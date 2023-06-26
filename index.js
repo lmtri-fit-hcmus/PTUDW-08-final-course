@@ -7,6 +7,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const expressHandlebars = require('express-handlebars');
+const passport = require('./controllers/passport');
 
 
 
@@ -41,6 +42,9 @@ app.use(
     store: store
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {

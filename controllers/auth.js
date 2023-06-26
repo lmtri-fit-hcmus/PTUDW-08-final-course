@@ -2,25 +2,31 @@ const crypto = require('crypto');
 var bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator/check');
 const User = require('../models/user');
-
+const axios = require('axios');
+const passport = require('passport');
 
 exports.getLogin = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
+  if(!req.session.isLoggedIn){
+    let message = req.flash('error');
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
+    res.render('auth/login', {
+      path: '/login',
+      pageTitle: 'Login',
+      errorMessage: message,
+      oldInput: {
+        email: '',
+        password: ''
+      },
+      validationErrors: []
+    });
   }
-  res.render('auth/login', {
-    path: '/login',
-    pageTitle: 'Login',
-    errorMessage: message,
-    oldInput: {
-      email: '',
-      password: ''
-    },
-    validationErrors: []
-  });
+  else{
+    res.redirect("/")
+  }
 };
 
 exports.getSignup = (req, res, next) => {
@@ -43,110 +49,50 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).render('auth/login', {
-      path: '/login',
-      pageTitle: 'Login',
-      errorMessage: errors.array()[0].msg,
-      oldInput: {
-        email: email,
-        password: password
-      },
-      validationErrors: errors.array()
-    });
-  }
-  User.findOne({ email: email })
-    .then(user => {
+exports.postLogin = (req, res) => {
+  (req, res, next) => {
+    passport.authenticate('local-login', (_, user) => {
+      errMsg = req.flash('loginMessage')
       if (!user) {
+        //req.flash('error', message.message);
         return res.status(422).render('auth/login', {
           path: '/login',
           pageTitle: 'Login',
-          errorMessage: 'Invalid email or password.',
-          oldInput: {
-            email: email,
-            password: password
-          },
-          validationErrors: []
+          errorMessage: errMsg,
         });
       }
-      bcrypt
-        .compare(password, user.password)
-        .then(doMatch => {
-          if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-            return req.session.save(err => {
-              console.log(err);
-              res.redirect('/');
-            });
-          }
-          return res.status(422).render('auth/login', {
-            path: '/login',
-            pageTitle: 'Login',
-            errorMessage: 'Invalid email or password.',
-            oldInput: {
-              email: email,
-              password: password
-            },
-            validationErrors: []
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          res.redirect('/login');
-        });
-    })
-    .catch(err => console.log(err));
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      return req.session.save(err => {
+        console.log(err);
+        res.redirect('/');
+      });
+    })(req, res, next);
+  }
 };
 
 exports.postSignup = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-   User.findOne({ email: email })
-  .then(user => {
-    if (user) {
-      console.log("email exist")
-      return res.status(422).render('auth/signup', {
-        path: '/signup',
-        pageTitle: 'Sign Up',
-        errorMessage: 'Email exists',
-        oldInput: {
-          email: email,
-          password: password
-        },
-        validationErrors: []
-      });
-    }
-    bcrypt
-  .hash(password, 12)
-  .then(hashedPassword => {
-    const user = new User({
-      email: email,
-      password: hashedPassword
-    });
-    console.log(user)
-    user.save().then(()=>{
-    res.redirect('/login')
-    });
-  })
-  .then(result => {
-    //gui mail sign up
-  })
-  .catch(err => {
-    console.log(err);
-  });
-  })
+    passport.authenticate('local-register', (success, message) => {
+      console.log( req.flash('registerMessage'))
+      if(success){
+        res.redirect("/")
+      }
+      else{
+        return res.status(422).render('auth/signup', {
+          path: '/signup',
+          pageTitle: 'Sign Up',
+          errorMessage: req.flash('registerMessage'),
+          validationErrors: []
+        });
+      }
+    })(req, res, next);
+
 };
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err);
-    res.redirect('/');
+    res.redirect('/login');
   });
 };
 
