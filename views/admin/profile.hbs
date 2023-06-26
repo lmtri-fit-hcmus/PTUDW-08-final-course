@@ -1,0 +1,91 @@
+
+    <div id="header" class="mb-5"></div>
+    <main>
+        <div class="container my-4">
+            <div class="row">
+                <div class="profile-left col-3">
+                    <nav class="navbar">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item text-muted">
+                                <img src="images//avatar.png">
+                            </li>
+                            <li class="nav-item-info">
+                                <a class="nav-link left-item" id="profile-item"
+                                    style="font-size: 18px; font-weight: 600; color:#357C4D;"> Profile </a>
+                            </li>
+
+                            <li class="nav-item-info">
+                                <a class="nav-link left-item" id="change-pwd-item"
+                                    style="font-size: 18px; font-weight: 600;"> Change Password
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="profile-right profile col-8 bg-light" id="profile">
+                    <div class="right-title fs-4 m-3 mb-4"> Profile
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">Name
+                        </div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="text"
+                            placeholder="" value="Nguyen Van A">
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">Email
+                        </div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="text"
+                            placeholder="" value="nguyenvana@gmail.com">
+                    </div>
+
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">Date of birth</div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="text"
+                            placeholder="" value="1/1/2022">
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">
+                        </div>
+                        <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1" id="save-btn"
+                            type="submit">Save
+                        </button>
+                    </div>
+                </div>
+
+                <form class="profile-right change-pwd col-8 bg-light" id="change-pwd">
+                    <div class="right-title fs-4 m-3 mb-4 d-flex justify-content-between">
+                        <div clas="right-title-text">Change Password
+                        </div>
+                    </div>
+
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">Current Password
+                        </div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="password"
+                            placeholder="" id="cur-pwd">
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">New Password
+                        </div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="password"
+                            placeholder="" id="new-pwd" required onchange="validatePassword()">
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">Confirm Password</div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="password"
+                            placeholder="" id="confirm-pwd" required placeholder="" onkeyup="validatePassword()">
+                    </div>
+                    <div class="right-item d-flex align-items-center mx-5 my-4">
+                        <div class="w-25 text-end px-3 py-2">
+                        </div>
+                        <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1" type="submit"
+                            id="confirm-btn">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
