@@ -1,51 +1,3 @@
-
-<header class="contenter-fluit">
-    <div class="container-join-login border border-bottom-1 mb-1">
-        <div class="join-login-bar d-flex pt-2 pb-2 justify-content-center align-items-center">
-            <div class="dropdown d-flex justify-content-center align-items-center">
-                <div id="profile-pic" class="d-inline-block"></div>
-                <button id="profile-dropdown" class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a id="admin-profile" class="dropdown-item" href="#">Profile</a></li>
-                    <li><a id="signout-btn" class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="logo-search d-flex mt-5 mx-5 mb-2 justify-content-between align-items-end">
-        <a class="logo mx-5" href="home.html"><img class="img-logo w-80" src="images//logo.png"></a>
-    </div>
-
-    <nav class="navbar navbar-expand-sm navbar-dark bg-white container mb-2">
-        <div class="container">
-            <ul class="navbar-nav mt-2 mt-lg-0 col">
-                <li class="nav-option nav-tag col text-center p-2" id="btn-home">
-                    <a class="nav-link " href="#" aria-current="page">Category & Tag Management</a>
-                </li>
-                <li class="nav-option nav-tag col text-center p-2" id="btn-paper-management">
-                    <a class="nav-link" href="#">Paper Management</a>
-                </li>
-                <li class="nav-option nav-tag col text-center p-2" id="btn-role-management">
-                    <a class="nav-link" href="#">Role Management</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <form action="#" class="searchform order-sm-start order-lg-last">
-        <div class="form-group d-flex mx-4">
-            <input type=" text" class="form-control pl-3" placeholder="Search">
-            <button type="guestmit" placeholder="" class="btn-search bg-light border border-1 rounded">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-    </form>
-    <!-- place navbar here -->
-</header>
-
 <main>
     
     <div class="row" id="cat-tag-management">
@@ -371,92 +323,81 @@
     </div>
 
     <div class="row" id="role-management">
-        <div class="option col-2 d-flex px-5 justify-content-center align-items-center">
-            <div class="container">
-                <a class="option-to-choose option-link d-block" id="list-user-option"><i class="fa-solid fa-caret-right"
-                        style="color: #21ab51;"></i> List user</a>
-                <a class="option-to-choose option-link d-block" id="assign-cat-option">Assign cagetory</a>
-                <a class="option-to-choose option-link d-block" id="renew-acc-option">Renew account</a>
-            </div>
-            <div class="vertical-line" style="border-left: 1px solid black; height: 100%;"></div>
-        </div>
-        <div id="view-field mt-5 mb-5" class="col-9 d-flex align-items-center">
-            <div id="list-user" class="cate row w-100">
-                <div class="paper-container row mb-2">
-                    <div class="user col d-flex align-items-center">
-                        <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup" >
-                            <img src="images//blog-img/1.png" alt="" class="paper-img">
-                        </div>
-                        <div id="user-detail" style="margin-left: 30px;">
-                            <div class="user-name"><h4>Tri Le</h4></div>
-                            <div class="user-role">Subcriber</div> 
-                        </div>
-                    </div>
+            <div class="option col-2 d-flex px-5 justify-content-center align-items-center">
+                <div class="container">
+                    <a class="option-to-choose option-link d-block" id="list-user-option"><i class="fa-solid fa-caret-right"
+                            style="color: #21ab51;"></i> List user</a>
+                    <a class="option-to-choose option-link d-block" id="assign-cat-option">Assign cagetory</a>
+                    <a class="option-to-choose option-link d-block" id="renew-acc-option">Renew account</a>
                 </div>
-                <div class="paper-container row mb-2">
-                    <div class="user col d-flex align-items-center">
-                        <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup">
-                            <img src="images//blog-img/1.png" alt="" class="paper-img">
-                        </div>
-                        <div id="user-detail" style="margin-left: 30px;">
-                            <div class="user-name"><h4>Dung Nguyen</h4></div>
-                            <div class="user-role">Writer</div> 
-                        </div>
-                    </div>
-                </div>         
-                <br>
+                <div class="vertical-line" style="border-left: 1px solid black; height: 100%;"></div>
             </div>
-            <div id="assign-cat" class="cate row w-100">
-                <div class="row">
-                    <div class="user-container col-10 row mb-2">
-                        <div class="user col d-flex align-items-center">
-                            <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup">
-                                <img src="images//blog-img/1.png" alt="" class="paper-img">
-                            </div>
-                            <div id="user-detail" style="margin-left: 30px;">
-                                <div class="user-name"><h4>Dung Nguyen</h4></div>
-                                <div class="user-role">Writer</div> 
-                            </div>
-                        </div>
-                    </div>  
-                    <div class="assign-btn col-2 dropdown d-flex justify-content-center align-items-center">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="assign-cat-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Select an option
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#" data-value="Agricultural">Agricultural</a>
-                            <a class="dropdown-item" href="#" data-value="Seafood">Seafood</a>
-                            </div>
-                    </div>
-
-                </div>       
-                <br>
-            </div>
-            <div id="renew-acc" class="cate row w-100">
-                <div class="row">
+            <div id="view-field mt-5 mb-5" class="col-9 d-flex align-items-center">
+                <div id="list-user" class="cate row mt-5 w-100">
                     <div class="user-container col-10 row mb-2">
                         <div class="paper col d-flex align-items-center">
-                            <div class="user-avatar" >
-                                <img src="images//blog-img/1.png" alt="" class="paper-img">
+                            <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup" >
+                                <img src="/images/blog-img/1.png" alt="" class="paper-img">
                             </div>
-                            <div class="user-detail" style="margin-left: 30px;">
+                            <div id="user-detail" style="margin-left: 30px;">
                                 <div class="user-name"><h4>Tri Le</h4></div>
                                 <div class="user-role">Subcriber</div> 
-                                <div id="tmp-expire-day" class="expire-day" style="margin-right: 10px; color: #921C1C; position: absolute; bottom: 0; right: 0;"> Expired </div>
                             </div>
                         </div>
-                    </div>  
-                    <div class="renew-account-btn col-2 dropdown d-flex justify-content-center align-items-center">
-                        <button id="renew-btn" class="w-100">
-                            Renew account
-                        </button>
-                    </div>
+                    </div>      
+                    <br>
+                </div>
+                <div id="assign-cat" class="cate row w-100">
+                    <div class="row">
+                        <div class="user-container col-10 row mb-2">
+                            <div class="paper col d-flex align-items-center">
+                                <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup">
+                                    <img src="../../assets/images/blog-img/1.png" alt="" class="paper-img">
+                                </div>
+                                <div id="user-detail" style="margin-left: 30px;">
+                                    <div class="user-name"><h4>Dung Nguyen</h4></div>
+                                    <div class="user-role">Writer</div> 
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="assign-btn col-2 dropdown d-flex justify-content-center align-items-center">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="assign-cat-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select an option
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" data-value="Agricultural">Agricultural</a>
+                                <a class="dropdown-item" href="#" data-value="Seafood">Seafood</a>
+                              </div>
+                        </div>
 
-                </div>       
-                <br>
+                    </div>       
+                    <br>
+                </div>
+                <div id="renew-acc" class="cate row w-100">
+                    <div class="row">
+                        <div class="user-container col-10 row mb-2">
+                            <div class="paper col d-flex align-items-center">
+                                <div class="user-avatar" >
+                                    <img src="../../assets/images/blog-img/1.png" alt="" class="paper-img">
+                                </div>
+                                <div class="user-detail" style="margin-left: 30px;">
+                                    <div class="user-name"><h4>Tri Le</h4></div>
+                                    <div class="user-role">Subcriber</div> 
+                                    <div id="tmp-expire-day" class="expire-day" style="margin-right: 10px; color: #921C1C; position: absolute; bottom: 0; right: 0;"> Expired </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="renew-account-btn col-2 dropdown d-flex justify-content-center align-items-center">
+                            <button id="renew-btn" class="w-100">
+                                Renew account
+                            </button>
+                        </div>
+
+                    </div>       
+                    <br>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="overlay-show"></div>
+        <div id="overlay-show"></div>
 </main>
 

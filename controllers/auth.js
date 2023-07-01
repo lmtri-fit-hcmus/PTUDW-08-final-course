@@ -64,7 +64,7 @@ exports.postLogin = (req, res, next) => {
     req.session.user = user;
     return req.session.save(err => {
       console.log(err);
-      res.redirect(`/${user.role}`);
+      res.redirect(`/${user.role.toLowerCase()}`);
     });
   })(req, res, next);
 }
