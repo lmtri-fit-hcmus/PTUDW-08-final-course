@@ -49,33 +49,31 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res) => {
-  (req, res, next) => {
-    passport.authenticate('local-login', (_, user) => {
-      errMsg = req.flash('loginMessage')
-      if (!user) {
-        //req.flash('error', message.message);
-        return res.status(422).render('auth/login', {
-          path: '/login',
-          pageTitle: 'Login',
-          errorMessage: errMsg,
-        });
-      }
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      return req.session.save(err => {
-        console.log(err);
-        res.redirect('/');
+exports.postLogin = (req, res, next) => {
+  passport.authenticate('local-login', (_, user) => {
+    errMsg = req.flash('loginMessage')
+    if (!user) {
+      //req.flash('error', message.message);
+      return res.status(422).render('auth/login', {
+        path: '/login',
+        pageTitle: 'Login',
+        errorMessage: errMsg,
       });
-    })(req, res, next);
-  }
-};
+    }
+    req.session.isLoggedIn = true;
+    req.session.user = user;
+    return req.session.save(err => {
+      console.log(err);
+      res.redirect(`/${user.role}`);
+    });
+  })(req, res, next);
+}
 
 exports.postSignup = (req, res, next) => {
     passport.authenticate('local-register', (success, message) => {
       console.log( req.flash('registerMessage'))
       if(success){
-        res.redirect("/")
+        res.redirect("/login")
       }
       else{
         return res.status(422).render('auth/signup', {

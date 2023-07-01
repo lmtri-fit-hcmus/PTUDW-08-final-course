@@ -32,7 +32,7 @@ passport.use('local-login', new LocalStrategy({
     const errors = validationResult(req);
     console.log(errors)
     if (!errors.isEmpty()) {
-        return done(null, false, req.flash('loginMessage', errors.array()[0].msg));
+        return done(null, req.flash('loginMessage', errors.array()[0].msg));
     }
     if (email) {
         email: email.toLowerCase(); // chuyen dia chi email sang ky tu thuong
@@ -42,16 +42,16 @@ passport.use('local-login', new LocalStrategy({
             let user = await User.findOne( { email: email });
             console.log(user)
             if (!user) { // neu email chua ton tai
-                return done(null, false, req.flash('loginMessage', 'Email does not exist!'));
+                return done(null,req.flash('loginMessage', 'Email does not exist!'));
             }
             if (!bcrypt.compareSync(password, user.password)) { //neu mat khau khong dung
-                return done(null, false, req.flash('loginMessage', 'Invalid Password!'));
+                return done(null, req.flash('loginMessage', 'Invalid Password!'));
             }
             // cho phep dang nhap
             return done(null, user);
         }
         // bo qua dang nhap
-        done(null, req.session.user);
+        done(req.session.user, req.flash('loginMessage', 'Success!'));
     }
     catch (error) {
         done(error);
@@ -73,7 +73,7 @@ passport.use('local-register', new LocalStrategy({
         return done(null, req.session.user);
     }
     const axios = require('axios');
-    const { response } = req.body;
+    const response  = req.body['g-recaptcha-response'];
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_KEY}&response=${response}`;
     console.log(verifyUrl)
     axios.post(verifyUrl).then((verificationResponse)=>{
@@ -94,7 +94,8 @@ passport.use('local-register', new LocalStrategy({
         .then(hashedPassword => {
           const user = new User({
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: req.body.role
           });
           console.log(user)
           user.save().then(()=>{
