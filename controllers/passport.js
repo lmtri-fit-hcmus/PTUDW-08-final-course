@@ -29,31 +29,29 @@ passport.use('local-login', new LocalStrategy({
     passReqToCallback: true // cho phep truyen req vao callback de kiem tra user da dang nhap hay chua
 
 }, async (req, email, password, done) => {
-    const errors = validationResult(req);
-    console.log(errors)
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return done(null, req.flash('loginMessage', errors.array()[0].msg));
-    }
-    if (email) {
-        email: email.toLowerCase(); // chuyen dia chi email sang ky tu thuong
     }
     try {
         if (!req.session.user) { // neu user chua dang nhap
             let user = await User.findOne( { email: email });
-            console.log(user)
+
             if (!user) { // neu email chua ton tai
                 return done(null,req.flash('loginMessage', 'Email does not exist!'));
             }
             if (!bcrypt.compareSync(password, user.password)) { //neu mat khau khong dung
                 return done(null, req.flash('loginMessage', 'Invalid Password!'));
             }
+
             // cho phep dang nhap
-            return done(null, user);
+            return done(user, req.flash('loginMessage', 'Success!'));
         }
         // bo qua dang nhap
         done(req.session.user, req.flash('loginMessage', 'Success!'));
     }
     catch (error) {
+        console.log(error)
         done(error);
     }
 }
@@ -66,11 +64,8 @@ passport.use('local-register', new LocalStrategy({
     passwordFiled: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    if (email) {
-        email = email.toLowerCase();
-    }
     if (req.session.isLoggedIn) { // neu nguoi dung da dang nhap, bo qua
-        return done(null, req.session.user);
+        return done(true, req.flash('registerMessage', 'Already login'));
     }
     const axios = require('axios');
     const response  = req.body['g-recaptcha-response'];

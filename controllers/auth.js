@@ -6,6 +6,7 @@ const axios = require('axios');
 const passport = require('passport');
 
 exports.getLogin = (req, res, next) => {
+  req.app.locals.layout = 'auth'
   if(!req.session.isLoggedIn){
     let message = req.flash('error');
     if (message.length > 0) {
@@ -13,6 +14,7 @@ exports.getLogin = (req, res, next) => {
     } else {
       message = null;
     }
+    req.app.locals.layout = 'auth'
     res.render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
@@ -50,10 +52,11 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  passport.authenticate('local-login', (_, user) => {
+  passport.authenticate('local-login', (user, _) => {
     errMsg = req.flash('loginMessage')
     if (!user) {
       //req.flash('error', message.message);
+      req.app.locals.layout = 'auth'
       return res.status(422).render('auth/login', {
         path: '/login',
         pageTitle: 'Login',
@@ -62,8 +65,8 @@ exports.postLogin = (req, res, next) => {
     }
     req.session.isLoggedIn = true;
     req.session.user = user;
+    console.log(user)
     return req.session.save(err => {
-      console.log(err);
       res.redirect(`/${user.role.toLowerCase()}`);
     });
   })(req, res, next);
