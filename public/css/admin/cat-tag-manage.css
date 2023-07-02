@@ -100,7 +100,7 @@
 .cat-btn-agri, .cat-btn {
     width: 145px;
     height: 55px;
-    background-color: #618C1B;
+    /* background-color: #618C1B; */
     color: white;
     border: 0;
     border-radius: 20px;
@@ -183,7 +183,7 @@
     color: rgb(221, 219, 219);
     border: 0;
     border-radius: 20px;
-    margin: 0 4%;
+    margin: 2% 2%;
 }
 
 .modify-option {
@@ -219,13 +219,13 @@
     margin: 0;
 }
 
-#category-demo-field{
+#category-demo-field, #category-demo-field1{
     height: 50px;
     border-radius: 20px;
     flex-shrink: 0;
     padding: 20px;
 }
-#tag-demo-field{
+#tag-demo-field, #tag-demo-field1 {
     background-color: #8b8787;
     color: rgb(221, 219, 219);
     height: 50px;

@@ -13,5 +13,10 @@ router.get(
   isAuth,
   adminController.getHomePage
 );
+router.get(
+  '/update-category',
+  isAuth,
+  adminController.getUpdateCategory
+);
 
 module.exports = router;

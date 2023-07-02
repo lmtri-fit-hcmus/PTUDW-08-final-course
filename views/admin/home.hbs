@@ -11,10 +11,12 @@
         </div>
         <div id="view-field mt-5 mb-5" class="col-9 d-flex align-items-center">
             <div id="cate" class="cate row w-100">
-                <div class="category-container row mb-2">
+                {{#each listCategory}}
+                     <div class="category-container row mb-2">
                     <div class="category col d-flex align-items-center">
                         <div class="col-2">
-                            <button data-toggle="modal" data-target="#update1" class="cat-btn-agri d-flex justify-content-center align-items-center">Agricultural</button>
+                            <button data-toggle="modal" data-target="#update1" class="cat-btn-agri d-flex justify-content-center align-items-center"
+                            style="background-color: {{this.color}};">{{this.name}}</button>
                             <div class="modal fade" id="update1" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -26,15 +28,16 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form>
+                                            <form action="/admin/update-category" method="GET">
                                                 <div class="form-group">
                                                     <div class="grid-container">
+                                                        <input type="hidden" name="old-name" value="{{this.name}}">
                                                         <div class="cell" style="border-top-left-radius: 10px;"><label for="name">Name:</label></div>
                                                         <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name" name="cat-name"></div>
                                                         <div class="cell"><label for="color-picker">Choose a color:</label></div>
                                                         <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker"></div>
                                                         <div class="cell" style="border-bottom-left-radius: 10px;"><label for="message">Detail:</label></div>
-                                                        <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" rows="3"></textarea></div>
+                                                        <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" name="detail" rows="3"></textarea></div>
                                                     </div>   
                                                 </div>
                                                 <br>
@@ -43,8 +46,8 @@
 
                                                 </div>
                                                 <div class="modal-footer justify-content-center" >  
-                                                    <button style="background-color: #9C4444; color: white;" class="btn">Delete</button>
-                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <input type="submit" name="submitButton" style="background-color: #9C4444; color: white;" class="btn" value="Delete">
+                                                    <input type="submit" name="submitButton" class="btn btn-primary" value="Update">
                                                 </div>
                                             </form>
                                         </div>
@@ -52,57 +55,11 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="col">Includes a wide range of activities such as farming, horticulture, and
-                            forestry. Agriculture is an essential industry that provides food for the world's
-                            population and supports rural economies around the globe.</p>
+                        <p class="col">{{detail}}</p>
                     </div>
-                </div>
-                <div class="category-container row mb-2">
-                    <div class="category col d-flex align-items-center">
-                        <div class="col-2">
-                            <button data-toggle="modal" data-target="#update2" class="cat-btn-seafood d-flex justify-content-center align-items-center">Seafood</button>
-                            <div class="modal fade" id="update2" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Add category</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <div class="grid-container">
-                                                        <div class="cell" style="border-top-left-radius: 10px;"><label for="name">Name:</label></div>
-                                                        <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name" name="cat-name"></div>
-                                                        <div class="cell"><label for="color-picker">Choose a color:</label></div>
-                                                        <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker"></div>
-                                                        <div class="cell" style="border-bottom-left-radius: 10px;"><label for="message">Detail:</label></div>
-                                                        <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" rows="3"></textarea></div>
-                                                    </div>   
-                                                </div>
-                                                <br>
-                                                <h5 class="modal-title" >Demo</h5>
-                                                <div id="category-demo-field" class="d-inline-flex justify-content-center align-items-center">
-
-                                                </div>
-                                                <div class="modal-footer justify-content-center" >  
-                                                    <button style="background-color: #9C4444; color: white;" class="btn">Delete</button> 
-                                                    <button type="submit" class="btn btn-primary">Add</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="col">Includes fish, shellfish, and other aquatic animals. Seafood is an important
-                            source of protein and other nutrients for people around the world, particularly in
-                            coastal regions</p>
-                    </div>
-                </div>
+                </div>    
+                {{/each}}
+               
                 <br>
                 <div id="add-cat-form" class="container d-flex justify-content-center">
                     <button type="button" id="add-cat" data-toggle="modal" data-target="#myModal" class="d-flex justify-content-center align-items-center">Add Category</button>
@@ -121,7 +78,7 @@
                                         <div class="form-group">
                                             <div class="grid-container">
                                                 <div class="cell" style="border-top-left-radius: 10px;"><label for="name">Name:</label></div>
-                                                <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name" name="cat-name"></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name-add" name="cat-name"></div>
                                                 <div class="cell"><label for="color-picker">Choose a color:</label></div>
                                                 <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker"></div>
                                                 <div class="cell" style="border-bottom-left-radius: 10px;"><label for="message">Detail:</label></div>
@@ -130,7 +87,7 @@
                                         </div>
                                         <br>
                                         <h5 class="modal-title" >Demo</h5>
-                                        <div id="category-demo-field" class="d-inline-flex justify-content-center align-items-center">
+                                        <div id="category-demo-field1" class="d-inline-flex justify-content-center align-items-center">
 
                                         </div>
                                         <div class="modal-footer justify-content-center" >  
@@ -145,21 +102,41 @@
 
             </div>
             <div id="tag" class="tag row w-100">
-                <div class="tag-container row mb-2">
-                    <div class="tagg col d-flex align-items-center">
-                        <button class="tag-btn col-2">#Coffee</button>
+                {{#each listTag}}
+                    <button data-toggle="modal" data-target="#updateTag" class="tag-btn col-2">{{this.name}}</button>
+                    <div class="modal fade" id="updateTag" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="grid-container">
+                                                <div class="cell" style="border-top-left-radius: 10px;
+                                                border-bottom-left-radius: 10px;"><label for="tag-name">Name:</label></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name" name="tag-name"></div>
+                                            </div>   
+                                        </div>
+                                        <br>
+                                        <h5 class="modal-title" >Demo</h5>
+                                        <div id="tag-demo-field" class="d-inline-flex justify-content-center align-items-center">
+
+                                        </div>
+                                        <div class="modal-footer justify-content-center" >  
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="tag-container row mb-2">
-                    <div class="tagg col d-flex align-items-center">
-                        <button class="tag-btn col-2">#Seafood</button>
-                    </div>
-                </div>
-                <div class="tag-container row mb-2">
-                    <div class="tagg col d-flex align-items-center">
-                        <button class="tag-btn col-2">#Hot</button>
-                    </div>
-                </div>
+                {{/each}}
                 <br>
                 <div id="add-tag-form" class="container d-flex justify-content-center">
                     <button type="button" id="add-tag" data-toggle="modal" data-target="#tagModal">Add Tag</button>
@@ -178,13 +155,13 @@
                                         <div class="form-group">
                                             <div class="grid-container">
                                                 <div class="cell" style="border-top-left-radius: 10px;
-                                                border-bottom-left-radius: 10px;"><label for="tag-name">Name:</label></div>
-                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name" name="tag-name"></div>
+                                                border-bottom-left-radius: 10px;"><label for="tag-name-add">Name:</label></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name-add" name="tag-name"></div>
                                             </div>   
                                         </div>
                                         <br>
                                         <h5 class="modal-title" >Demo</h5>
-                                        <div id="tag-demo-field" class="d-inline-flex justify-content-center align-items-center">
+                                        <div id="tag-demo-field1" class="d-inline-flex justify-content-center align-items-center">
 
                                         </div>
                                         <div class="modal-footer justify-content-center" >  
