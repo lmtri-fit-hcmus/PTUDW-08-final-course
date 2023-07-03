@@ -1,5 +1,7 @@
 .profile-left img {
-    width: 80px;
+    width: 100px;
+    border-radius: 50px;
+    height: 100px;
 }
 
 
@@ -46,10 +48,6 @@
     z-index: 1;
 }
 
-.change-pwd {
-    display: none;
-}
-
 .nav-item-info > .nav-link {
     color: black;
 }
@@ -57,3 +55,4 @@
 .name {
     width: 30%;
 }
+

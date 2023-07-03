@@ -11,10 +11,21 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String,
+  },
+  dob: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
   role: {
     type: String,
     required: true
   }
-});
+},
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('User', userSchema);
