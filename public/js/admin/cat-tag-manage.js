@@ -160,7 +160,7 @@ document.getElementById("cat-name").addEventListener('input', () => {
 
 document.getElementById("cat-name-add").addEventListener('input', () => {
     document.getElementById("category-demo-field1").innerHTML = document.getElementById("cat-name-add").value;
-    document.getElementById("category-demo-field1").style.backgroundColor = document.getElementById("cat-color").value;
+    document.getElementById("category-demo-field1").style.backgroundColor = document.getElementById("cat-color-add").value;
     document.getElementById("category-demo-field1").style.color = "white"
 })
 
@@ -172,12 +172,12 @@ document.getElementById("cat-color").addEventListener('input', () => {
 
 document.getElementById("cat-color-add").addEventListener('input', () => {
     document.getElementById("category-demo-field1").innerHTML = document.getElementById("cat-name-add").value;
-    document.getElementById("category-demo-field1").style.backgroundColor = document.getElementById("cat-color").value;
+    document.getElementById("category-demo-field1").style.backgroundColor = document.getElementById("cat-color-add").value;
     document.getElementById("category-demo-field1").style.color = "white"
 })
 
 document.getElementById("tag-name").addEventListener('input', () => {
-    document.getElementById("tag-demo-field").innerHTML = "#" + document.getElementById("tag-name").value;
+    document.getElementById("tag-demo-field").innerHTML = document.getElementById("tag-name").value;
 })
 
 document.getElementById("tag-name-add").addEventListener('input', () => {

@@ -15,9 +15,9 @@
                      <div class="category-container row mb-2">
                     <div class="category col d-flex align-items-center">
                         <div class="col-2">
-                            <button data-toggle="modal" data-target="#update1" class="cat-btn-agri d-flex justify-content-center align-items-center"
+                            <button data-toggle="modal" data-target="#{{this.signname}}" class="cat-btn-agri d-flex justify-content-center align-items-center"
                             style="background-color: {{this.color}};">{{this.name}}</button>
-                            <div class="modal fade" id="update1" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="{{this.signname}}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
@@ -31,19 +31,19 @@
                                             <form action="/admin/update-category" method="GET">
                                                 <div class="form-group">
                                                     <div class="grid-container">
-                                                        <input type="hidden" name="old-name" value="{{this.name}}">
+                                                        <input type="hidden" name="old-name" value="{{name}}">
                                                         <div class="cell" style="border-top-left-radius: 10px;"><label for="name">Name:</label></div>
-                                                        <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name" name="cat-name"></div>
+                                                        <div class="cell" style="border-top-right-radius: 10px;"><input type="text" value="{{name}}" class="form-control" id="cat-name" name="cat-name"></div>
                                                         <div class="cell"><label for="color-picker">Choose a color:</label></div>
-                                                        <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker"></div>
+                                                        <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker" value="{{this.color}}"></div>
                                                         <div class="cell" style="border-bottom-left-radius: 10px;"><label for="message">Detail:</label></div>
-                                                        <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" name="detail" rows="3"></textarea></div>
+                                                        <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" name="detail" rows="3">{{this.detail}}</textarea></div>
                                                     </div>   
                                                 </div>
                                                 <br>
                                                 <h5 class="modal-title" >Demo</h5>
-                                                <div id="category-demo-field" class="d-inline-flex justify-content-center align-items-center">
-
+                                                <div id="category-demo-field" style="background-color: {{this.color}}; color: white" class="d-inline-flex justify-content-center align-items-center">
+                                                    {{this.name}}
                                                 </div>
                                                 <div class="modal-footer justify-content-center" >  
                                                     <input type="submit" name="submitButton" style="background-color: #9C4444; color: white;" class="btn" value="Delete">
@@ -74,15 +74,15 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="/admin/add-category" method="GET"> 
                                         <div class="form-group">
                                             <div class="grid-container">
                                                 <div class="cell" style="border-top-left-radius: 10px;"><label for="name">Name:</label></div>
-                                                <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name-add" name="cat-name"></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;"><input type="text" class="form-control" id="cat-name-add" name="cat-name" required></div>
                                                 <div class="cell"><label for="color-picker">Choose a color:</label></div>
-                                                <div class="cell"><input style="width: 100%;" type="color" id="cat-color" name="color-picker"></div>
+                                                <div class="cell"><input style="width: 100%;" type="color" id="cat-color-add" name="color-picker" required></div>
                                                 <div class="cell" style="border-bottom-left-radius: 10px;"><label for="message">Detail:</label></div>
-                                                <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" rows="3"></textarea></div>
+                                                <div class="cell" style="border-bottom-right-radius: 10px;"><textarea class="form-control" id="cat-detail" name="detail" rows="3" required></textarea></div>
                                             </div>   
                                         </div>
                                         <br>
@@ -103,8 +103,8 @@
             </div>
             <div id="tag" class="tag row w-100">
                 {{#each listTag}}
-                    <button data-toggle="modal" data-target="#updateTag" class="tag-btn col-2">{{this.name}}</button>
-                    <div class="modal fade" id="updateTag" tabindex="-1" role="dialog"
+                    <button data-toggle="modal" data-target="#{{this.signname}}" class="tag-btn col-2">#{{this.name}}</button>
+                    <div class="modal fade" id="{{this.signname}}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                             <div class="modal-content">
@@ -115,12 +115,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="/admin/update-tag" method="GET">
+                                        <input type="hidden" name="old-name" value="{{this.name}}">
                                         <div class="form-group">
                                             <div class="grid-container">
                                                 <div class="cell" style="border-top-left-radius: 10px;
                                                 border-bottom-left-radius: 10px;"><label for="tag-name">Name:</label></div>
-                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name" name="tag-name"></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name" name="tag-name" value="{{this.name}}"></div>
                                             </div>   
                                         </div>
                                         <br>
@@ -129,7 +130,8 @@
 
                                         </div>
                                         <div class="modal-footer justify-content-center" >  
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <input type="submit" name="submitButton" style="background-color: #9C4444; color: white;" class="btn" value="Delete">
+                                            <button type="submit" class="btn btn-primary" name="submitButton" value="Update">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -151,7 +153,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="/admin/add-tag" method="GET">
                                         <div class="form-group">
                                             <div class="grid-container">
                                                 <div class="cell" style="border-top-left-radius: 10px;

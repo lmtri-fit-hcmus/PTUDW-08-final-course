@@ -6,6 +6,14 @@ const categorySchema = new Schema({
   name: {
     type: String,
     required: true
+  },
+  color: {
+    type: String,
+    required: true
+  },
+  detail: {
+    type: String,
+    required: true
   }
 });
 
