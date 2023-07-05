@@ -12,6 +12,20 @@ $(document).ready(function () {
 
 
 
+document.getElementById('top-10-trend').addEventListener('click', () => {
+    document.getElementById('top-10-trend').style.color = "#198754"
+    document.getElementById('top-10-new').style.color = "#6bca8a"
+    document.getElementById("scroll-style-trend").style.display = "block"
+    document.getElementById("scroll-style-new").style.display = "none"
+})
+
+document.getElementById('top-10-new').addEventListener('click', () => {
+    document.getElementById('top-10-new').style.color = "#198754"
+    document.getElementById('top-10-trend').style.color = "#6bca8a"
+    document.getElementById("scroll-style-new").style.display = "block"
+    document.getElementById("scroll-style-trend").style.display = "none"
+})
+
 
 
 

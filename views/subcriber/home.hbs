@@ -1,3 +1,4 @@
+</br>
 <main>
     <div class="container my-5 mt-5 ">
         <div class="row justify-content-around pt-5">
@@ -14,55 +15,51 @@
                         <li data-bs-target="#carouselId" data-bs-slide-to="2" aria-label="Third slide"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
+                        {{#with topWeekPapers.[0]}}
                         <div class="carousel-item active position-relative">
-                            <img src="/images/blog-img/1.png" class="w-100 d-block" alt="First slide">
+                            <img src="/images/{{metadata_id.avaPaper}}" class="w-100 d-block" alt="First slide"
+                                id="top3img">
                             <div class="carousel-caption">
-                                <h5> <a href="#" class="text-decoration-none text-white" id="title">The Impact of
-                                        Precision
-                                        Agriculture on Crop Yield: A Review of
-                                        Current
-                                        Practices and Future Directions</a></h5>
-                                <p>14, March, 2023</p>
+                                <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
+                                </h5>
+                                <p>{{{publicationDate}}}</p>
                             </div>
-                            <div class="top-3-category position-absolute top-0 start-0 bg-success text-white p-2 rounded-3 m-3 text-centerd"
-                                href="#">
-                                Agricultural
+                            <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
+                                style="background-color: {{category_id.color}}" href="#">
+                                {{{category_id.name}}}
                                 </d>
                             </div>
                         </div>
+                        {{/with}}
+                        {{#with topWeekPapers.[1]}}
                         <div class="carousel-item">
-                            <img src="/images/blog-img/1.png" class="w-100 d-block" alt="Second slide">
+                            <img src="/images/{{metadata_id.avaPaper}}" class="d-block" alt="Second slide" id="top3img">
                             <div class="carousel-caption">
-                                <h5> <a href="#" class="text-decoration-none text-white" id="title">The Impact of
-                                        Precision
-                                        Agriculture on Crop Yield: A Review of Current Practices and Future
-                                        Directions</a></h5>
-                                <p>14, March, 2023</p>
+                                <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
+                                </h5>
+                                <p>{{{publicationDate}}}</p>
                             </div>
-                            <div class="top-3-category position-absolute top-0 start-0 bg-success text-white p-2 rounded-3 m-3 text-centerd"
-                                href="#">
-                                Agricultural
-                                </d>
+                            <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
+                                style="background-color: {{category_id.color}}" href="#">
+                                {{{category_id.name}}}
                             </div>
-
                         </div>
+                        {{/with}}
+                        {{#with topWeekPapers.[2]}}
                         <div class="carousel-item">
-                            <img src="/images/blog-img/1.png" class="w-100 d-block" alt="Third slide">
+                            <img src="/images/{{metadata_id.avaPaper}}" class="w-100 d-block" alt="Third slide"
+                                id="top3img">
                             <div class="carousel-caption">
-                                <h5> <a href="#" class="text-decoration-none text-white" id="title">The Impact of
-                                        Precision
-                                        Agriculture on Crop Yield: A Review of
-                                        Current
-                                        Practices and Future Directions</a></h5>
-                                <p>14, March, 2023</p>
+                                <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
+                                </h5>
+                                <p>{{{publicationDate}}}</p>
                             </div>
-                            <div class="top-3-category position-absolute top-0 start-0 bg-success text-white p-2 rounded-3 m-3 text-centerd"
-                                href="#">
-                                Agricultural
-                                </d>
+                            <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
+                                style="background-color: {{category_id.color}}" href="#">
+                                {{{category_id.name}}}
                             </div>
-
                         </div>
+                        {{/with}}
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId"
                         data-bs-slide="prev">
@@ -78,232 +75,55 @@
             </div>
             <div class="top-10 col-4">
                 <div class="d-flex justify-content-around pt-2">
-                    <span class="top-10-trending h6">Top 10 trending
+                    <span class="top-10-trending h6" id="top-10-trend" style="color: #198754">Top 10 trending
                     </span>
-                    <span class="top-10-newest h6">Top 10 newest
+                    <span class="top-10-newest h6" id="top-10-new" style="color: #6bca8a;">Top 10 newest
                     </span>
                 </div>
                 <span class="line mb-5"></span>
-                <div class="scroll" id="scroll-style">
+                <div class="scroll " id="scroll-style-trend">
+                    {{#each topTrendPapers}}
                     <div class="top-10-item">
                         <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
+                            <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
+                                style="width:60%;height:120px;object-fit:cover;">
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                                 <div class="mb-1" style="font-size:13px;">
-                                    <div class="top-10-item-date p-1">14, March, 2023</div>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
+                                    <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                                    <div class="top-10-item-category text-white p-1 rounded-3" href="#"
+                                        style="background-color: {{category_id.color}}">
+                                        {{category_id.name}}
                                     </div>
-                                    <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
+                                    <a class="top-10-item-title m-0 p-1" href="#" id="title">{{{title}}}
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {{/each}}
+                </div>
+                <div class="scroll " id="scroll-style-new">
+                    {{#each topNewPapers}}
+                    <div class="top-10-item">
+                        <div class="d-flex mb-3">
+                            <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
+                                style="width:60%;height:120px;object-fit:cover;">
+                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
+                                <div class="mb-1" style="font-size:13px;">
+                                    <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                                    <div class="top-10-item-category text-white p-1 rounded-3"
+                                        style="background-color: {{category_id.color}}" href="#">
+                                        {{category_id.name}}
+                                    </div>
+                                    <a class="top-10-item-title m-0 p-1" href="#" id="title">{{{title}}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
 
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/blog-img/1.png" alt="website template image"
-                                style="width:120px;height:120px;object-fit:cover;">
-                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                                <div class="mb-1" style="font-size:13px;">
-                                    <span class="top-10-item-date">14, March, 2023</span>
-                                    <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                        Agricultural
-                                        </d>
-                                    </div>
-                                    <a class="top-10-item-title  m-0" href="#" id="title">The Impact of Precision
-                                        Agriculture on
-                                        Crop Yield: A
-                                        Review
-                                        of Current Practices and Future Directions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -315,93 +135,32 @@
         <div class="top-3 h4 m-1 pb-2 mb-4 text-success">Top 10 Category
             <span class="line"></span>
         </div>
+
         <div class="top-10-category m-2">
+            {{#each top10Cat}}
             <div class="top-10-item p-3">
                 <div class="d-flex mb-3">
-                    <img src="/images/blog-img/1.png" alt="website template image"
+                    <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
                         style="width:120px;height:120px;object-fit:cover;">
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                         <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
+                            <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                            <div class="top-10-item-category text-white p-1 rounded-3"
+                                style="background-color: {{category_id.color}}" href="#">
+                                {{category_id.name}}
                             </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
+                            <a class="top-10-item-title m-0 p-1" href="#" id="title">{{{title}}}
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="top-10-item p-3">
-                <div class="d-flex mb-3">
-                    <img src="/images/blog-img/1.png" alt="website template image"
-                        style="width:120px;height:120px;object-fit:cover;">
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="top-10-item p-3">
-                <div class="d-flex mb-3">
-                    <img src="/images/blog-img/1.png" alt="website template image"
-                        style="width:120px;height:120px;object-fit:cover;">
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="top-10-item p-3">
-                <div class="d-flex mb-3">
-                    <img src="/images/blog-img/1.png" alt="website template image"
-                        style="width:120px;height:120px;object-fit:cover;">
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{/each}}
         </div>
+
     </div>
+    </div>
+
 
     <div class="container my-3">
         <div class="top-3 h4 m-1 pb-2 mb-4 text-success">Other Paper
@@ -409,173 +168,25 @@
         </div>
         <div class="card-body container">
             <div class="row ">
+                {{#each otherPapers}}
                 <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
                     <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
+                        <img src="/images/{{metadata_id.avaPaper}}" alt="" class="img-thumbnail"
+                            style="width:100%;height:300px">
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                         <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
+                            <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                            <div class="top-10-item-category text-white p-1 rounded-3"
+                                style="background-color: {{category_id.color}}" href=" #">
+                                {{category_id.name}}
                             </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
+                            <a class="top-10-item-title m-0 p-1" href="#" id="title">{{title}}
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6 mt-3">
-                    <div class="d-flex ">
-                        <img src="/images/blog-img/1.png" alt="" class="img-thumbnail h-100">
-                    </div>
-                    <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
-                        <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">14, March, 2023</div>
-                            <div class="top-10-item-category bg-success text-white p-1 rounded-3" href="#">
-                                Agricultural
-                                </d>
-                            </div>
-                            <a class="top-10-item-title m-0 p-1" href="#" id="title">The Impact of Precision
-                                Agriculture on
-                                Crop Yield: A
-                                Review
-                                of Current Practices and Future Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
             </div>
         </div>
     </div>

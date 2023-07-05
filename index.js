@@ -30,7 +30,10 @@ app.engine('hbs', expressHandlebars.engine({
   layoutsDir: __dirname + "/views/layouts",
   partialsDir: __dirname + "/views/partials",
   extname: 'hbs',
-  defaultLayout: 'auth'
+  defaultLayout: 'auth',
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true
+  },
 }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: false }));
