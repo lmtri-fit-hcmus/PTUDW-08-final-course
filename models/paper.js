@@ -36,6 +36,9 @@ const paperSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Metadata",
     },
+    isPremium: {
+        type: Boolean,
+    },
 
 },
     { timestamps: true }

@@ -14,6 +14,9 @@ const userSchema = new Schema({
   name: {
     type: String,
   },
+  penName: {
+    type: String,
+  },
   dob: {
     type: String,
   },

@@ -24,7 +24,8 @@ const store = new MongoDBStore({
 
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
-const subcriberRoutes = require('./routes/subcriber')
+const subcriberRoutes = require('./routes/subcriber');
+const writerRoutes = require('./routes/writer');
 
 app.engine('hbs', expressHandlebars.engine({
   layoutsDir: __dirname + "/views/layouts",
@@ -75,6 +76,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/subcriber', subcriberRoutes);
+app.use('/writer', writerRoutes);
 
 app.use(errorController.get404);
 

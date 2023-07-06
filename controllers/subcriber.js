@@ -92,7 +92,7 @@ controller.getHomePage = async (req, res, next) => {
         .limit(8);
 
     res.render('subcriber/home', {
-        path: '/subcriber', pageTitle: 'Home',
+        path: '/subcriber', pageTitle: '08 Newspaper',
         topWeekPapers: topWeekPapers,
         topTrendPapers: topTrendPapers,
         topNewPapers: topNewPapers,
@@ -152,22 +152,21 @@ controller.postChangePwd = async (req, res, next) => {
 
 controller.getListPaperCategory = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
-    const limit = 5;
-    // 0 -> 5, 6 -> 11
-    // options.limit = limit;
-    // options.offset = limit * (page - 1);
-    //let { rows, count } = await models.Product.findAndCountAll(options);
 
+    const limit = 5;
 
     req.app.locals.layout = 'subcriber'
     const cat = await Cats.findOne({ name: req.params.name })
+
     const listPaperCat = await Paper.find({ category_id: cat._id })
         .populate('category_id')
         .populate('author_id')
         .populate('metadata_id')
         .populate('comments')
+        .sort({ isPremium: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
+
     const count = await Paper.find({ category_id: cat._id }).count();
     res.locals.pagination = {
         page: page,
@@ -176,7 +175,7 @@ controller.getListPaperCategory = async (req, res, next) => {
         queryParams: req.query
     };
 
-    res.render('subcriber/category', { path: '/subcriber', pageTitle: 'Category', listPaperCat: listPaperCat, catName: cat.name });
+    res.render('subcriber/category', { path: '/subcriber', pageTitle: req.params.name, listPaperCat: listPaperCat, catName: cat.name });
 }
 
 

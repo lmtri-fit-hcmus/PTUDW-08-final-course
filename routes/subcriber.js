@@ -26,8 +26,7 @@ const router = express.Router();
 // /sub/add-product => POST
 router.get('/', subcriberController.getDataHeader, subcriberController.getHomePage);
 router.get('/profile', isAuth, subcriberController.getDataHeader, subcriberController.getProfilePage);
-router.post('/profile', isAuth,
-    upload.single('avatar'), subcriberController.postUpdateProfile);
+router.post('/profile', isAuth, upload.single('avatar'), subcriberController.postUpdateProfile);
 
 router.get('/change-pwd', isAuth, subcriberController.getDataHeader, subcriberController.getChangePwdPage);
 router.post('/change-pwd', isAuth, subcriberController.postChangePwd);

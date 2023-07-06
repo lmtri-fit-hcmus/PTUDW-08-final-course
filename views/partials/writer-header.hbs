@@ -1,0 +1,67 @@
+<header class="contenter-fluit">
+    <div class="container-join-login border border-bottom-1 mb-3">
+        <div class="join-login-bar d-flex pt-2 pb-2">
+            <a href="../../pages/authentication/renew-premium.html"
+                class="btn-primary border border-1 bg-primary rounded-3 text-decoration-none fw-bold text-white p-2 px-3 mx-2"
+                style="visibility:hidden">Primary
+            </a>
+
+            <div class="dropdown open">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{#if avatar}}
+                    <img src="/images/{{avatar}}" alt="/images/{{avatar}}" style="border-radius: 50px;">
+                    {{else}}
+                    <img src="/images/avatar.png" alt="/images/avatar.png">
+                    {{/if}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId">
+                    <a class="dropdown-item" href="/writer/profile">Profile</a>
+                    <a class="dropdown-item" href="/logout">Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container logo-search d-flex justify-content-between p-2 w-100 align-items-end ">
+        <a class="logo mx-5" href="/writer/"><img class="img-logo w-80" src="/images/logo.png"></a>
+        <form action="#" class="searchform order-sm-start order-lg-last">
+            <div class="form-group d-flex mx-4">
+                <input type=" text" class="form-control pl-3" placeholder="Enter your search title">
+                <button type="submit" placeholder="" class="btn-search bg-light border border-1 rounded">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    {{!-- <nav class="navbar navbar-expand-sm navbar-dark bg-white container">
+        <div class="container">
+            <ul class="navbar-nav mt-2 mt-lg-0 col">
+                <li class="col-2 text-center p-2" id="btn-home">
+                    <a class="nav-link active" href="/writer/" aria-current="page">Home <span
+                            class="visually-hidden">(current)</span></a>
+                </li>
+                <li class="col-5 nav-item dropdown bg-dark text-center p-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Category</a>
+                    <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
+                        {{#each categories}}
+                        <a class="dropdown-item" href="/writer/{{name}}">{{name}}</a>
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="col-5 nav-item dropdown bg-dark text-center p-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Tag</a>
+                    <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
+                        <a class="dropdown-item" href="coffee-tag.html">#coffee</a>
+                        <a class="dropdown-item" href="#">#seafood</a>
+                        <a class="dropdown-item" href="#">#farm</a>
+                        <a class="dropdown-item" href="#">#chill</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav> --}}
+</header>
