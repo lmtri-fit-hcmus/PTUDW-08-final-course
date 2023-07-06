@@ -8,7 +8,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const expressHandlebars = require('express-handlebars');
 const passport = require('./controllers/passport');
-
+const { createPagination } = require('express-handlebars-paginate')
 
 
 const errorController = require('./controllers/error');
@@ -34,6 +34,9 @@ app.engine('hbs', expressHandlebars.engine({
   runtimeOptions: {
     allowProtoPropertiesByDefault: true
   },
+  helpers: {
+    createPagination
+  }
 }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: false }));

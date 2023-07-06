@@ -7,6 +7,18 @@ const Comment = require("../models/comment");
 const bcrypt = require('bcrypt');
 const controller = {}
 
+controller.getDataHeader = async (req, res, next) => {
+    const user = await User.findById({ _id: req.session.user._id });
+    res.locals.avatar = user.avatar;
+
+    const categories = await Cats.find({})
+    res.locals.categories = categories;
+
+    // const tags = await Tags.find({})
+    // res.locals.tags = tags;
+    next();
+}
+
 controller.getHomePage = async (req, res, next) => {
     // const newP = await new Paper({
     //     body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -33,7 +45,6 @@ controller.getHomePage = async (req, res, next) => {
         { $sort: { subTotal: -1 } },
         { $limit: 10 }
     ])
-    console.log(result[7]);
     let top10Cat = [];
     for (var i = 0; i < 10; i++) {
         if (result[i] != undefined) {
@@ -44,13 +55,11 @@ controller.getHomePage = async (req, res, next) => {
                 .populate('comments')
                 .sort({ viewCount: -1 })
                 .limit(1);
-            //res.locals.top10Cat[i] = paper;
+
             top10Cat[i] = paper[0];
         }
     }
-    //console.log(top10Cat);
-    //console.log(top10Cat[1]);
-    //console.log(Object.assign({}, top10Cat));
+
     const topWeekPapers = await Paper.find({})
         .populate('category_id')
         .populate('author_id')
@@ -58,8 +67,7 @@ controller.getHomePage = async (req, res, next) => {
         .populate('comments')
         .sort({ viewCount: -1 })
         .limit(3);
-    //console.log(typeof topWeekPapers);
-    //console.log(topWeekPapers);
+
     const topTrendPapers = await Paper.find({})
         .populate('category_id')
         .populate('author_id')
@@ -142,6 +150,34 @@ controller.postChangePwd = async (req, res, next) => {
     //res.redirect('/subcriber/');
 };
 
+controller.getListPaperCategory = async (req, res, next) => {
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+    const limit = 5;
+    // 0 -> 5, 6 -> 11
+    // options.limit = limit;
+    // options.offset = limit * (page - 1);
+    //let { rows, count } = await models.Product.findAndCountAll(options);
+
+
+    req.app.locals.layout = 'subcriber'
+    const cat = await Cats.findOne({ name: req.params.name })
+    const listPaperCat = await Paper.find({ category_id: cat._id })
+        .populate('category_id')
+        .populate('author_id')
+        .populate('metadata_id')
+        .populate('comments')
+        .limit(limit)
+        .skip(limit * (page - 1))
+    const count = await Paper.find({ category_id: cat._id }).count();
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.render('subcriber/category', { path: '/subcriber', pageTitle: 'Category', listPaperCat: listPaperCat, catName: cat.name });
+}
 
 
 

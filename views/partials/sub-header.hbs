@@ -8,7 +8,11 @@
             <div class="dropdown open">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img src="/images/avatar.png">
+                    {{#if avatar}}
+                    <img src="/images/{{avatar}}" alt="/images/{{avatar}}" style="border-radius: 50px;">
+                    {{else}}
+                    <img src="/images/avatar.png" alt="/images/avatar.png">
+                    {{/if}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="triggerId">
                     <a class="dropdown-item" href="/subcriber/profile">Profile</a>
@@ -20,7 +24,7 @@
     </div>
 
     <div class="container logo-search d-flex justify-content-between p-2 w-100 align-items-end ">
-        <a class="logo mx-5" href="home.html"><img class="img-logo w-80" src="/images/logo.png"></a>
+        <a class="logo mx-5" href="/subcriber/"><img class="img-logo w-80" src="/images/logo.png"></a>
         <form action="#" class="searchform order-sm-start order-lg-last">
             <div class="form-group d-flex mx-4">
                 <input type=" text" class="form-control pl-3" placeholder="Enter your search title">
@@ -30,20 +34,20 @@
             </div>
         </form>
     </div>
-
     <nav class="navbar navbar-expand-sm navbar-dark bg-white container">
         <div class="container">
             <ul class="navbar-nav mt-2 mt-lg-0 col">
                 <li class="col-2 text-center p-2" id="btn-home">
-                    <a class="nav-link active" href="home.html" aria-current="page">Home <span
+                    <a class="nav-link active" href="/subcriber/" aria-current="page">Home <span
                             class="visually-hidden">(current)</span></a>
                 </li>
                 <li class="col-5 nav-item dropdown bg-dark text-center p-2">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Category</a>
                     <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="agri-cat.html">Agricultural</a>
-                        <a class="dropdown-item" href="seafood-cat.html">Seafood </a>
+                        {{#each categories}}
+                        <a class="dropdown-item" href="/subcriber/{{name}}">{{name}}</a>
+                        {{/each}}
                     </div>
                 </li>
                 <li class="col-5 nav-item dropdown bg-dark text-center p-2">

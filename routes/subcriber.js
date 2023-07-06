@@ -24,14 +24,14 @@ const upload = multer({
 
 const router = express.Router();
 // /sub/add-product => POST
-router.get('/', subcriberController.getHomePage);
-router.get('/profile', isAuth, subcriberController.getProfilePage);
+router.get('/', subcriberController.getDataHeader, subcriberController.getHomePage);
+router.get('/profile', isAuth, subcriberController.getDataHeader, subcriberController.getProfilePage);
 router.post('/profile', isAuth,
     upload.single('avatar'), subcriberController.postUpdateProfile);
 
-router.get('/change-pwd', isAuth, subcriberController.getChangePwdPage);
+router.get('/change-pwd', isAuth, subcriberController.getDataHeader, subcriberController.getChangePwdPage);
 router.post('/change-pwd', isAuth, subcriberController.postChangePwd);
-
+router.get('/:name', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperCategory);
 
 module.exports = router;
 

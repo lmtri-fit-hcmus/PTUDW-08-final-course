@@ -101,3 +101,18 @@ p {
     height: 650px;
 }
 
+.dropdown img {
+    height: 30px;
+}
+
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: #357c4d;
+    border-color: #357c4d;
+}
+
+.pagination {
+
+    --bs-pagination-color: #0ac66e;
+}
