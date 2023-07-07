@@ -8,7 +8,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const expressHandlebars = require('express-handlebars');
 const passport = require('./controllers/passport');
-const { createPagination } = require('express-handlebars-paginate')
+const { createPagination } = require('express-handlebars-paginate');
+
 
 
 const errorController = require('./controllers/error');
@@ -26,6 +27,7 @@ const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const subcriberRoutes = require('./routes/subcriber');
 const writerRoutes = require('./routes/writer');
+const helper = require('./controllers/helper');
 
 app.engine('hbs', expressHandlebars.engine({
   layoutsDir: __dirname + "/views/layouts",
@@ -36,7 +38,10 @@ app.engine('hbs', expressHandlebars.engine({
     allowProtoPropertiesByDefault: true
   },
   helpers: {
-    createPagination
+    createPagination,
+    timeChange: function (publicationDate) {
+      return publicationDate.toDateString();
+    }
   }
 }))
 app.set('view engine', 'hbs')
