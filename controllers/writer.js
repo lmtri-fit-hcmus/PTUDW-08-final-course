@@ -48,7 +48,7 @@ controller.getProfilePage = async (req, res, next) => {
     const user = await User.findById({ _id: req.session.user._id });
     req.app.locals.layout = 'writer'
     res.render('writer/profile', {
-        path: '/writer', pageTitle: 'Profile', email: user.email, penName: user.penName, name: user.name, dob: user.dob, id: user._id, avatar: user.avatar
+        path: '/writer', pageTitle: 'Profile', email: user.email, penName: user.penName, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar
     });
 };
 

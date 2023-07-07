@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
   },
   dob: {
-    type: String,
+    type: Date,
   },
   avatar: {
     type: String,

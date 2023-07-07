@@ -4,6 +4,7 @@ const User = require('../models/user')
 const Paper = require('../models/paper');
 const Metadata = require('../models/metadata');
 const Comment = require("../models/comment");
+const Tags = require('../models/tag');
 const bcrypt = require('bcrypt');
 const controller = {}
 
@@ -14,8 +15,8 @@ controller.getDataHeader = async (req, res, next) => {
     const categories = await Cats.find({})
     res.locals.categories = categories;
 
-    // const tags = await Tags.find({})
-    // res.locals.tags = tags;
+    const tags = await Tags.find({})
+    res.locals.tags = tags;
     next();
 }
 
@@ -50,9 +51,7 @@ controller.getHomePage = async (req, res, next) => {
         if (result[i] != undefined) {
             const paper = await Paper.find({ category_id: result[i]._id })
                 .populate('category_id')
-                .populate('author_id')
                 .populate('metadata_id')
-                .populate('comments')
                 .sort({ viewCount: -1 })
                 .limit(1);
 
@@ -60,61 +59,56 @@ controller.getHomePage = async (req, res, next) => {
         }
     }
 
+
+    // db.mydatabase.mycollection.find({$where : 'return this.date.getMonth() == 11'})
     const topWeekPapers = await Paper.find({})
         .populate('category_id')
-        .populate('author_id')
         .populate('metadata_id')
-        .populate('comments')
         .sort({ viewCount: -1 })
         .limit(3);
 
     const topTrendPapers = await Paper.find({})
         .populate('category_id')
-        .populate('author_id')
         .populate('metadata_id')
-        .populate('comments')
         .sort({ viewCount: -1 })
         .limit(10);
 
     const topNewPapers = await Paper.find({})
         .populate('category_id')
-        .populate('author_id')
         .populate('metadata_id')
-        .populate('comments')
-        .sort({ createdAt: -1 })
+        .sort({ publicationDate: -1 })
         .limit(10);
 
     const otherPapers = await Paper.find({})
         .populate('category_id')
-        .populate('author_id')
         .populate('metadata_id')
-        .populate('comments')
         .limit(8);
-
+    // console.log(typeof otherPapers[0].publicationDate);
     res.render('subcriber/home', {
         path: '/subcriber', pageTitle: '08 Newspaper',
         topWeekPapers: topWeekPapers,
         topTrendPapers: topTrendPapers,
         topNewPapers: topNewPapers,
         otherPapers: otherPapers,
-        top10Cat: top10Cat
+        top10Cat: top10Cat,
     });
 };
 
 
 controller.getProfilePage = async (req, res, next) => {
-    const user = await User.findById({ _id: req.session.user._id });
     req.app.locals.layout = 'subcriber'
-
-    res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob, id: user._id, avatar: user.avatar });
+    const user = await User.findById({ _id: req.session.user._id });
+    res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar });
 };
 
 controller.postUpdateProfile = async (req, res, next) => {
     req.app.locals.layout = 'subcriber'
     if (req.file) {
-        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob, avatar: req.file.filename } });
+        const user = await User.findByIdAndUpdate({ _id: req.body.user_id },
+            { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob, avatar: req.file.filename } });
     } else {
-        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob } });
+        const user = await User.findByIdAndUpdate({ _id: req.body.user_id },
+            { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob } });
     }
     const user = await User.findById({ _id: req.session.user._id });
     let message = "Success!";
@@ -156,13 +150,11 @@ controller.getListPaperCategory = async (req, res, next) => {
     const limit = 5;
 
     req.app.locals.layout = 'subcriber'
-    const cat = await Cats.findOne({ name: req.params.name })
+    const cat = await Cats.findOne({ name: req.params.category })
 
     const listPaperCat = await Paper.find({ category_id: cat._id })
         .populate('category_id')
-        .populate('author_id')
         .populate('metadata_id')
-        .populate('comments')
         .sort({ isPremium: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
@@ -175,7 +167,7 @@ controller.getListPaperCategory = async (req, res, next) => {
         queryParams: req.query
     };
 
-    res.render('subcriber/category', { path: '/subcriber', pageTitle: req.params.name, listPaperCat: listPaperCat, catName: cat.name });
+    res.render('subcriber/category', { path: '/subcriber', pageTitle: req.params.category, listPaperCat: listPaperCat, catName: cat.name });
 }
 
 

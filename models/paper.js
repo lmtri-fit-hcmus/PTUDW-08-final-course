@@ -13,7 +13,7 @@ const paperSchema = new Schema({
         required: true,
     },
     publicationDate: {
-        type: String,
+        type: Date,
         required: true,
     },
     body: {
@@ -24,10 +24,10 @@ const paperSchema = new Schema({
         type: Number,
         default: 0,
     },
-    comments: {
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment",
-    },
+    }],
     author_id: {
         type: Schema.Types.ObjectId,
         ref: "User",

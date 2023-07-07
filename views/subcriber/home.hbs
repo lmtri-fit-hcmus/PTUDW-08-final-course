@@ -21,7 +21,7 @@
                             <div class="carousel-caption">
                                 <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
                                 </h5>
-                                <p>{{{publicationDate}}}</p>
+                                <p>{{{timeChange publicationDate}}}</p>
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
@@ -36,7 +36,7 @@
                             <div class="carousel-caption">
                                 <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
                                 </h5>
-                                <p>{{{publicationDate}}}</p>
+                                <p>{{{timeChange publicationDate}}}</p>
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
@@ -51,7 +51,7 @@
                             <div class="carousel-caption">
                                 <h5> <a href="#" class="text-decoration-none text-white" id="title">{{{title}}}</a>
                                 </h5>
-                                <p>{{{publicationDate}}}</p>
+                                <p>{{{timeChange publicationDate}}}</p>
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
@@ -88,7 +88,7 @@
                                 style="width:60%;height:120px;object-fit:cover;">
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                                 <div class="mb-1" style="font-size:13px;">
-                                    <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                                    <div class="top-10-item-date p-1">{{timeChange publicationDate}}</div>
                                     <div class="top-10-item-category text-white p-1 rounded-3" href="#"
                                         style="background-color: {{category_id.color}}">
                                         {{category_id.name}}
@@ -109,7 +109,7 @@
                                 style="width:60%;height:120px;object-fit:cover;">
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                                 <div class="mb-1" style="font-size:13px;">
-                                    <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                                    <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                                     <div class="top-10-item-category text-white p-1 rounded-3"
                                         style="background-color: {{category_id.color}}" href="#">
                                         {{category_id.name}}
@@ -145,7 +145,7 @@
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                         <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                            <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                             <div class="top-10-item-category text-white p-1 rounded-3"
                                 style="background-color: {{category_id.color}}" href="#">
                                 {{category_id.name}}
@@ -177,7 +177,7 @@
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                         <div class="mb-1" style="font-size:13px;">
-                            <div class="top-10-item-date p-1">{{{publicationDate}}}</div>
+                            <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                             <div class="top-10-item-category text-white p-1 rounded-3"
                                 style="background-color: {{category_id.color}}" href=" #">
                                 {{category_id.name}}
