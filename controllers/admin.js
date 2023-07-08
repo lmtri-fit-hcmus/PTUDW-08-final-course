@@ -1,84 +1,119 @@
 const { validationResult } = require('express-validator/check');
 const Cats = require('../models/category');
-const Tags = require('../models/tag')
+const Papers = require('../models/paper');
+const Tags = require('../models/tag');
+const tag = require('../models/tag');
 
-function normalization(text){
+function normalization(text) {
   return text.replace(/[^A-Za-z0-9]/g, '')
 }
-
-exports.getHomePage = async (req, res, next) => {
+exports.getCategories = async (req, res, next) => {
   req.app.locals.layout = 'admin'
-    cats = (await Cats.find()).map(category => {
-      ch = category['name']
-      c = category.toObject()
-      c['signname'] = normalization(ch)
-      return c
-    });
-    tags = (await Tags.find()).map(tag => {
-      ch = tag['name']
-      c = tag.toObject()
-      c['signname'] = normalization(ch)
-      return c
-    });
-    res.render('admin/home', {
-      path: '/admin',
-      pageTitle: 'Home',
-      listCategory: cats,
-      listTag: tags,
-    });
-};
-
-exports.getUpdateCategory =  (req, res, next) => { 
-  if(req.query["submitButton"] == "Delete"){   
+  cats = (await Cats.find()).map(category => {
+    ch = category['name']
+    c = category.toObject()
+    c['signname'] = normalization(ch)
+    return c
+  });
+  res.render('admin/categories', {
+    path: '/admin/categories',
+    pageTitle: 'Manage categories',
+    listCategory: cats,
+  });
+}
+exports.postCategories = (req, res, next) => {
+  console.log(req.body)
+  if (req.body.submitButton == "Delete") {
     // Delete objects by name
-    Cats.deleteOne({ name: req.query['old-name']  }, (err, result) => {
+    Cats.deleteOne({ name: req.body['old-name'] }, (err, result) => {
       if (err) {
         console.error('Error deleting objects:', err);
       } else {
         console.log(`Deleted object(s)`);
       }
     });
-    console.log(Cats.find().then(res=>console.log(res)))
-    
   }
-  else if(req.query["submitButton"] == "Update"){
-  //  oldCat =  Cats.findOne({name: req.query['old-name']})
-  Cats.updateOne(
-      { name: req.query['old-name'] }, // Filter to find the document to update
-       {color:  req.query["color-picker"],
-                 name:  req.query['cat-name'], 
-                  detail:  req.query["detail"] }, 
+  else if (req.body["submitButton"] == "Update") {
+    Cats.updateOne(
+      { name: req.body['old-name'] }, // Filter to find the document to update
+      {
+        color: req.body["color-picker"],
+        name: req.body['cat-name'],
+        detail: req.body["detail"]
+      },
       { new: true }
     ).then(updatedObject => {
       console.log('Object updated successfully');
       console.log(updatedObject);
     })
-    .catch(error => {
-      console.error('Error updating object:', error);
-    });;
+      .catch(error => {
+        console.error('Error updating object:', error);
+      });;
   }
-  res.redirect("/admin")
+  res.redirect("/admin/categories")
+}
+exports.getTags = async (req, res, next) => {
+  req.app.locals.layout = 'admin'
+  tags = (await Tags.find()).map(tag => {
+    ch = tag['name']
+    c = tag.toObject()
+    c['signname'] = normalization(ch)
+    return c
+  });
+  res.render('admin/tags', {
+    path: '/admin/tags',
+    pageTitle: 'Manage tags',
+    listTag: tags,
+  });
+}
+exports.postTags = (req, res, next) => {
+  if (req.body["submitButton"] == "Delete") {
+    // Delete objects by name
+    Tags.deleteOne({ name: req.body['old-name'] }, (err, result) => {
+      if (err) {
+        console.error('Error deleting objects:', err);
+      } else {
+        console.log(`Deleted object(s)`);
+      }
+    });
+  }
+  else if (req.body["submitButton"] == "Update") {
+    //  oldCat =  Cats.findOne({name: req.query['old-name']})
+    console.log(req.body)
+    Tags.updateOne(
+      { name: req.body['old-name'] }, // Filter to find the document to update
+      { name: req.body['tag-name'] },
+      { new: true }
+    ).then(updatedObject => {
+      console.log('Object updated successfully');
+      console.log(updatedObject);
+    })
+      .catch(error => {
+        console.error('Error updating object:', error);
+      });;
+  }
+  res.redirect("/admin/tags")
 }
 
-exports.getAddCategory =  (req, res, next) => {
+exports.postAddCategory = (req, res, next) => {
 
-  Cats.exists({name: req.query['cat-name']}, (err, result) => {
+  Cats.exists({ name: req.body['cat-name'] }, (err, result) => {
     if (err) {
       console.error(err);
     } else {
-      if(result){
-        req.flash('error','Category exist!')
+      if (result) {
+        req.flash('error', 'Category exist!')
         console.log("Here")
-        res.redirect('/admin') 
+        res.redirect('/admin/categories')
       }
-      else{
+      else {
         const cat = new Cats({
-          name: req.query['cat-name'],
-          color: req.query['color-picker'],
-          detail: req.query['detail']
+          name: req.body['cat-name'],
+          color: req.body['color-picker'],
+          detail: req.body['detail']
         });
         cat.save().then(
-          res.redirect('/admin') 
+          res.redirect('/admin/categories')
         )
 
       }
@@ -86,10 +121,10 @@ exports.getAddCategory =  (req, res, next) => {
   });
 }
 
-exports.getUpdateTag = (req, res, next)=>{
-  if(req.query["submitButton"] == "Delete"){   
+exports.getUpdateTag = (req, res, next) => {
+  if (req.query["submitButton"] == "Delete") {
     // Delete objects by name
-    Tags.deleteOne({ name: req.query['old-name']  }, (err, result) => {
+    Tags.deleteOne({ name: req.query['old-name'] }, (err, result) => {
       if (err) {
         console.error('Error deleting objects:', err);
       } else {
@@ -97,43 +132,63 @@ exports.getUpdateTag = (req, res, next)=>{
       }
     });
   }
-  else if(req.query["submitButton"] == "Update"){
-  //  oldCat =  Cats.findOne({name: req.query['old-name']})
-  console.log(req.query)
-  Tags.updateOne(
+  else if (req.query["submitButton"] == "Update") {
+    //  oldCat =  Cats.findOne({name: req.query['old-name']})
+    console.log(req.query)
+    Tags.updateOne(
       { name: req.query['old-name'] }, // Filter to find the document to update
-       { name:  req.query['tag-name']}, 
+      { name: req.query['tag-name'] },
       { new: true }
     ).then(updatedObject => {
       console.log('Object updated successfully');
       console.log(updatedObject);
     })
-    .catch(error => {
-      console.error('Error updating object:', error);
-    });;
+      .catch(error => {
+        console.error('Error updating object:', error);
+      });;
   }
   res.redirect("/admin")
 }
 
-exports.getAddTag = (req, res, next) => {
-  console.log(req.query)
-  Tags.exists({name: req.query['tag-name']}, (err, result) => {
+exports.postAddTag = (req, res, next) => {
+  Tags.exists({ name: req.body['tag-name'] }, (err, result) => {
     if (err) {
       console.error(err);
     } else {
-      if(result){
-        req.flash('error','Tag exist!')
-        res.redirect('/admin') 
+      if (result) {
+        req.flash('error', 'Tag exist!')
+        res.redirect('/admin/tags')
       }
-      else{
+      else {
         const tag = new Tags({
-          name: req.query['tag-name']
+          name: req.body['tag-name']
         });
         tag.save().then(
-          res.redirect('/admin') 
+          res.redirect('/admin/tags')
         )
 
       }
     }
+  });
+}
+
+exports.getListPaper = async (req, res, next) => {
+  req.app.locals.layout = 'admin'
+  list = await (Papers.find().populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
+  res.render('admin/list-paper', {
+    path: '/admin/list-paper',
+    pageTitle: 'Manage papers',
+    listPaper: list
+  });
+
+}
+
+exports.getListPendingReviewPaper = async(req, res, next) => {
+  req.app.locals.layout = 'admin'
+  list = await (Papers.find({status: "pending-review"}).populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
+  res.render('admin/pending-review', {
+    path: 'admin/pending-review',
+    pageTitle: 'Manage papers',
+    listPaper: list 
   });
 }
