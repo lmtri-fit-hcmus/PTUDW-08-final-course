@@ -139,3 +139,33 @@
 #overlay-show{
     display: none;
 }
+
+
+select:required:invalid {
+    color: #797575;;
+  }
+
+
+option[value=""][disabled] {
+    display: none;
+  }
+option {
+    color: #000;
+  }
+
+.vscomp-ele {
+    max-width: 500px;
+}
+
+.vscomp-toggle-button {
+    background-color:transparent;
+    padding-left: 3px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: none;
+}
+
+.vscomp-wrapper.focused .vscomp-toggle-button,
+.vscomp-wrapper:focus .vscomp-toggle-button {
+    box-shadow:none
+}

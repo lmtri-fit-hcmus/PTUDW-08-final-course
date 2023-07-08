@@ -21,6 +21,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.0.3",
     "csurf": "^1.9.0",
+    "dompurify": "^3.0.4",
     "dotenv": "^16.3.1",
     "express": "^4.16.3",
     "express-handlebars": "^7.0.7",
@@ -30,6 +31,7 @@
     "fs": "^0.0.1-security",
     "google-auth-library": "^8.8.0",
     "googleapis": "^118.0.0",
+    "jsdom": "^22.1.0",
     "mailgun-js": "^0.22.0",
     "mongodb": "^3.7.3",
     "mongoose": "^5.13.17",
@@ -43,6 +45,7 @@
     "pug": "^2.0.3",
     "randomstring": "^1.2.3",
     "sequelize": "^5.0.0-beta.11",
-    "smtp-client": "^0.4.0"
+    "smtp-client": "^0.4.0",
+    "string-strip-html": "^6.0.0"
   }
 }

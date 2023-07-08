@@ -98,21 +98,26 @@ controller.getHomePage = async (req, res, next) => {
 controller.getProfilePage = async (req, res, next) => {
     req.app.locals.layout = 'subcriber'
     const user = await User.findById({ _id: req.session.user._id });
-    res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar });
+    if (user.dob) {
+        res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar });
+    } else {
+        res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, id: user._id, avatar: user.avatar });
+    }
 };
 
 controller.postUpdateProfile = async (req, res, next) => {
     req.app.locals.layout = 'subcriber'
+    dob = new Date(req.body.dob)
     if (req.file) {
         const user = await User.findByIdAndUpdate({ _id: req.body.user_id },
-            { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob, avatar: req.file.filename } });
+            { $set: { name: req.body.name, email: req.body.email, dob: dob, avatar: req.file.filename } });
     } else {
         const user = await User.findByIdAndUpdate({ _id: req.body.user_id },
-            { $set: { name: req.body.name, email: req.body.email, dob: req.body.dob } });
+            { $set: { name: req.body.name, email: req.body.email, dob: dob } });
     }
     const user = await User.findById({ _id: req.session.user._id });
     let message = "Success!";
-    res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob, id: user._id, avatar: user.avatar, updateMessage: message });
+    res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar, updateMessage: message });
     //res.redirect('subcriber/profile');
     //res.redirect('/subcriber/'); 
 }
@@ -155,6 +160,7 @@ controller.getListPaperCategory = async (req, res, next) => {
     const listPaperCat = await Paper.find({ category_id: cat._id })
         .populate('category_id')
         .populate('metadata_id')
+        .populate('tags')
         .sort({ isPremium: -1 })
         .limit(limit)
         .skip(limit * (page - 1))

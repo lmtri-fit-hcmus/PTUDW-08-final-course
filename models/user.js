@@ -26,7 +26,11 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true
-  }
+  },
+  listCat: [{
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+  }]
 },
   { timestamps: true }
 );

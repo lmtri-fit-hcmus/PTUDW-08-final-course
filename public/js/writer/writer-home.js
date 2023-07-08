@@ -143,3 +143,17 @@ document.querySelectorAll('#delete-btn').forEach(item => {
 //     document.getElementById("rejected").style.display = "none"
 //     document.getElementById("submited").style.display = "block"
 // })
+
+
+let fileUploadPaper = document.getElementById('fileUploadPaper');
+let chosenImgPaper = document.getElementById('chosen-img-paper');
+
+fileUploadPaper.onchange = () => {
+    let reader = new FileReader();
+    reader.readAsDataURL(fileUploadPaper.files[0]);
+    console.log(fileUploadPaper.files[0]);
+    reader.onload = () => {
+        chosenImgPaper.setAttribute('src', reader.result);
+        console.log(reader.result);
+    }
+}

@@ -1,3 +1,4 @@
+
 let fileUpload = document.getElementById('fileUpload');
 let chosenImg = document.getElementById('chosen-img');
 
@@ -10,6 +11,9 @@ fileUpload.onchange = () => {
         console.log(reader.result);
     }
 }
+
+
+
 
 function checkPasswordConfirm(formId) {
     let password = document.querySelector(`#${formId} [name=newPwd]`);

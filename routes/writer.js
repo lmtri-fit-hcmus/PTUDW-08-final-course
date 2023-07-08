@@ -22,6 +22,8 @@ const upload = multer({
 
 
 
+
+
 const router = express.Router();
 // /sub/add-product => POST
 router.get('/', writerController.getDataHeader, writerController.getHomePage);
@@ -36,6 +38,8 @@ router.post('/profile', isAuth, upload.single('avatar'), writerController.postUp
 
 router.get('/change-pwd', isAuth, writerController.getDataHeader, writerController.getChangePwdPage);
 router.post('/change-pwd', isAuth, writerController.postChangePwd);
+
+router.post('/postPaper', isAuth, upload.single('avaPaper'), writerController.getDataHeader, writerController.postPaper);
 // router.get('/:name', isAuth, writerController.getDataHeader, writerController.getListPaperCategory);
 
 module.exports = router;

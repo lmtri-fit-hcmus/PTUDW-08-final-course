@@ -27,7 +27,7 @@ const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const subcriberRoutes = require('./routes/subcriber');
 const writerRoutes = require('./routes/writer');
-const helper = require('./controllers/helper');
+const editorRoutes = require('./routes/editor');
 
 app.engine('hbs', expressHandlebars.engine({
   layoutsDir: __dirname + "/views/layouts",
@@ -40,12 +40,14 @@ app.engine('hbs', expressHandlebars.engine({
   helpers: {
     createPagination,
     timeChange: function (publicationDate) {
-      return publicationDate.toDateString();
+      if (publicationDate) {
+        return publicationDate.toDateString();
+      }
     }
   }
 }))
 app.set('view engine', 'hbs')
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
@@ -82,6 +84,7 @@ app.use(authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/subcriber', subcriberRoutes);
 app.use('/writer', writerRoutes);
+app.use('/editor', editorRoutes);
 
 app.use(errorController.get404);
 

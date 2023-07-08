@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/css/home/part-paper.css">
     <link rel="stylesheet" href="/css/edit/edit-detail.css">
     <link rel="stylesheet" href="/css/writor/writor.css">
+
+    <link rel="stylesheet" href="/css/writor/virtual-select.min.css">
     <link rel="stylesheet" href="/css/writor/writor-home.css">
 
 </head>
@@ -41,41 +43,23 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    {{!--
-    <script>
-        let item = document.getElementsByClassName("page-item page-link");
-        var currentValue = 1;
-        function activePageItem() {
-            for (i of item) {
-                i.classList.remove("active");
-            }
-            event.target.classList.add("active");
-            currentValue = event.target.value;
-        }
-        function backBtn() {
-            if (currentValue > 1) {
-                for (i of item) {
-                    i.classList.remove("active");
-                }
-                currentValue--;
-                item[currentValue - 1].classList.add("active");
-            }
-        }
-        function nextBtn() {
-            if (currentValue < 3) {
-                for (i of item) {
-                    i.classList.remove("active");
-                }
-                currentValue++;
-                item[currentValue - 1].classList.add("active");
-            }
 
-        }
-    </script> --}}
     <script src="/js/home/home.js"></script>
     <script src="/js/writer/writer-home.js"></script>
+    <script src="/js/writer/writer.js"></script>
     <script src="/js/tinymce/tinymce.min.js"></script>
     <script src="/js/writer/script.js"></script>
+    <script type="text/javascript" src="/js/writer/virtual-select.min.js"></script>
+    <script type="text/javascript">
+        VirtualSelect.init({
+            ele: '#inpTag'
+        });
+    </script>
+    <script type="text/javascript">
+        VirtualSelect.init({
+            ele: '#inpCat'
+        });
+    </script>
 </body>
 
 </html>

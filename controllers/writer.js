@@ -3,19 +3,21 @@ const Cats = require('../models/category');
 const User = require('../models/user')
 const Paper = require('../models/paper');
 const Metadata = require('../models/metadata');
+const Tags = require('../models/tag')
 const Comment = require("../models/comment");
 const bcrypt = require('bcrypt');
+const metadata = require('../models/metadata');
 const controller = {}
 
 controller.getDataHeader = async (req, res, next) => {
     const user = await User.findById({ _id: req.session.user._id });
     res.locals.avatar = user.avatar;
 
-    // const categories = await Cats.find({})
-    // res.locals.categories = categories;
+    const categories = await Cats.find({})
+    res.locals.categories = categories;
 
-    // const tags = await Tags.find({})
-    // res.locals.tags = tags;
+    const tags = await Tags.find({})
+    res.locals.tags = tags;
     next();
 }
 
@@ -47,21 +49,30 @@ controller.getSubmitted = async (req, res, next) => {
 controller.getProfilePage = async (req, res, next) => {
     const user = await User.findById({ _id: req.session.user._id });
     req.app.locals.layout = 'writer'
-    res.render('writer/profile', {
-        path: '/writer', pageTitle: 'Profile', email: user.email, penName: user.penName, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar
-    });
+    if (user.dob) {
+        res.render('writer/profile', {
+            path: '/writer', pageTitle: 'Profile', email: user.email, penName: user.penName, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar
+        });
+    } else {
+        res.render('writer/profile', {
+            path: '/writer', pageTitle: 'Profile', email: user.email, penName: user.penName, name: user.name, id: user._id, avatar: user.avatar
+        });
+    }
+
 };
 
 controller.postUpdateProfile = async (req, res, next) => {
+
     req.app.locals.layout = 'writer'
+    dob = new Date(req.body.dob)
     if (req.file) {
-        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, penName: req.body.penName, email: req.body.email, dob: req.body.dob, avatar: req.file.filename } });
+        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, penName: req.body.penName, email: req.body.email, dob: dob, avatar: req.file.filename } });
     } else {
-        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, penName: req.body.penName, email: req.body.email, dob: req.body.dob } });
+        const user = await User.findByIdAndUpdate({ _id: req.body.user_id }, { $set: { name: req.body.name, penName: req.body.penName, email: req.body.email, dob: dob } });
     }
     const user = await User.findById({ _id: req.session.user._id });
     let message = "Success!";
-    res.render('writer/profile', { path: '/writer', pageTitle: 'Profile', email: user.email, name: user.name, penName: user.penName, dob: user.dob, id: user._id, avatar: user.avatar, updateMessage: message });
+    res.render('writer/profile', { path: '/writer', pageTitle: 'Profile', email: user.email, name: user.name, penName: user.penName, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar, updateMessage: message });
     //res.redirect('writer/profile');
     //res.redirect('/writer/'); 
 }
@@ -92,5 +103,24 @@ controller.postChangePwd = async (req, res, next) => {
     //res.redirect('/writer/');
 };
 
+controller.postPaper = async (req, res, next) => {
+    req.app.locals.layout = 'writer'
+    let user = await User.findById({ _id: req.session.user._id });
 
+    const tags = req.body.tags.split(',');
+
+    const metadata = await Metadata.create({
+        avaPaper: req.file.filename,
+        abstract: req.body.abstract,
+        content: req.body.content
+    });
+    const paper = await Paper.create({
+        title: req.body.title,
+        tags: tags,
+        category_id: req.body.category,
+        author_id: user._id,
+        metadata_id: metadata._id
+    })
+    res.send('okkkkk')
+}
 module.exports = controller; 

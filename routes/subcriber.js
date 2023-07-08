@@ -30,7 +30,7 @@ router.post('/profile', isAuth, upload.single('avatar'), subcriberController.pos
 
 router.get('/change-pwd', isAuth, subcriberController.getDataHeader, subcriberController.getChangePwdPage);
 router.post('/change-pwd', isAuth, subcriberController.postChangePwd);
-router.get('/:name', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperCategory);
+router.get('/:category', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperCategory);
 
 module.exports = router;
 
