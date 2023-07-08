@@ -45,12 +45,12 @@
                 </div>
                 {{#if listPaper}}
                 {{#each listPaper}}
-                <div class="right-item d-flex align-items-center my-2">
-                    <div class="item p-2 d-flex">
+                <div class="right-item d-flex align-items-center my-2" style="position: relative;">
+                    <div class=" item p-2 d-flex">
                         <div class="d-flex mb-3">
                             <div>
                                 <img class="item-img" src="/images/{{metadata_id.avaPaper}}"
-                                    alt="website template image" style="width:180px;height:180px;object-fit:cover;">
+                                    alt="website template image" style="width:150px;height:150px;object-fit:cover;">
                             </div>
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                                 <div class="mb-1" style="font-size:13px;">
@@ -73,31 +73,41 @@
                             </div>
                         </div>
                         <div class="option">
+                            <button class="option-item text-white bg-warning m-2"
+                                style="position: absolute; right: 20px; top:10px" id="note-btn">Note</button>
+                            <div id="note-overlay">
+                                <div>
+                                    <textarea class="" id="note-text" readonly>{{note}}</textarea>
+                                </div>
+                                <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1"
+                                    style="position: absolute; right: 45%; top: 87%;" id="ok-btn">Ok</button>
+                                {{!-- <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1"
+                                    id="ok-btn" type="submit">Save --}}
+                                </button>
+                            </div>
                             <button class="option-item text-white bg-success m-2"
-                                style="position: absolute; right: 20px; top:10px" id="edit-btn1">Edit</button>
+                                style="position: absolute; right: 20px; top:50px" id="edit-btn1">Edit</button>
                             <button class="option-item text-white bg-danger m-2"
-                                style="position: absolute; right: 20px; top:50px" id="delete-btn">Delete</button>
+                                style="position: absolute; right: 20px; top:90px" id="delete-btn">Delete</button>
                         </div>
-                        <button class="option-item text-white bg-danger m-2" id="delete-btn">Delete</button>
                     </div>
                 </div>
+                {{/each}}
+                <div class="col-lg-12">
+                    <nav aria-label="Page navigation example" id="pagination">
+                        {{{createPagination pagination paginationClass="pagination justify-content-center"
+                        leftText="<" rightText=">" }}} </nav>
+                </div>
+                {{else}}
+                <div>
+                    <h3 style="text-align: center;">Empty</h3>
+                </div>
+                {{/if}}
             </div>
-            {{/each}}
-            <div class="col-lg-12">
-                <nav aria-label="Page navigation example" id="pagination">
-                    {{{createPagination pagination paginationClass="pagination justify-content-center"
-                    leftText="Previous" rightText="Next"}}}
-                </nav>
-            </div>
-            {{else}}
-            <div>
-                <h3 style="text-align: center;">Empty</h3>
-            </div>
-            {{/if}}
         </div>
     </div>
-    </div>
 </main>
+<div id="background"></div>
 <script>
     document.querySelectorAll('#pagination li').forEach(li => {
         li.classList.add('page-item');

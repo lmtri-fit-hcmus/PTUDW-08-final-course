@@ -47,6 +47,9 @@ const paperSchema = new Schema({
     isPremium: {
         type: Boolean,
     },
+    note: {
+        type: String
+    }
 
 },
     { timestamps: true }

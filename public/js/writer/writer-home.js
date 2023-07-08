@@ -143,7 +143,20 @@ document.querySelectorAll('#delete-btn').forEach(item => {
 //     document.getElementById("rejected").style.display = "none"
 //     document.getElementById("submited").style.display = "block"
 // })
+document.querySelectorAll('#ok-btn').forEach(item => {
+    item.addEventListener('click', (e) => {
+        $('#note-overlay').css('display', 'none')
+        $('#background').css('display', 'none')
+    });
+});
 
+
+document.querySelectorAll('#note-btn').forEach(item => {
+    item.addEventListener('click', (e) => {
+        $('#note-overlay').css('display', 'block')
+        $('#background').css('display', 'block')
+    });
+});
 
 let fileUploadPaper = document.getElementById('fileUploadPaper');
 let chosenImgPaper = document.getElementById('chosen-img-paper');
