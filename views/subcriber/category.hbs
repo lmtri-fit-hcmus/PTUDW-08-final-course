@@ -14,6 +14,7 @@
         </form> --}}
         <div class="mt-5">
             {{#each listPaperCat}}
+            {{tags .name}}
             <div class="item p-2">
                 <div class="d-flex mb-3">
                     <div class="item-img">
@@ -32,18 +33,18 @@
                         <div class="mb-1" style="font-size:13px;">
                             <a class="item-title m-0 p-1" href="#" id="title">{{title}}
                             </a>
-                            <div class="item-date">{{publicationDate}}</div>
+                            <div class="item-date">{{timeChange publicationDate}}</div>
                             <div class="item-tag my-1">
-                                <a class="bg-secondary text-decoration-none text-white rounded-3" href="#">#coffee
+                                {{#each this.tags}}
+                                <a class="bg-secondary text-decoration-none text-white rounded-3" href="#">{{name}}
                                 </a>
-                                <a class="bg-secondary text-decoration-none text-white rounded-3" href="#">#chill
-                                </a>
+                                {{/each}}
                             </div>
                             <a class="item-category text-white text-decoration-none rounded-3" href="#"
                                 style="background-color:{{category_id.color}}">
                                 {{category_id.name}}
                             </a>
-                            <p class="item-demo mt-2">{{metadata_id.abstract}}</p>
+                            <p class="item-demo mt-2">{{{metadata_id.abstract}}}</p>
                         </div>
                     </div>
                 </div>
@@ -56,32 +57,9 @@
                 leftText="Previous" rightText="Next"}}}
             </nav>
         </div>
-
-
     </div>
-
-    {{!-- <div class="container my-5 align-items-center d-flex justify-content-center">
-        <ul class="pagination">
-            <li class="page-item-btn page-link" onclick="backBtn()">
-                <span aria-hidden="true">&laquo;</span>
-            </li>
-            <li class="page-item page-link active" value="1" onclick="activePageItem()">1
-            </li>
-            <li class="page-item page-link" value="2" onclick="activePageItem()">2</li>
-            <li class="page-item page-link" value="3" onclick="activePageItem()">3</li>
-            <li class="page-item-btn page-link" onclick="nextBtn()">
-                <span aria-hidden="true">&raquo;</span>
-            </li>
-        </ul>
-    </div> --}}
 </main>
 
-{{!-- <div class="col-lg-12">
-    <nav aria-label="Page navigation example" id="pagination">
-        {{{createPagination pagination paginationClass="pagination justify-content-center"
-        leftText="Previous" rightText="Next"}}}
-    </nav>
-</div> --}}
 <script>
     document.querySelectorAll('#pagination li').forEach(li => {
         li.classList.add('page-item');

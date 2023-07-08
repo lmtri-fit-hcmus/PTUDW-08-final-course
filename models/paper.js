@@ -40,8 +40,9 @@ const paperSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Metadata",
     },
-    snippet: {
+    status: {
         type: String,
+        default: 'submitted'
     },
     isPremium: {
         type: Boolean,
@@ -55,7 +56,7 @@ const paperSchema = new Schema({
 paperSchema.pre('validate', function (next) {
     if (this.metadata_id.content) {
         this.metadata_id.content = htmlPurify.sanitize(this.metadata_id.content);
-        this.snippet = stripHtml(this.metadata_id.content.substring(0, 200)).result
+        // this.snippet = stripHtml(this.metadata_id.content.substring(0, 200)).result
     }
     next();
 })

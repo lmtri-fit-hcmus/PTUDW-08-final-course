@@ -49,39 +49,37 @@ controller.getHomePage = async (req, res, next) => {
     let top10Cat = [];
     for (var i = 0; i < 10; i++) {
         if (result[i] != undefined) {
-            const paper = await Paper.find({ category_id: result[i]._id })
-                .populate('category_id')
-                .populate('metadata_id')
+            const paper = await Paper.findOne({ category_id: result[i]._id })
+                .populate({ path: 'category_id', select: 'color name' })
+                .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
                 .sort({ viewCount: -1 })
-                .limit(1);
 
-            top10Cat[i] = paper[0];
+            top10Cat[i] = paper;
         }
     }
 
-
     // db.mydatabase.mycollection.find({$where : 'return this.date.getMonth() == 11'})
-    const topWeekPapers = await Paper.find({})
-        .populate('category_id')
-        .populate('metadata_id')
+    const topWeekPapers = await Paper.find({ status: 'published' })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .sort({ viewCount: -1 })
         .limit(3);
 
-    const topTrendPapers = await Paper.find({})
-        .populate('category_id')
-        .populate('metadata_id')
+    const topTrendPapers = await Paper.find({ status: 'published' })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .sort({ viewCount: -1 })
         .limit(10);
 
-    const topNewPapers = await Paper.find({})
-        .populate('category_id')
-        .populate('metadata_id')
+    const topNewPapers = await Paper.find({ status: 'published' })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .sort({ publicationDate: -1 })
         .limit(10);
 
-    const otherPapers = await Paper.find({})
-        .populate('category_id')
-        .populate('metadata_id')
+    const otherPapers = await Paper.find({ status: 'published' })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .limit(8);
     // console.log(typeof otherPapers[0].publicationDate);
     res.render('subcriber/home', {
@@ -158,21 +156,20 @@ controller.getListPaperCategory = async (req, res, next) => {
     const cat = await Cats.findOne({ name: req.params.category })
 
     const listPaperCat = await Paper.find({ category_id: cat._id })
-        .populate('category_id')
-        .populate('metadata_id')
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
         .sort({ isPremium: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
-    const count = await Paper.find({ category_id: cat._id }).count();
+    const count = await Paper.find({ category_id: cat._id, status: 'published' }).count();
     res.locals.pagination = {
         page: page,
         limit: limit,
         totalRows: count,
         queryParams: req.query
     };
-
     res.render('subcriber/category', { path: '/subcriber', pageTitle: req.params.category, listPaperCat: listPaperCat, catName: cat.name });
 }
 

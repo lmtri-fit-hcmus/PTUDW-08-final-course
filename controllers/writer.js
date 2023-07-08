@@ -28,22 +28,103 @@ controller.getHomePage = async (req, res, next) => {
 
 controller.getPublished = async (req, res, next) => {
     req.app.locals.layout = 'writer'
-    res.render('writer/published', { path: '/writer', pageTitle: '08 Newspaper' });
+
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listPaper = await Paper.find({ author_id: req.user._id, status: "published" })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ author_id: req.user._id, status: "published" }).count();
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('writer/published', { path: '/writer', pageTitle: 'Published', listPaper: listPaper });
 };
 
 controller.getAccepted = async (req, res, next) => {
     req.app.locals.layout = 'writer'
-    res.render('writer/accepted', { path: '/writer', pageTitle: '08 Newspaper' });
+
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listPaper = await Paper.find({ author_id: req.user._id, status: "accepted" })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ author_id: req.user._id, status: "accepted" }).count();
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('writer/accepted', { path: '/writer', pageTitle: 'Accepted', listPaper: listPaper });
+
 };
 
 controller.getRejected = async (req, res, next) => {
     req.app.locals.layout = 'writer'
-    res.render('writer/rejected', { path: '/writer', pageTitle: '08 Newspaper' });
+
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listPaper = await Paper.find({ author_id: req.user._id, status: "rejected" })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ author_id: req.user._id, status: "rejected" }).count();
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('writer/rejected', { path: '/writer', pageTitle: 'Rejected', listPaper: listPaper });
 };
 
 controller.getSubmitted = async (req, res, next) => {
     req.app.locals.layout = 'writer'
-    res.render('writer/submitted', { path: '/writer', pageTitle: '08 Newspaper' });
+
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listPaper = await Paper.find({ author_id: req.user._id, status: "submitted" })
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ author_id: req.user._id, status: "submitted" }).count();
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('writer/submitted', { path: '/writer', pageTitle: 'Submitted', listPaper: listPaper });
 };
 
 controller.getProfilePage = async (req, res, next) => {
@@ -83,7 +164,6 @@ controller.getChangePwdPage = async (req, res, next) => {
     res.render('writer/change-pwd', { path: '/writer', pageTitle: 'Change Password', id: user._id, avatar: user.avatar });
 };
 
-
 controller.postChangePwd = async (req, res, next) => {
 
     req.app.locals.layout = 'writer'
@@ -121,6 +201,8 @@ controller.postPaper = async (req, res, next) => {
         author_id: user._id,
         metadata_id: metadata._id
     })
-    res.send('okkkkk')
+    res.render('writer/submitted', { path: '/writer', pageTitle: 'Submitted' });
 }
+
+
 module.exports = controller; 
