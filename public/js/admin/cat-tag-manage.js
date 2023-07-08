@@ -36,10 +36,7 @@ document.getElementById("admin-profile").addEventListener('click', ()=>{
 
 //hanldle sign out
 document.getElementById('signout-btn').addEventListener('click', function() {
-    // Clear any state of the previous page here
-    localStorage.clear(); // Clear local storage
-    sessionStorage.clear(); // Clear session storage
-    window.location.href = '../authentication/login.html';
+    window.location.href = "/logout";
   });
 
 document.getElementById('tag-option').addEventListener('click', () => {
@@ -47,8 +44,8 @@ document.getElementById('tag-option').addEventListener('click', () => {
     document.getElementById('tag-option').style.color = "#357C4D"
     document.getElementById('cate-option').innerHTML = "Category"
     document.getElementById('cate-option').style.color = "black"
-    document.getElementById("tag").style.display = "block"
-    document.getElementById("cate").style.display = "none"
+    window.location.href = `/admin/tags`;
+
 })
 
 document.getElementById('cate-option').addEventListener('click', () => {
@@ -56,27 +53,10 @@ document.getElementById('cate-option').addEventListener('click', () => {
     document.getElementById('cate-option').style.color = "#357C4D"
     document.getElementById('tag-option').innerHTML = "Tag"
     document.getElementById('tag-option').style.color = "black"
-    document.getElementById("cate").style.display = "block"
-    document.getElementById("tag").style.display = "none"
+    window.location.href = `/admin/categories`;
 })
 
-document.getElementById('view-list-option').addEventListener('click', () => {
-    document.getElementById('view-list-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> List paper"
-    document.getElementById('view-list-option').style.color = "#357C4D"
-    document.getElementById('list-pending-option').innerHTML = "Pending review"
-    document.getElementById('list-pending-option').style.color = "black"
-    document.getElementById("view-list").style.display = "block"
-    document.getElementById("list-pending").style.display = "none"
-})
 
-document.getElementById('list-pending-option').addEventListener('click', () => {
-    document.getElementById('list-pending-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> Pending review"
-    document.getElementById('list-pending-option').style.color = "#357C4D"
-    document.getElementById('view-list-option').innerHTML = "List paper"
-    document.getElementById('view-list-option').style.color = "black"
-    document.getElementById("list-pending").style.display = "block"
-    document.getElementById("view-list").style.display = "none"
-})
 
 document.getElementById('list-user-option').addEventListener('click', () => {
     document.getElementById('list-user-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> List user"
@@ -116,41 +96,7 @@ document.getElementById('renew-acc-option').addEventListener('click', () => {
 
 
 
-document.getElementById('btn-paper-management').addEventListener('click', () => {
-    const elements = Array.from(document.getElementsByClassName("nav-option"));
-    elements.forEach((element) => {
-        element.style.backgroundColor = "#212529";
-        element.style.color = "white";
-    });
-    document.getElementById('btn-paper-management').style.backgroundColor = "#357C4D"
-    document.getElementById('cat-tag-management').style.display = "none";
-    document.getElementById('role-management').style.display = "none";
-    document.getElementById('paper-management').style.display = "flex";
-})
 
-document.getElementById('btn-role-management').addEventListener('click', () => {
-    const elements = Array.from(document.getElementsByClassName("nav-option"));
-    elements.forEach((element) => {
-        element.style.backgroundColor = "#212529";
-        element.style.color = "white";
-    });
-    document.getElementById('btn-role-management').style.backgroundColor = "#357C4D"
-    document.getElementById('cat-tag-management').style.display = "none";
-    document.getElementById('role-management').style.display = "flex";
-    document.getElementById('paper-management').style.display = "none";
-})
-
-document.getElementById('btn-home').addEventListener('click', () => {
-    const elements = Array.from(document.getElementsByClassName("nav-option"));
-    elements.forEach((element) => {
-        element.style.backgroundColor = "#212529";
-        element.style.color = "white";
-    });
-    document.getElementById('btn-home').style.backgroundColor = "#357C4D"
-    document.getElementById('cat-tag-management').style.display = "flex";
-    document.getElementById('role-management').style.display = "none";
-    document.getElementById('paper-management').style.display = "none";
-})
 
 document.getElementById("cat-name").addEventListener('input', () => {
     document.getElementById("category-demo-field").innerHTML = document.getElementById("cat-name").value;
@@ -177,6 +123,7 @@ document.getElementById("cat-color-add").addEventListener('input', () => {
 })
 
 document.getElementById("tag-name").addEventListener('input', () => {
+    console.log("chiuuu")
     document.getElementById("tag-demo-field").innerHTML = document.getElementById("tag-name").value;
 })
 

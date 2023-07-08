@@ -38,7 +38,7 @@ body {
   padding-top: 50px;
   font-family: 'Poppins', sans-serif;
 }
-#signup-form input, #inputState{
+#signup-form input, #signup-form select, #inputState{
   font-family: 'Poppins', sans-serif;
   color: #686868;
   width: 100%;
