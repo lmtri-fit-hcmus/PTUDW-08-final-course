@@ -58,41 +58,17 @@ document.getElementById('cate-option').addEventListener('click', () => {
 
 
 
-document.getElementById('list-user-option').addEventListener('click', () => {
-    document.getElementById('list-user-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> List user"
-    document.getElementById('list-user-option').style.color = "#357C4D"
-    document.getElementById('assign-cat-option').innerHTML = "Assign category"
-    document.getElementById('assign-cat-option').style.color = "black"
-    document.getElementById('renew-acc-option').innerHTML = "Renew account"
-    document.getElementById('renew-acc-option').style.color = "black"
-    document.getElementById("list-user").style.display = "block"
-    document.getElementById("assign-cat").style.display = "none"
-    document.getElementById("renew-acc").style.display = "none"
-})
+// document.getElementById('list-user-option').addEventListener('click', () => {
+//     window.location.href = `/admin/list-user`
+// })
 
-document.getElementById('assign-cat-option').addEventListener('click', () => {
-    document.getElementById('assign-cat-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> Assign category"
-    document.getElementById('assign-cat-option').style.color = "#357C4D"
-    document.getElementById('list-user-option').innerHTML = "List user"
-    document.getElementById('list-user-option').style.color = "black"
-    document.getElementById('renew-acc-option').innerHTML = "Renew account"
-    document.getElementById('renew-acc-option').style.color = "black"
-    document.getElementById("list-user").style.display = "none"
-    document.getElementById("assign-cat").style.display = "block"
-    document.getElementById("renew-acc").style.display = "none"
-})
+// document.getElementById('assign-cat-option').addEventListener('click', () => {
+//     window.location.href = `/admin/assign-category`
+// })
 
-document.getElementById('renew-acc-option').addEventListener('click', () => {
-    document.getElementById('renew-acc-option').innerHTML = "<i class='fa-solid fa-caret-right' style='color: #21ab51;'></i> Renew account"
-    document.getElementById('renew-acc-option').style.color = "#357C4D"
-    document.getElementById('list-user-option').innerHTML = "List user"
-    document.getElementById('list-user-option').style.color = "black"
-    document.getElementById('assign-cat-option').innerHTML = "Asign category"
-    document.getElementById('assign-cat-option').style.color = "black"
-    document.getElementById("list-user").style.display = "none"
-    document.getElementById("assign-cat").style.display = "none"
-    document.getElementById("renew-acc").style.display = "block"
-})
+// document.getElementById('renew-acc-option').addEventListener('click', () => {
+//     window.location.href = `/admin/renew-acc`
+// })
 
 
 

@@ -30,7 +30,10 @@ const userSchema = new Schema({
   listCat: [{
     type: Schema.Types.ObjectId,
     ref: "Category",
-  }]
+  }],
+  lastPaidDate: {
+    type: Date
+  }
 },
   { timestamps: true }
 );

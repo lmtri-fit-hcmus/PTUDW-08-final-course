@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-white container mb-2">
+    <div class="container">
+        <ul class="navbar-nav mt-2 mt-lg-0 col">
+            <li class="nav-option nav-tag col text-center p-2" id="btn-home">
+                <a class="nav-link " href="#" aria-current="page">Category & Tag Management</a>
+            </li>
+            <li class="nav-option nav-tag col text-center p-2" id="btn-paper-management">
+                <a class="nav-link" href="#">Paper Management</a>
+            </li>
+            <li class="nav-option nav-tag col text-center p-2" id="btn-role-management">
+                <a class="nav-link" href="#">Role Management</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<form action="#" class="searchform order-sm-start order-lg-last">
+    <div class="form-group d-flex mx-4">
+        <input type=" text" class="form-control pl-3" placeholder="Search">
+        <button type="guestmit" placeholder="" class="btn-search bg-light border border-1 rounded">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+</form>
+<main>
+    <div class="row" id="role-management">
+        <div class="option col-2 d-flex px-5 justify-content-center align-items-center">
+            <div class="container">
+                <a class="option-to-choose option-link d-block" id="list-user-option" href="list-user" style="color: #357C4D;"><i class="fa-solid fa-caret-right"
+                        style="color: #21ab51;"></i> List user</a>
+                <a class="option-to-choose option-link d-block" id="assign-cat-option" href="assign-category">Assign category</a>
+                <a class="option-to-choose option-link d-block" id="renew-acc-option" href="renew-account">Renew account</a>
+            </div>
+            <div class="vertical-line" style="border-left: 1px solid black; height: 100%;"></div>
+        </div>
+        <div id="view-field mt-5 mb-5" class="col-9 d-flex align-items-center">
+            <div id="list-user" class="cate row mt-5 w-100">
+                {{#each listUser}}
+                <div class="user-container col-10 row mb-2">
+                    <div class="paper col d-flex align-items-center">
+                        <div class="user-avatar" data-toggle="modal" data-target="#user-detail-popup">
+                            <img src="/images/blog-img/1.png" alt="" class="paper-img">
+                        </div>
+                        <div id="user-detail" style="margin-left: 30px;">
+                            <div class="user-name" href="#">
+                                <h4><a href="#" class="title">{{this.name}}</a></h4>
+                            </div>
+                            <div class="user-role">{{this.email}}</div>
+                            <br>
+                            <div class="user-role">{{this.role}}</div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                <br>
+            </div>
+        </div>
+    </div>
+    <div id="overlay-show"></div>
+    <style>
+        #btn-role-management {
+            background-color: #357C4D;
+        }
+    </style>
+    <script>
+        document.getElementById('list-user-option').addEventListener('click', () => {
+            window.location.href = "/admin/list-user`
+        })
+
+        document.getElementById('assign-cat-option').addEventListener('click', () => {
+            window.location.href = "/admin/assign-category"
+        })
+
+        document.getElementById('renew-acc-option').addEventListener('click', () => {
+            window.location.href = `/admin/renew-acc`
+        })
+
+
+        document.getElementById('btn-paper-management').addEventListener('click', () => {
+            window.location.href = `/admin/list-paper`;
+        })
+
+        document.getElementById('btn-role-management').addEventListener('click', () => {
+            window.location.href = `/admin/list-user`;
+        })
+
+        document.getElementById('btn-home').addEventListener('click', () => {
+            window.location.href = `/admin/categories`;
+        })
+    </script>
+</main>
