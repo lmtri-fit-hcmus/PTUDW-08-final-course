@@ -6,8 +6,8 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.get('/',  (req, res, next) => {
-  res.redirect('/admin/categories')})
+// router.get('/',  (req, res, next) => {
+//   res.redirect('/admin/categories')})
 
 router.get('/login', authController.getLogin);
 

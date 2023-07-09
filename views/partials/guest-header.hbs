@@ -1,0 +1,55 @@
+<header class="contenter-fluit">
+    <div class="container-join-login border border-bottom-1 mb-3">
+        <div class="join-login-bar d-flex pt-2 pb-2">
+            <a href="/login"
+                class="btn-login border border-1 rounded-3 text-decoration-none fw-bold text-white p-2 px-3 mx-2">Log
+                in
+            </a>
+
+            <a href="/signup"
+                class="btn-join border border-1 rounded-3 text-decoration-none fw-bold text-white p-2 px-3 mx-2">Join
+            </a>
+
+        </div>
+    </div>
+
+    <div class="container logo-search d-flex justify-content-between p-2 w-100 align-items-end ">
+        <a class="logo mx-5" href="/subcriber/"><img class="img-logo w-80" src="/images/logo.png"></a>
+        <form action="#" class="searchform order-sm-start order-lg-last">
+            <div class="form-group d-flex mx-4">
+                <input type=" text" class="form-control pl-3" placeholder="Enter your search title">
+                <button type="submit" placeholder="" class="btn-search bg-light border border-1 rounded">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-white container">
+        <div class="container">
+            <ul class="navbar-nav mt-2 mt-lg-0 col">
+                <li class="col-2 text-center p-2" id="btn-home">
+                    <a class="nav-link active" href="/" aria-current="page">Home <span
+                            class="visually-hidden">(current)</span></a>
+                </li>
+                <li class="col-5 nav-item dropdown bg-dark text-center p-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Category</a>
+                    <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
+                        {{#each categories}}
+                        <a class="dropdown-item" href="/categories/{{name}}">{{name}}</a>
+                        {{/each}}
+                    </div>
+                </li>
+                <li class="col-5 nav-item dropdown bg-dark text-center p-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Tag</a>
+                    <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
+                        {{#each tags}}
+                        <a class="dropdown-item" href="/tags/{{name}}">#{{name}}</a>
+                        {{/each}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

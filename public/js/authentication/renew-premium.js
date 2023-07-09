@@ -4,5 +4,5 @@ $('#noti-renew').on('click', ()=>{
 })
 
 document.getElementById("home-icon").addEventListener('click', () => {
-    window.location.href = '../../pages/guest/home.html';
+    window.location.href = '/';
   })

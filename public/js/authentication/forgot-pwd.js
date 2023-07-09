@@ -15,5 +15,5 @@ form.addEventListener('submit', () => {
     window.location.href = `./reset-pwd.html?name=${email}&code=${code}`;
   });
 document.getElementById("home-icon").addEventListener('click', () => {
-    window.location.href = '../../pages/guest/home.html';
+    window.location.href = '/';
   })
