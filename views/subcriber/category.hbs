@@ -14,7 +14,6 @@
         </form> --}}
         <div class="mt-5">
             {{#each listPaperCat}}
-            {{isPremium}}
             <div class="item p-2">
                 <div class="d-flex mb-3">
                     <div class="item-img">
@@ -31,8 +30,14 @@
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                         <div class="mb-1" style="font-size:13px;">
+                            {{!-- <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            </a> --}}
+                            {{#if isPremium}}
+                            {{{checkCatPremium ../checkPremium this.title}}}
+                            {{else}}
                             <a class="item-title m-0 p-1" href="#" id="title">{{title}}
                             </a>
+                            {{/if}}
                             <div class="item-date">{{timeChange publicationDate}}</div>
                             <div class="item-tag my-1">
                                 {{#each this.tags}}

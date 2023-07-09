@@ -55,7 +55,6 @@ app.engine('hbs', expressHandlebars.engine({
           }
         }
       }
-
       for (var i = 0; i < tags.length; i++) {
         if (!str.includes(`<option value="${item._id}" selected>${item.name}</option>`)) {
           if (!str.includes(`<option value="${item._id}">${item.name}</option>`)) {
@@ -64,7 +63,31 @@ app.engine('hbs', expressHandlebars.engine({
         }
       }
       return str;
-    }
+    },
+    checkCatPremium: function (checkPre, item) {
+      if (checkPre) {
+        return `<a class="item-title m-0 p-1" href="#da check" id="title">${item}</a>`; //href detail
+      }
+      else {
+        return `<a class="item-title m-0 p-1" href="#bat re new" id="title">${item}</a>`; //href renew
+      }
+    },
+    checkTopWeekPremium: function (checkPre, item) {
+      if (checkPre) {
+        return `<a href="#da check" class="text-decoration-none text-white" id="title">${item}</a>`; //href detail
+      }
+      else {
+        return `<a href="#bat re new" class="text-decoration-none text-white" id="title">${item}</a>`; //href renew
+      }
+    },
+    checkTop10Premium: function (checkPre, item) {
+      if (checkPre) {
+        return `<a class="top-10-item-title m-0 p-1" href="#da check" id="title">${item}</a>`; //href detail
+      }
+      else {
+        return `<a class="top-10-item-title m-0 p-1" href="#bat re new" id="title">${item}</a>`; //href renew
+      }
+    },
   }
 }))
 app.set('view engine', 'hbs')
@@ -103,7 +126,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/',authRoutes);
+app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/subcriber', subcriberRoutes);
 app.use('/writer', writerRoutes);

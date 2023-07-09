@@ -17,6 +17,21 @@ controller.getDataHeader = async (req, res, next) => {
 
     const tags = await Tags.find({})
     res.locals.tags = tags;
+
+    let checkPremium
+    let expireDate = new Date(req.user.lastPaidDate);
+
+    expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
+    nowDate = new Date();
+    if (nowDate < expireDate) {
+        checkPremium = true;
+    }
+    else {
+        checkPremium = false;
+    }
+
+    res.locals.checkPremium = checkPremium;
+
     next();
 }
 
@@ -134,17 +149,17 @@ controller.getListPaperCategory = async (req, res, next) => {
 
     const limit = 5;
 
-    let checkPremium
-    let expireDate = new Date(req.user.lastPaidDate);
+    // let checkPremium
+    // let expireDate = new Date(req.user.lastPaidDate);
 
-    expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
-    nowDate = new Date();
-    if (nowDate < expireDate) {
-        checkPremium = true;
-    }
-    else {
-        checkPremium = false;
-    }
+    // expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
+    // nowDate = new Date();
+    // if (nowDate < expireDate) {
+    //     checkPremium = true;
+    // }
+    // else {
+    //     checkPremium = false;
+    // }
 
     req.app.locals.layout = 'subcriber'
     const cat = await Cats.findOne({ name: req.params.category })
