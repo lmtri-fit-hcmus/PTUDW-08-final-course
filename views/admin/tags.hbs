@@ -1,0 +1,146 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-white container mb-2">
+            <div class="container">
+                <ul class="navbar-nav mt-2 mt-lg-0 col">
+                    <li class="nav-option nav-tag col text-center p-2" id="btn-home">
+                        <a class="nav-link " href="#" aria-current="page">Category & Tag Management</a>
+                    </li>
+                    <li class="nav-option nav-tag col text-center p-2" id="btn-paper-management">
+                        <a class="nav-link" href="#">Paper Management</a>
+                    </li>
+                    <li class="nav-option nav-tag col text-center p-2" id="btn-role-management">
+                        <a class="nav-link" href="#">Role Management</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    <form action="#" class="searchform order-sm-start order-lg-last">
+            <div class="form-group d-flex mx-4">
+                <input type=" text" class="form-control pl-3" placeholder="Search">
+                <button type="guestmit" placeholder="" class="btn-search bg-light border border-1 rounded">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+    </form>
+    <div class="row" id="cat-tag-management">
+        <div class="option col-2 d-flex px-5 justify-content-center align-items-center">
+            <div class="container">
+                
+                <a class="option-to-choose option-link d-block" id="cate-option" style="color: black;">Category</a>
+                <a class="option-to-choose option-link d-block" id="tag-option" style="color: #21ab51;"><i class="fa-solid fa-caret-right"
+                        style="color: #21ab51;"></i> Tag </a>
+            </div>  
+            <div class="vertical-line" style="border-left: 1px solid black; height: 100%;"></div>
+        </div>
+        <div id="view-field mt-5 mb-5" class="col-9 d-flex align-items-center">
+            <div id="tag" class="tag row w-100">
+                {{#each listTag}}
+                    <button data-toggle="modal" data-target="#{{this.signname}}" class="tag-btn col-2">#{{this.name}}</button>
+                    <div class="modal fade" id="{{this.signname}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST">
+                                        <input type="hidden" name="old-name" value="{{this.name}}">
+                                        <div class="form-group">
+                                            <div class="grid-container">
+                                                <div class="cell" style="border-top-left-radius: 10px;
+                                                border-bottom-left-radius: 10px;"><label for="tag-name">Name:</label></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;">
+                                                    <input type="text" class="form-control" id="tag-name" name="tag-name" value="{{this.name}}">
+                                                </div>
+                                            </div>   
+                                        </div>
+                                        <br>
+                                        <div class="modal-footer justify-content-center" >  
+                                            <input type="submit" name="submitButton" style="background-color: #9C4444; color: white;" class="btn" value="Delete">
+                                            <button type="submit" class="btn btn-primary" name="submitButton" value="Update">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+                <br>
+                <div id="add-tag-form" class="container d-flex justify-content-center">
+                    <button type="button" id="add-tag" data-toggle="modal" data-target="#tagModal">Add Tag</button>
+                    <div class="modal fade" id="tagModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add tag</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/tags/add" method="POST">
+                                        <div class="form-group">
+                                            <div class="grid-container">
+                                                <div class="cell" style="border-top-left-radius: 10px;
+                                                border-bottom-left-radius: 10px;"><label for="tag-name-add">Name:</label></div>
+                                                <div class="cell" style="border-top-right-radius: 10px;border-bottom-right-radius: 10px;"><input type="text" class="form-control" id="tag-name-add" name="tag-name"></div>
+                                            </div>   
+                                        </div>
+                                        <br>
+                                        <div class="modal-footer justify-content-center" >  
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <style>
+        #btn-home {
+     background-color: #357C4D; 
+}
+    </style>
+       <script>
+        document.getElementById('btn-paper-management').addEventListener('click', () => {
+            console.log("check")
+            const elements = Array.from(document.getElementsByClassName("nav-option"));
+            elements.forEach((element) => {
+                element.style.backgroundColor = "#212529";
+                element.style.color = "white";
+            });
+            document.getElementById('btn-paper-management').style.backgroundColor = "#357C4D"
+            window.location.href = `/admin/list-paper`;
+        })
+
+        document.getElementById('btn-role-management').addEventListener('click', () => {
+            const elements = Array.from(document.getElementsByClassName("nav-option"));
+            elements.forEach((element) => {
+                element.style.backgroundColor = "#212529";
+                element.style.color = "white";
+            });
+            document.getElementById('btn-role-management').style.backgroundColor = "#357C4D"
+            document.getElementById('cat-tag-management').style.display = "none";
+            document.getElementById('role-management').style.display = "flex";
+            document.getElementById('paper-management').style.display = "none";
+            window.location.href = `/admin/role`;
+        })
+
+        document.getElementById('btn-home').addEventListener('click', () => {
+            const elements = Array.from(document.getElementsByClassName("nav-option"));
+            elements.forEach((element) => {
+                element.style.backgroundColor = "#212529";
+                element.style.color = "white";
+            });
+            document.getElementById('btn-home').style.backgroundColor = "#357C4D"
+            window.location.href = `/admin/categories`;
+        })
+    </script>

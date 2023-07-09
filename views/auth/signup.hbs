@@ -2,12 +2,17 @@
             <h1 id="signup-tag">
                 Sign up
             </h1>
-            <form method="POST" id="signup-form">
-                <input type="text" id="username" name="email" placeholder="Email"><br>
-                <input type="password" id="password" name="password" placeholder="Password"><br>
-                <input type="password" id="confirm-pwd" name="confirm-pwd" placeholder="Confirm password"><br>
+                <form method="POST" id="signup-form">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Full name" name="name" required>
+                    </div>
+                </div>
+                <input type="text" id="username" name="email" placeholder="Email" required><br>
+                <input type="password" id="password" name="password" placeholder="Password" required><br>
+                <input type="password" id="confirm-pwd" name="confirm-pwd" placeholder="Confirm password" required><br>
 
-                <select id="inputState" class="form-select" name="role">
+                <select id="inputState" class="form-select" name="role" required>
                     <option selected>Choose user's role</option>
                     <option>Subcriber</option>
                     <option>Writer</option>
@@ -21,3 +26,37 @@
             </form>
             <br>
             <p id="signup">Already have an account?  <strong class="custom-link" id="login">Log in</strong></p>
+
+ <script>
+    // Generate options for the day select
+    var daySelect = document.getElementById("daySelect");
+    for (var day = 1; day <= 31; day++) {
+      var option = document.createElement("option");
+      option.text = day;
+      option.value = day;
+      daySelect.appendChild(option);
+    }
+
+    // Generate options for the month select
+    var monthSelect = document.getElementById("monthSelect");
+    var months = [
+      "January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+    ];
+    for (var i = 0; i < months.length; i++) {
+      var option = document.createElement("option");
+      option.text = months[i];
+      option.value = i + 1;
+      monthSelect.appendChild(option);
+    }
+
+    // Generate options for the year select
+    var yearSelect = document.getElementById("yearSelect");
+    var currentYear = new Date().getFullYear();
+    for (var year = currentYear; year >= 1900; year--) {
+      var option = document.createElement("option");
+      option.text = year;
+      option.value = year;
+      yearSelect.appendChild(option);
+    }
+  </script>

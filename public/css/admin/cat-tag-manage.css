@@ -3,7 +3,7 @@
 }
 
 #btn-home {
-    background-color: #357C4D;
+    /* background-color: #357C4D; */
 }
 
 .title, .review-title{
@@ -29,7 +29,7 @@
     box-shadow: 0px 5px 10px #939292;
 }
 
-#profile-dropdown {
+#dropdownMenuButton{
     border: 0;
     background-color: white;
     height: 100%;
@@ -47,19 +47,14 @@
     /* display: none; */
 }
 
-#paper-management, #role-management, #assign-cat, #renew-acc{
+ #paper-management, #role-management, #assign-cat, #renew-acc{
     margin: 50px 0;
-    display: none;
 }
 
 .option-link {
     font-size: 22px;
     text-decoration: none;
     color: black;
-}
-
-.tag {
-    display: none;
 }
 
 .option-to-choose{
@@ -227,12 +222,8 @@
 }
 #tag-demo-field, #tag-demo-field1 {
     background-color: #8b8787;
-    color: rgb(221, 219, 219);
     height: 50px;
     border-radius: 20px;
     flex-shrink: 0;
     padding: 20px;
-}
-#list-pending{
-    display: none;
 }

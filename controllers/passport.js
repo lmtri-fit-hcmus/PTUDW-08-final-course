@@ -73,11 +73,10 @@ passport.use('local-register', new LocalStrategy({
     console.log(verifyUrl)
     axios.post(verifyUrl).then((verificationResponse)=>{
         const { success } = verificationResponse.data;
-        //by pass
-        // if (!success) {
-        //   console.log("Please check captcha!")
-        //   return done(false, req.flash('registerMessage', 'Please check captcha!'));
-        // }
+        if (!success) {
+          console.log("Please check captcha!")
+          return done(false, req.flash('registerMessage', 'Please check captcha!'));
+        }
         User.findOne({ email: email })
         .then(user => {
           if (user) {
@@ -90,7 +89,8 @@ passport.use('local-register', new LocalStrategy({
           const user = new User({
             email: email,
             password: hashedPassword,
-            role: req.body.role
+            role: req.body.role,
+            name: req.body.name
           });
           console.log(user)
           user.save().then(()=>{
