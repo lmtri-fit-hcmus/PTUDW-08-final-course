@@ -103,7 +103,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(authRoutes);
+app.use('/',authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/subcriber', subcriberRoutes);
 app.use('/writer', writerRoutes);
