@@ -1,8 +1,8 @@
-// document.querySelectorAll('#title').forEach(item => {
-//     item.addEventListener('click', (e) => {
-//         window.location.href = `./detail.html?`;
-//     });
-// });
+document.querySelectorAll('#title').forEach(item => {
+    item.addEventListener('click', (e) => {
+        window.location.href = `./detail.html?`;
+    });
+});
 
 // document.getElementById('save-btn').addEventListener('click', () => {
 //     // Disable the submit button to prevent multiple submissions

@@ -21,19 +21,6 @@ controller.getDataHeader = async (req, res, next) => {
 }
 
 controller.getHomePage = async (req, res, next) => {
-    // const newP = await new Paper({
-    //     body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    //     title: "This is the best of category",
-    //     author_id: "64a2ed1892217a5ed456417a",
-    //     publicationDate: "1999-02-26",
-    //     viewCount: 100,
-    //     isPremium: false,
-    //     approveBy: "64a4025c457a1795203379b8",
-    //     category_id: "64a2eb8d0a57b42e5cc4ba88",
-    //     metadata_id: "64a5d5efb8bf7b40a2e07536",
-    //     comments: "64a57cec862b81c7b80729df"
-    // });
-    // newP.save();
     req.app.locals.layout = 'subcriber'
 
     const result = await Paper.aggregate([
@@ -58,7 +45,6 @@ controller.getHomePage = async (req, res, next) => {
         }
     }
 
-    // db.mydatabase.mycollection.find({$where : 'return this.date.getMonth() == 11'})
     const topWeekPapers = await Paper.find({ status: 'published' })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
@@ -81,7 +67,7 @@ controller.getHomePage = async (req, res, next) => {
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .limit(8);
-    // console.log(typeof otherPapers[0].publicationDate);
+
     res.render('subcriber/home', {
         path: '/subcriber', pageTitle: '08 Newspaper',
         topWeekPapers: topWeekPapers,
@@ -116,8 +102,6 @@ controller.postUpdateProfile = async (req, res, next) => {
     const user = await User.findById({ _id: req.session.user._id });
     let message = "Success!";
     res.render('subcriber/profile', { path: '/subcriber', pageTitle: 'Profile', email: user.email, name: user.name, dob: user.dob.toISOString().replace(/T00:00:00.000Z$/, ""), id: user._id, avatar: user.avatar, updateMessage: message });
-    //res.redirect('subcriber/profile');
-    //res.redirect('/subcriber/'); 
 }
 
 
@@ -143,14 +127,24 @@ controller.postChangePwd = async (req, res, next) => {
         const user1 = await User.findByIdAndUpdate({ _id: req.body.user_id }, { password: newPwdHash });
         res.render('subcriber/change-pwd', { path: '/subcriber', pageTitle: 'Change Password', avatar: user.avatar, changePwdMessageS: "Success!" });
     }
-
-    //res.redirect('/subcriber/');
 };
 
 controller.getListPaperCategory = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
 
     const limit = 5;
+
+    let checkPremium
+    let expireDate = new Date(req.user.lastPaidDate);
+
+    expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
+    nowDate = new Date();
+    if (nowDate < expireDate) {
+        checkPremium = true;
+    }
+    else {
+        checkPremium = false;
+    }
 
     req.app.locals.layout = 'subcriber'
     const cat = await Cats.findOne({ name: req.params.category })
