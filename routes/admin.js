@@ -24,4 +24,8 @@ router.post('/categories/add', isAuth, adminController.postAddCategory)
 router.get('/list-paper', isAuth, adminController.getListPaper)
 router.get('/pending-review', isAuth, adminController.getListPendingReviewPaper)
 
+router.get('/list-user', isAuth, adminController.getListUser)
+router.get('/assign-category', isAuth, adminController.getAssignCat)
+router.get('/renew-account', isAuth, adminController.getRenewAccount)
+
 module.exports = router;
