@@ -86,12 +86,24 @@ passport.use('local-register', new LocalStrategy({
           bcrypt
         .hash(password, 12)
         .then(hashedPassword => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            role: req.body.role,
-            name: req.body.name
-          });
+          let user = null
+          if(req.body.role == "Subcriber"){
+            user = new User({
+                email: email,
+                password: hashedPassword,
+                role: req.body.role,
+                name: req.body.name,
+                lastPaidDate: new Date()
+              });
+          }
+          else{
+            user = new User({
+                email: email,
+                password: hashedPassword,
+                role: req.body.role,
+                name: req.body.name
+              });
+          }
           console.log(user)
           user.save().then(()=>{
             return done(true, req.flash('registerMessage', 'Register successfully'));
