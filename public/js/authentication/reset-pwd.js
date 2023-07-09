@@ -13,6 +13,6 @@ document.getElementById('reset-form-btn').addEventListener('click', () => {
     
   });
   document.getElementById("home-icon").addEventListener('click', () => {
-    window.location.href = '../../pages/guest/home.html';
+    window.location.href = '/';
   })
   $('#overlay-show').load('../../pages/shared/done-layout.html');

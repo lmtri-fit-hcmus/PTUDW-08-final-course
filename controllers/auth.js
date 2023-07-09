@@ -32,6 +32,7 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+  req.app.locals.layout = 'auth'
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0];
@@ -98,6 +99,7 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getReset = (req, res, next) => {
+  req.app.locals.layout = 'auth'
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0];
@@ -151,6 +153,7 @@ exports.postReset = (req, res, next) => {
 };
 
 exports.getNewPassword = (req, res, next) => {
+  req.app.locals.layout = 'auth'
   const token = req.params.token;
   User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
     .then(user => {

@@ -29,6 +29,7 @@ const authRoutes = require('./routes/auth');
 const subcriberRoutes = require('./routes/subcriber');
 const writerRoutes = require('./routes/writer');
 const editorRoutes = require('./routes/editor');
+const guestRoutes = require('./routes/guest')
 
 app.engine('hbs', expressHandlebars.engine({
   layoutsDir: __dirname + "/views/layouts",
@@ -126,7 +127,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', authRoutes);
+app.use('/',authRoutes);
+app.use('/', guestRoutes);
 app.use('/admin', adminRoutes);
 app.use('/subcriber', subcriberRoutes);
 app.use('/writer', writerRoutes);
