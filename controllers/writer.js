@@ -83,7 +83,6 @@ controller.getRejected = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
 
     const limit = 5;
-
     const listPaper = await Paper.find({ author_id: req.user._id, status: "rejected" })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
@@ -204,5 +203,63 @@ controller.postPaper = async (req, res, next) => {
     res.render('writer/submitted', { path: '/writer', pageTitle: 'Submitted' });
 }
 
+controller.getEditPaper = async (req, res, next) => {
+    req.app.locals.layout = 'writer'
+
+    const paper = await Paper.findOne({ _id: req.params.id })
+        .populate({ path: 'category_id' })
+        .populate({ path: 'metadata_id' })
+        .populate('tags')
+
+    const listTag = await Tags.find({});
+    const listCat = await Cats.find({});
+
+    const tagsSelected = paper.tags;
+    const catSelected = []
+    catSelected.push(paper.category_id);
+
+
+    res.locals.listCat = listCat
+    res.locals.catSelected = catSelected;
+    res.locals.listTag = listTag
+    res.locals.tagsSelected = tagsSelected
+
+    res.render('writer/editPaper', { path: '/writer', pageTitle: 'Edit paper', paper: paper });
+
+}
+
+controller.updatePaper = async (req, res, next) => {
+    // const paper = await Paper.findOneAndUpdate({ _id: req.params.id },
+    //     { $set: { title:req.body.title,} });
+    const paper = await Paper.findOne({ _id: req.params.id });
+    console.log(paper)
+    console.log(req.body.tags);
+    if (req.file) {
+        const metadata = await Metadata.findByIdAndUpdate({ _id: paper.metadata_id },
+            { $set: { abstract: req.body.abstract, content: req.body.content, avaPaper: req.file.filename } })
+
+        await Paper.findByIdAndUpdate({ _id: req.params.id },
+            { $set: { title: req.body.title, tags: req.body.tags.split(','), category_id: req.body.category, metadata_id: metadata._id } })
+    }
+    else {
+        const metadata = await Metadata.findByIdAndUpdate({ _id: paper.metadata_id },
+            { $set: { abstract: req.body.abstract, content: req.body.content } })
+
+        await Paper.findByIdAndUpdate({ _id: req.params.id },
+            { $set: { title: req.body.title, tags: req.body.tags.split(','), category_id: req.body.category, metadata_id: metadata._id } })
+    }
+    res.redirect('/writer/')
+}
+
+controller.deletePaper = async (req, res, next) => {
+    req.app.locals.layout = 'writer'
+    const paper = await Paper.updateOne({ _id: req.params.id }, { $set: { status: 'deleted' } })
+        .then(() => res.redirect('back'));
+    //res.render('writer/submitted')
+    //console.log(req.params.id);
+    // Course.delete({ _id: req.params.id })
+    //     .then(() => res.redirect('back'))
+    //     .catch(next);
+}
 
 module.exports = controller; 

@@ -6,44 +6,35 @@ document.querySelectorAll('#title').forEach(item => {
 
 
 
-document.querySelectorAll('#edit-btn').forEach(item => {
-    item.addEventListener('click', (e) => {
-        $('#edit-form').css('display', 'block')
-        $('#background').css('display', 'block')
-    });
-});
+// document.querySelectorAll('#edit-btn').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         $('#edit-form').css('display', 'block')
+//         $('#background').css('display', 'block')
+//     });
+// });
 
 
-document.querySelectorAll('#save-btn').forEach(item => {
-    item.addEventListener('click', (e) => {
-        $('#edit-form').css('display', 'none')
-        $('#background').css('display', 'none')
-    });
-});
+// document.querySelectorAll('#save-btn').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         $('#edit-form').css('display', 'none')
+//         $('#background').css('display', 'none')
+//     });
+// });
 
-document.querySelectorAll('#edit-btn1').forEach(item => {
-    item.addEventListener('click', (e) => {
-        $('#edit-form1').css('display', 'block')
-        $('#background').css('display', 'block')
-    });
-});
-
-
-document.querySelectorAll('#save-btn').forEach(item => {
-    item.addEventListener('click', (e) => {
-        $('#edit-form1').css('display', 'none')
-        $('#background').css('display', 'none')
-    });
-});
+// document.querySelectorAll('#edit-btn1').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         $('#edit-form1').css('display', 'block')
+//         $('#background').css('display', 'block')
+//     });
+// });
 
 
-document.querySelectorAll('#delete-btn').forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.target.parentNode.parentNode.parentNode.remove();
-
-    });
-});
-
+// document.querySelectorAll('#save-btn').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         $('#edit-form1').css('display', 'none')
+//         $('#background').css('display', 'none')
+//     });
+// });
 
 
 
@@ -170,3 +161,29 @@ fileUploadPaper.onchange = () => {
         console.log(reader.result);
     }
 }
+
+
+// async function deletePa(id) {
+//     let res = await fetch('/writer/deletePaper/:id', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//         },
+//         body: JSON.stringify({ id })
+//     });
+//     let json = await res.json();
+// }
+
+
+
+
+// document.querySelectorAll('#delete-btn').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         e.target.parentNode.parentNode.parentNode.remove();
+
+//     });
+// });
+
+
+

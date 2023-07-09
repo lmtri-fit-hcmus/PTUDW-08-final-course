@@ -45,11 +45,12 @@
                 {{#if listPaper}}
                 {{#each listPaper}}
                 <div class="right-item d-flex align-items-center my-2" style="position: relative;">
-                    <div class="item p-2 d-flex">
+                    <div class=" item p-2 d-flex">
                         <div class="d-flex mb-3">
                             <div>
                                 <img class="item-img" src="/images/{{metadata_id.avaPaper}}"
                                     alt="website template image" style="width:150px;height:150px;object-fit:cover;">
+                                <input type="hidden" name="id" id="idPaper" value="{{_id}}">
                             </div>
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                                 <div class="mb-1" style="font-size:13px;">
@@ -63,7 +64,7 @@
                                         </a>
                                         {{/each}}
                                     </div>
-                                    <a class="item-category text-white text-decoration-none rounded-3"
+                                    <a class="item-category bg-success text-white text-decoration-none rounded-3"
                                         style="background-color: {{category_id.color}}" href="#">
                                         {{{category_id.name}}}
                                     </a>
@@ -72,10 +73,13 @@
                             </div>
                         </div>
                         <div class="option">
-                            <button class="option-item text-white bg-success m-2"
-                                style="position: absolute; right: 20px; top:10px" id="edit-btn1">Edit</button>
+                            <a href="/writer/editPaper/{{_id}}">
+                                <button class="option-item text-white bg-success m-2"
+                                    style="position: absolute; right: 20px; top:50px" id="edit-btn">Edit</button>
+                            </a>
                             <button class="option-item text-white bg-danger m-2"
-                                style="position: absolute; right: 20px; top:50px" id="delete-btn">Delete</button>
+                                style="position: absolute; right: 20px; top:90px" id="delete-btn" data-bs-toggle="modal"
+                                data-bs-id="{{this._id}}" data-bs-target="#delete-paper-modal">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -91,10 +95,30 @@
                 </div>
                 {{/if}}
             </div>
-
         </div>
     </div>
 </main>
+
+
+<div class="modal" tabindex="-1" id="delete-paper-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete this paper?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this paper?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-paper" type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     document.querySelectorAll('#pagination li').forEach(li => {
         li.classList.add('page-item');
@@ -102,4 +126,28 @@
     document.querySelectorAll('#pagination a').forEach(a => {
         a.classList.add('page-link');
     })
+</script>
+
+
+<script>
+    var idPa;
+    const deletePaperModal = document.getElementById('delete-paper-modal')
+    var deleteForm = document.forms['delete-paper-form'];
+    var btnDelete = document.getElementById('btn-delete-paper');
+
+
+    if (deletePaperModal) {
+
+        deletePaperModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            id = button.getAttribute('data-bs-id');
+            console.log(id);
+        })
+    }
+    btnDelete.onclick = function () {
+        deleteForm.action = '/writer/' + id + '?_method=DELETE';
+        console.log(deleteForm.action)
+        deleteForm.submit();
+    }
+
 </script>

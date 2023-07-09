@@ -136,12 +136,12 @@ controller.postChangePwd = async (req, res, next) => {
     let newPwd = req.body.newPwd;
 
     if (!bcrypt.compareSync(curPwd, user.password)) {
-        res.render('subcriber/change-pwd', { path: '/subcriber', pageTitle: 'Change Password', avatar: user.avatar, changePwdMessage: "Wrong current password!" });
+        res.render('subcriber/change-pwd', { path: '/subcriber', pageTitle: 'Change Password', avatar: user.avatar, changePwdMessageW: "Wrong current password!" });
     }
     else {
         const newPwdHash = await bcrypt.hash(newPwd, 12);
         const user1 = await User.findByIdAndUpdate({ _id: req.body.user_id }, { password: newPwdHash });
-        res.render('subcriber/change-pwd', { path: '/subcriber', pageTitle: 'Change Password', avatar: user.avatar, changePwdMessage: "Success!" });
+        res.render('subcriber/change-pwd', { path: '/subcriber', pageTitle: 'Change Password', avatar: user.avatar, changePwdMessageS: "Success!" });
     }
 
     //res.redirect('/subcriber/');

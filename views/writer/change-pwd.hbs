@@ -31,10 +31,17 @@
                         <div clas="right-title-text">Change Password
                         </div>
                     </div>
-                    {{#if changePwdMessage}}
+                    {{#if changePwdMessageW}}
                     <div class="col md-12">
                         <div class="p-3 mt-3 alert alert-warning">
-                            {{changePwdMessage}}
+                            {{changePwdMessageW}}
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{#if changePwdMessageS}}
+                    <div class="col md-12">
+                        <div class="p-3 mt-3 alert alert-success">
+                            {{changePwdMessageS}}
                         </div>
                     </div>
                     {{/if}}

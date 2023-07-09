@@ -1,0 +1,90 @@
+<main>
+    {{#with paper}}
+    <form action="/writer/{{_id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="container my-4">
+            <div class="row">
+                <div class="profile-left col-2">
+                    <nav class="navbar">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item-info">
+                                <div class="nav-link left-item" id="create-new-post-item"
+                                    style="font-size: 18px; font-weight: 600; color:#000000;"> Create a new post</div>
+                            </li>
+                            <li class="nav-item-info">
+                                <div class="nav-link left-item" id="create-new-post-item"
+                                    style="font-size: 18px; font-weight: 600; color:#357C4D;"> Edit paper</div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="home-right profile col-9 bg-light position-relative" id="edit-paper">
+                    <input type="hidden" name="user_id" value="{{id}}">
+                    <div class="right-title fs-4 m-3 mb-4"> Edit paper
+                    </div>
+                    <div class="right-item d-flex align-items-center my-2">
+                        <div class="right-item-input text-end px-3" id="title">Title
+                        </div>
+                        <input class="input w-50 border border-secondary rounded-3 p-2 text-dark" type="text"
+                            name="title" placeholder="Title" required value="{{title}}">
+                    </div>
+                    <div class="right-item d-flex align-items-center my-2">
+                        <div class="right-item-input text-end px-3" id="tag">Tag
+                        </div>
+
+                        <select id="inpTag" multiple class="input w-50 border border-secondary rounded-3 p-2 text-dark"
+                            name="tags" placeholder="Tags" data-search="true" data-silent-initial-value-set="true"
+                            style="background-color:#ffffff" required>
+
+                            {{#each ../listTag}}
+                            {{{handleSelected ../../tagsSelected this}}}
+                            {{/each}}
+
+                        </select>
+                    </div>
+                    <div class="right-item d-flex align-items-center my-2">
+                        <div class="right-item-input text-end px-3" id="category">Category</div>
+
+                        <select id="inpCat" class="input w-50 border border-secondary rounded-3 p-2 text-dark"
+                            name="category" placeholder="Category for your paper" data-search="true"
+                            data-silent-initial-value-set="true" style="background-color:#ffffff" required>
+                            {{!-- <option value="{{category_id._id}}" selected>{{category_id.name}}</option>
+                            {{#each ../listCat}}
+                            <option value="{{_id}}">{{name}}</option>
+                            {{/each}} --}}
+                            {{#each ../listCat}}
+                            {{{handleSelected ../../catSelected this}}}
+                            {{/each}}
+
+                        </select>
+                    </div>
+                    <div class="right-item d-flex align-items-center my-5">
+                        <div class="right-item-input text-end px-3" id="abstract" required>Abstract
+                        </div>
+                        <textarea class="input w-75 border border-secondary rounded-3 p-2 text-dark" name="abstract"
+                            cols="40" rows="5" placeholder="Abstract">{{metadata_id.abstract}}</textarea>
+                    </div>
+                    <div class="right-item text-center" id="avatar">
+                        Avatar
+                        <div class="nothing">
+                            <img class="nothing" id="chosen-img-paper" src="/images/{{metadata_id.avaPaper}}"
+                                alt="/images/{{metadata_id.avaPaper}}">
+                            <div class="browse">
+                                <label for="fileUploadPaper">
+                                    <div>Browse from local</div>
+                                </label>
+                                <input type="file" accept=".jpg,.jpeg,.png" name="avaPaper" id="fileUploadPaper"
+                                    style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-input fs-5 mt-5 text-center">Content
+                        <textarea name="content" id="default" placeholder="Content"
+                            required>{{metadata_id.content}}</textarea>
+                        <button type="submit" id="create-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {{/with}}
+</main>

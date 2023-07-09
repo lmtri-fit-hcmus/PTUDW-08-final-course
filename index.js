@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const expressHandlebars = require('express-handlebars');
 const passport = require('./controllers/passport');
 const { createPagination } = require('express-handlebars-paginate');
+const methodOverride = require('method-override')
 
 
 
@@ -35,7 +36,7 @@ app.engine('hbs', expressHandlebars.engine({
   extname: 'hbs',
   defaultLayout: 'auth',
   runtimeOptions: {
-    allowProtoPropertiesByDefault: true
+    allowProtoPropertiesByDefault: true,
   },
   helpers: {
     createPagination,
@@ -43,6 +44,26 @@ app.engine('hbs', expressHandlebars.engine({
       if (publicationDate) {
         return publicationDate.toDateString();
       }
+    },
+    handleSelected: function (tags, item) {
+      let str = '  ';
+      for (var i = 0; i < tags.length; i++) {
+        if (JSON.stringify(tags[i]._id) == JSON.stringify(item._id)) {
+          if (!str.includes(`<option value="${item._id}" selected>${item.name}</option>` && `<option value="${item._id}">${item.name}</option>`)) {
+            str += `<option value="${item._id}" selected>${item.name}</option>`
+            break;
+          }
+        }
+      }
+
+      for (var i = 0; i < tags.length; i++) {
+        if (!str.includes(`<option value="${item._id}" selected>${item.name}</option>`)) {
+          if (!str.includes(`<option value="${item._id}">${item.name}</option>`)) {
+            str += `<option value="${item._id}">${item.name}</option>`
+          }
+        }
+      }
+      return str;
     }
   }
 }))
@@ -57,6 +78,8 @@ app.use(
     store: store
   })
 );
+
+app.use(methodOverride('_method'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -89,7 +112,10 @@ app.use('/editor', editorRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
   .then(result => {
     app.listen(3000);
   })

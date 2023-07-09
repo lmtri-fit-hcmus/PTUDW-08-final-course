@@ -40,19 +40,12 @@ router.get('/change-pwd', isAuth, writerController.getDataHeader, writerControll
 router.post('/change-pwd', isAuth, writerController.postChangePwd);
 
 router.post('/postPaper', isAuth, upload.single('avaPaper'), writerController.getDataHeader, writerController.postPaper);
+router.get('/editPaper/:id', isAuth, writerController.getDataHeader, writerController.getEditPaper);
+router.put('/:id', isAuth, upload.single('avaPaper'), writerController.getDataHeader, writerController.updatePaper);
 
+router.delete('/:id', isAuth, writerController.getDataHeader, writerController.deletePaper)
 
-// router.get('/:name', isAuth, writerController.getDataHeader, writerController.getListPaperCategory);
 
 module.exports = router;
-
-//[check('name').trim().isLength({ min: 1 }).withMessage('Name is required!')],
-// (req, res, next) => {
-//     let message = validationResult(req);
-//     if (message) {
-//         return res.render('writer/profile', { updateMessage: message });
-//     }
-//     next();
-// },
 
 
