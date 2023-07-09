@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator/check');
+const Users = require('../models/user');
 const Cats = require('../models/category');
 const Papers = require('../models/paper');
 const Tags = require('../models/tag');
@@ -185,10 +186,47 @@ exports.getListPaper = async (req, res, next) => {
 
 exports.getListPendingReviewPaper = async(req, res, next) => {
   req.app.locals.layout = 'admin'
-  list = await (Papers.find({status: "pending-review"}).populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
+  list = await (Papers.find({status: "submitted"}).populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
   res.render('admin/pending-review', {
     path: 'admin/pending-review',
     pageTitle: 'Manage papers',
     listPaper: list 
   });
+}
+
+exports.getListUser = (req, res, next) => {
+  req.app.locals.layout = 'admin'
+  Users.find().then(users =>{
+    res.render('admin/list-user', {
+      path: 'admin/list-user',
+      pageTitle: 'Manage user',
+      listUser: users
+    });
+  })
+}
+
+exports.getAssignCat = async (req, res, next) => {
+  req.app.locals.layout = 'admin'
+  Users.find({role: "Editor"}).populate('listCat').then(users =>{
+    Cats.find().then(cats =>{
+      
+      res.render('admin/assign-category', {
+      path: 'admin/assign-category',
+      pageTitle: 'Manage user',
+      listUser: users,
+      categories: cats
+    });
+    })
+  })
+}
+
+exports.getRenewAccount = async (req, res, next) => {
+  req.app.locals.layout = 'admin'
+  Users.find({role: "Subcriber"}).then(users =>{
+      res.render('admin/renew-account', {
+      path: 'admin/renew-account',
+      pageTitle: 'Manage user',
+      listUser: users
+    });
+    })
 }
