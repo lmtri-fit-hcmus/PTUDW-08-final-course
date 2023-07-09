@@ -31,17 +31,12 @@ router.post('/profile', isAuth, upload.single('avatar'), editorController.postUp
 
 router.get('/change-pwd', isAuth, editorController.getDataHeader, editorController.getChangePwdPage);
 router.post('/change-pwd', isAuth, editorController.postChangePwd);
-// router.get('/:name', isAuth, editorController.getDataHeader, editorController.getListPaperCategory);
 
+
+router.put('/accept/:id', isAuth, editorController.getDataHeader, editorController.acceptPaper);
+router.put('/reject/:id', isAuth, editorController.getDataHeader, editorController.rejectPaper);
+
+router.get('/approve', isAuth, editorController.getDataHeader, editorController.getApprovePaper);
+router.get('/reject', isAuth, editorController.getDataHeader, editorController.getRejectPaper);
+// router.put('/reject/:id',)
 module.exports = router;
-
-//[check('name').trim().isLength({ min: 1 }).withMessage('Name is required!')],
-// (req, res, next) => {
-//     let message = validationResult(req);
-//     if (message) {
-//         return res.render('editor/profile', { updateMessage: message });
-//     }
-//     next();
-// },
-
-

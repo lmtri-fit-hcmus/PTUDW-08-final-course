@@ -34,23 +34,4 @@
             </div>
         </form>
     </div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-white container">
-        <div class="container">
-            <ul class="navbar-nav mt-2 mt-lg-0 col">
-                <li class="col-2 text-center p-2" id="btn-home">
-                    <a class="nav-link active" href="/editor/" aria-current="page">Home <span
-                            class="visually-hidden">(current)</span></a>
-                </li>
-                <li class="col-10 nav-item dropdown bg-dark text-center p-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Category</a>
-                    <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
-                        {{#each categories}}
-                        <a class="dropdown-item" href="/editor/{{name}}">{{name}}</a>
-                        {{/each}}
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
 </header>

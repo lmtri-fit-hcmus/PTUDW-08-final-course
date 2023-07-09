@@ -75,14 +75,14 @@
 }
 
 
-#accept-overlay, #reject-overlay {
+#reject-overlay {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    z-index: 2;
+    z-index: 5;
     width: 600px;
     height: 400px;
     border: 1px solid black;

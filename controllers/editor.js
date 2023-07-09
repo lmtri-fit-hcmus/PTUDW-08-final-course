@@ -12,7 +12,6 @@ controller.getDataHeader = async (req, res, next) => {
     res.locals.avatar = user.avatar;
 
     res.locals.categories = user.listCat;
-    console.log(user.listCat[0])
     // const tags = await Tags.find({})
     // res.locals.tags = tags;
     next();
@@ -21,23 +20,32 @@ controller.getDataHeader = async (req, res, next) => {
 controller.getHomePage = async (req, res, next) => {
     req.app.locals.layout = 'editor'
     const user = await User.findById({ _id: req.session.user._id }).populate('listCat');
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
 
-    listDraft = []
-    for (var i = 0; i < user.listCat.length; i++) {
-        const paper = await Paper.find({ category_id: user.listCat[i]._id })
-            .populate('category_id')
-            .populate('metadata_id')
-            .sort({ viewCount: -1 })
-        for (var j = 0; j < 100; j++) {
-            if (paper[j]) {
-                listDraft.push(paper[j]);
-            }
-            else {
-                break;
-            }
-        }
-    }
-    console.log(listDraft);
+    const limit = 5;
+
+    const listDraft = await Paper.find({ category_id: user.listCat[0]._id, status: 'submitted' })
+        .populate('category_id')
+        .populate('metadata_id')
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ category_id: user.listCat[0]._id, status: 'submitted' }).count();
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
 
     res.render('editor/home', { path: '/editor', pageTitle: '08 Newspaper', listDraft: listDraft });
 };
@@ -98,5 +106,98 @@ controller.postChangePwd = async (req, res, next) => {
     //res.redirect('/editor/');
 };
 
+
+controller.acceptPaper = async (req, res, next) => {
+    req.app.locals.layout = 'editor'
+    await Paper.findByIdAndUpdate({ _id: req.params.id },
+        {
+            $set: {
+                publicationDate: dateUpdate,
+                status: 'published',
+                approve_by: req.user._id
+            }
+        })
+    res.redirect('back')
+}
+
+controller.rejectPaper = async (req, res, next) => {
+    req.app.locals.layout = 'editor'
+    const test = await Paper.findByIdAndUpdate({ _id: req.params.id },
+        {
+            $set: {
+                note: req.body.note,
+                status: 'rejected',
+                reject_by: req.user._id
+            }
+        })
+    res.redirect('back')
+}
+
+
+controller.getApprovePaper = async (req, res, next) => {
+    req.app.locals.layout = 'editor'
+    const user = await User.findById({ _id: req.session.user._id }).populate('listCat');
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listDraft = await Paper.find({ category_id: user.listCat[0]._id, approve_by: req.user._id })
+        .populate('category_id')
+        .populate('metadata_id')
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ category_id: user.listCat[0]._id, approve_by: req.user._id }).count();
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.render('editor/approve', { path: '/editor', pageTitle: '08 Newspaper', listDraft: listDraft });
+
+}
+
+controller.getRejectPaper = async (req, res, next) => {
+    req.app.locals.layout = 'editor'
+    const user = await User.findById({ _id: req.session.user._id }).populate('listCat');
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    const listDraft = await Paper.find({ category_id: user.listCat[0]._id, reject_by: req.user._id })
+        .populate('category_id')
+        .populate('metadata_id')
+        .populate('tags')
+        .limit(limit)
+        .skip(limit * (page - 1))
+
+    const count = await Paper.find({ category_id: user.listCat[0]._id, reject_by: req.user._id }).count();
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+
+    res.render('editor/reject', { path: '/editor', pageTitle: '08 Newspaper', listDraft: listDraft });
+
+}
 
 module.exports = controller; 

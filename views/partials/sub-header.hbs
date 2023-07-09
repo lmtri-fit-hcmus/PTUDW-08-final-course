@@ -54,10 +54,11 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Tag</a>
                     <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="coffee-tag.html">#coffee</a>
-                        <a class="dropdown-item" href="#">#seafood</a>
-                        <a class="dropdown-item" href="#">#farm</a>
-                        <a class="dropdown-item" href="#">#chill</a>
+                        <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
+                            {{#each tags}}
+                            <a class="dropdown-item" href="/subcriber/{{name}}">{{name}}</a>
+                            {{/each}}
+                        </div>
                     </div>
                 </li>
             </ul>

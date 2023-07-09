@@ -49,6 +49,14 @@ const paperSchema = new Schema({
     },
     note: {
         type: String
+    },
+    approve_by: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+    reject_by: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }
 
 },

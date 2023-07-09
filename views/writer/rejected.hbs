@@ -78,7 +78,7 @@
                                 style="position: absolute; right: 20px; top:10px" id="note-btn">Note</button>
                             <div id="note-overlay">
                                 <div>
-                                    <textarea class="" id="note-text" readonly>{{note}}</textarea>
+                                    <textarea class="" id="note-text" readonly>{{this.note}}</textarea>
                                 </div>
                                 <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1"
                                     style="position: absolute; right: 45%; top: 87%;" id="ok-btn">Ok</button>
@@ -163,5 +163,23 @@
         console.log(deleteForm.action)
         deleteForm.submit();
     }
+
+</script>
+
+<script>
+    document.querySelectorAll('#ok-btn').forEach(item => {
+        item.addEventListener('click', (e) => {
+            $('#note-overlay{{@index}}').css('display', 'none')
+            $('#background').css('display', 'none')
+        });
+    });
+
+
+    document.querySelectorAll('#note-btn').forEach(item => {
+        item.addEventListener('click', (e) => {
+            $('#note-overlay').css('display', 'block')
+            $('#background').css('display', 'block')
+        });
+    });
 
 </script>

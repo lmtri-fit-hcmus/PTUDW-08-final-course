@@ -32,15 +32,7 @@
                     <div class="right-item d-flex align-items-center my-2">
                         <div class="right-item-input text-end px-3" id="tag">Tag
                         </div>
-                        {{!-- <select id="inputTag" multiple
-                            class="input w-50 border border-secondary rounded-3 p-2 text-dark" name="tag"
-                            placeholder="Chọn nhãn" data-search="true" data-silent-initial-value-set="true">
 
-                            {{#each tags}}
-                            <option value="{{id}}">{{name}}</option>
-                            {{/each}}
-
-                        </select> --}}
                         <select id="inpTag" multiple class="input w-50 border border-secondary rounded-3 p-2 text-dark"
                             name="tags" placeholder="Tags" data-search="true" data-silent-initial-value-set="true"
                             style="background-color:#ffffff" required>
@@ -48,15 +40,6 @@
                             <option value="{{id}}">{{name}}</option>
                             {{/each}}
                         </select>
-
-                        {{!-- <select class="input w-50 border border-secondary rounded-3 p-2 text-dark" name="tags"
-                            placeholder="Tag for your paper">
-                            <option value="" disabled selected>Tag for your paper
-                            </option>
-                            {{#each tags}}
-                            <option value="{{id}}">{{name}}</option>
-                            {{/each}}
-                        </select> --}}
                     </div>
                     <div class="right-item d-flex align-items-center my-2">
                         <div class="right-item-input text-end px-3" id="category">Category</div>
@@ -70,31 +53,19 @@
                             {{/each}}
                         </select>
 
-                        {{!-- <select class="input w-50 border border-secondary rounded-3 p-2" name="category"
-                            placeholder="Category for your paper" required data-search="true"
-                            data-silent-initial-value-set="true">
-                            <option value="" disabled selected>Category for your paper</option>
-                            {{#each categories}}
-                            <option value="{{id}}">{{name}}</option>
-                            {{/each}}
-                        </select> --}}
-
-
                     </div>
                     <div class="right-item d-flex align-items-center my-5">
                         <div class="right-item-input text-end px-3" id="abstract">Abstract
                         </div>
                         <textarea class="input w-75 border border-secondary rounded-3 p-2 text-dark" name="abstract"
                             cols="40" rows="5" placeholder="Abstract"></textarea>
-                        {{!-- <input class="input w-75 border border-secondary rounded-3 p-2 text-dark" type="text"
-                            name="abstract" placeholder="Abstract" required style="height: 100px;"> --}}
                     </div>
                     <div class="right-item text-center" id="avatar">
                         Avatar
                         <div class="nothing">
-                            {{!-- {{#if avatar}}
-                            <img class="nothing" id="chosen-img-paper" src="/images/{{avatar}}"
-                                alt="/images/{{avatar}}">
+                            {{!-- {{#if metadata_id.avaPaper}}
+                            <img class="nothing" id="chosen-img-paper" src="/images/{{metadata_id.avaPaper}}"
+                                alt="/images/{{metadata_id.avaPaper}}">
                             {{else}} --}}
                             <img class="nothing" id="chosen-img-paper" src="/images/avatar.png"
                                 alt="/images/avatar.png">
