@@ -47,8 +47,10 @@ controller.getHomePage = async (req, res, next) => {
         }
     }
 
-    // db.mydatabase.mycollection.find({$where : 'return this.date.getMonth() == 11'})
-    const topWeekPapers = await Paper.find({ status: 'published' })
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+    const topWeekPapers = await Paper.find({ status: 'published',createdAt: { $gte: sevenDaysAgo, $lte: today } })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .sort({ viewCount: -1 })
