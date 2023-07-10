@@ -28,4 +28,5 @@ router.get('/list-user', isAuth, adminController.getListUser)
 router.get('/assign-category', isAuth, adminController.getAssignCat)
 router.get('/renew-account', isAuth, adminController.getRenewAccount)
 
+
 module.exports = router;
