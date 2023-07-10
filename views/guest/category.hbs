@@ -27,8 +27,16 @@
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                         <div class="mb-1" style="font-size:13px;">
+                            {{#if isPremium}}
+                            {{!-- href renew --}}
                             <a class="item-title m-0 p-1" href="#" id="title">{{title}}
                             </a>
+                            {{else}}
+                            {{!-- href detail --}}
+                            <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            </a>
+                            {{/if}}
+
                             <div class="item-date">{{timeChange publicationDate}}</div>
                             <div class="item-tag my-1">
                                 {{#each this.tags}}
