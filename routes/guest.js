@@ -5,5 +5,5 @@ const router = express.Router();
 router.get('/', guestController.getDataHeader, guestController.getHomePage);
 router.get('/categories/:category', guestController.getDataHeader, guestController.getListPaperCategory);
 router.get('/tags/:tag', guestController.getDataHeader, guestController.getListPaperTag);
-router.get('/find-paper', guestController.getDataHeader, guestController.getFindPaperByName);
+router.get('/find-paper', guestController.getDataHeader, guestController.getFindPaper);
 module.exports = router;

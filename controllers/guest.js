@@ -138,7 +138,7 @@ controller.getListPaperTag = async (req, res, next) => {
         listPaperTag: listPaper,
         tagName: tag.name });
 }
-controller.getFindPaperByName = async (req, res, next) => {
+controller.getFindPaper = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
 
     const limit = 5;
@@ -149,18 +149,27 @@ controller.getFindPaperByName = async (req, res, next) => {
 
     const listPaper = await Paper.find()
         .populate({ path: 'category_id', select: 'color name' })
-        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate({ path: 'metadata_id', select: 'avaPaper content abstract' })
         .populate('tags')
         .sort({ isPremium: -1 })
         //  .limit(limit)
         //  .skip(limit * (page - 1))
     results = []
     normalizedQuery = normalizeText(findTitle)
-    console.log(normalizedQuery)
     for (let i = 0; i < listPaper.length; i++) {
-        const document = listPaper[i].title;
-        const normalizedDocument = normalizeText(document);
+        let document = ''
+        if(req.query['search-type'] == 'title')
+            document = listPaper[i].title;
+        else if(req.query['search-type'] == 'abstract')
+            document = listPaper[i].metadata_id.abstract;
+        else
+            document = listPaper[i].metadata_id.content;
+        console.log(document)
+        if(document === undefined)
+            continue
         
+        const normalizedDocument = normalizeText(document);
+        console.log(normalizedDocument)
         if (normalizedDocument.some(word => normalizedQuery.includes(word))) {
             results.push(listPaper[i]);
         }

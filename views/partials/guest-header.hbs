@@ -17,7 +17,12 @@
         <a class="logo mx-5" href="/subcriber/"><img class="img-logo w-80" src="/images/logo.png"></a>
         <form action="/find-paper" method="get" class="searchform order-sm-start order-lg-last">
             <div class="form-group d-flex mx-4">
-                <input type=" text" class="form-control pl-3" placeholder="Enter your search title" name="title">
+                <select class="form-control" id="dropdown" name="search-type">
+                    <option value="title">title</option>
+                    <option value="abstract">abstract</option>
+                    <option value="content">content</option>
+                </select>
+                <input type=" text" class="form-control pl-3" placeholder="Enter your search text" name="title">
                 <button type="submit" placeholder="" class="btn-search bg-light border border-1 rounded">
                     <i class="bi bi-search"></i>
                 </button>
