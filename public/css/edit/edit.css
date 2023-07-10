@@ -46,6 +46,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-decoration: none;
+    margin-right: 70px;
 }
 
 .item-img {

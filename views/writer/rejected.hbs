@@ -75,7 +75,7 @@
                         </div>
                         <div class="option">
                             <button class="option-item text-white bg-warning m-2"
-                                style="position: absolute; right: 20px; top:10px" id="note-btn">Note</button>
+                                style="position: absolute; right: 20px; top:40px" id="note-btn">Note</button>
                             <div id="note-overlay">
                                 <div>
                                     <textarea class="" id="note-text" readonly>{{this.note}}</textarea>
@@ -88,11 +88,12 @@
                             </div>
                             <a href="/writer/editPaper/{{_id}}">
                                 <button class="option-item text-white bg-success m-2"
-                                    style="position: absolute; right: 20px; top:50px" id="edit-btn">Edit</button>
+                                    style="position: absolute; right: 20px; top:80px" id="edit-btn">Edit</button>
                             </a>
                             <button class="option-item text-white bg-danger m-2"
-                                style="position: absolute; right: 20px; top:90px" id="delete-btn" data-bs-toggle="modal"
-                                data-bs-id="{{this._id}}" data-bs-target="#delete-paper-modal">Delete</button>
+                                style="position: absolute; right: 20px; top:120px" id="delete-btn"
+                                data-bs-toggle="modal" data-bs-id="{{this._id}}"
+                                data-bs-target="#delete-paper-modal">Delete</button>
                         </div>
                     </div>
                 </div>

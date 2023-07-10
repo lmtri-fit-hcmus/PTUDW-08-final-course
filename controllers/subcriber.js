@@ -19,15 +19,17 @@ controller.getDataHeader = async (req, res, next) => {
     res.locals.tags = tags;
 
     let checkPremium
-    let expireDate = new Date(req.user.lastPaidDate);
+    if (req.user.lastPaidDate) {
+        let expireDate = new Date(req.user.lastPaidDate);
 
-    expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
-    nowDate = new Date();
-    if (nowDate < expireDate) {
-        checkPremium = true;
-    }
-    else {
-        checkPremium = false;
+        expireDate.setDate(req.user.lastPaidDate.getDate() + 7)
+        nowDate = new Date();
+        if (nowDate < expireDate) {
+            checkPremium = true;
+        }
+        else {
+            checkPremium = false;
+        }
     }
 
     res.locals.checkPremium = checkPremium;

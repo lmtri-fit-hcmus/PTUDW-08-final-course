@@ -200,7 +200,7 @@ controller.postPaper = async (req, res, next) => {
         author_id: user._id,
         metadata_id: metadata._id
     })
-    res.render('writer/submitted', { path: '/writer', pageTitle: 'Submitted' });
+    res.redirect('submitted');
 }
 
 controller.getEditPaper = async (req, res, next) => {
