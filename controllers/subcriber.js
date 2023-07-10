@@ -41,6 +41,7 @@ controller.getHomePage = async (req, res, next) => {
     req.app.locals.layout = 'subcriber'
 
     const result = await Paper.aggregate([
+        { $match: { status: 'published' } },
         {
             $group: {
                 _id: "$category_id",
@@ -48,7 +49,8 @@ controller.getHomePage = async (req, res, next) => {
             }
         },
         { $sort: { subTotal: -1 } },
-        { $limit: 10 }
+        { $limit: 10 },
+
     ])
     let top10Cat = [];
     for (var i = 0; i < 10; i++) {

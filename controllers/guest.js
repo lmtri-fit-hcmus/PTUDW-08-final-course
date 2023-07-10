@@ -10,7 +10,7 @@ const controller = {}
 
 function normalizeText(text) {
     return text.toLowerCase().replace(/[^\w\s]/g, '').split(' ');
-  }
+}
 
 controller.getDataHeader = async (req, res, next) => {
 
@@ -26,6 +26,7 @@ controller.getHomePage = async (req, res, next) => {
     req.app.locals.layout = 'guest'
 
     const result = await Paper.aggregate([
+        { $match: { status: 'published' } },
         {
             $group: {
                 _id: "$category_id",
@@ -33,7 +34,8 @@ controller.getHomePage = async (req, res, next) => {
             }
         },
         { $sort: { subTotal: -1 } },
-        { $limit: 10 }
+        { $limit: 10 },
+
     ])
     let top10Cat = [];
     for (var i = 0; i < 10; i++) {
@@ -50,7 +52,7 @@ controller.getHomePage = async (req, res, next) => {
     const today = new Date();
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(today.getDate() - 7);
-    const topWeekPapers = await Paper.find({ status: 'published',createdAt: { $gte: sevenDaysAgo, $lte: today } })
+    const topWeekPapers = await Paper.find({ status: 'published', createdAt: { $gte: sevenDaysAgo, $lte: today } })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .sort({ viewCount: -1 })
@@ -104,11 +106,13 @@ controller.getListPaperCategory = async (req, res, next) => {
         totalRows: count,
         queryParams: req.query
     };
-    res.render('guest/category', 
-    {   path: '/guest',
-         pageTitle: req.params.category,
-        listPaperCat: listPaperCat,
-        catName: cat.name });
+    res.render('guest/category',
+        {
+            path: '/guest',
+            pageTitle: req.params.category,
+            listPaperCat: listPaperCat,
+            catName: cat.name
+        });
 }
 controller.getListPaperTag = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
@@ -116,16 +120,16 @@ controller.getListPaperTag = async (req, res, next) => {
     const limit = 5;
 
     req.app.locals.layout = 'guest'
-   
+
     const tag = await Tags.findOne({ name: req.params.tag })
     console.log(tag.name)
     const listPaper = await Paper.find()
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
-        .populate({path: 'tags',match: { _id: tag._id }, select: 'name'})
+        .populate({ path: 'tags', match: { _id: tag._id }, select: 'name' })
         .sort({ isPremium: -1 })
-         .limit(limit)
-         .skip(limit * (page - 1))
+        .limit(limit)
+        .skip(limit * (page - 1))
     count = listPaper.length
     console.log(listPaper)
     res.locals.pagination = {
@@ -134,11 +138,13 @@ controller.getListPaperTag = async (req, res, next) => {
         totalRows: count,
         queryParams: req.query
     };
-    res.render('guest/tag', 
-    {   path: '/guest',
-        pageTitle: req.params.category,
-        listPaperTag: listPaper,
-        tagName: tag.name });
+    res.render('guest/tag',
+        {
+            path: '/guest',
+            pageTitle: req.params.category,
+            listPaperTag: listPaper,
+            tagName: tag.name
+        });
 }
 controller.getFindPaper = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
@@ -146,7 +152,7 @@ controller.getFindPaper = async (req, res, next) => {
     const limit = 5;
 
     req.app.locals.layout = 'guest'
-   
+
     const findTitle = req.query.title
 
     const listPaper = await Paper.find()
@@ -154,22 +160,22 @@ controller.getFindPaper = async (req, res, next) => {
         .populate({ path: 'metadata_id', select: 'avaPaper content abstract' })
         .populate('tags')
         .sort({ isPremium: -1 })
-        //  .limit(limit)
-        //  .skip(limit * (page - 1))
+    //  .limit(limit)
+    //  .skip(limit * (page - 1))
     results = []
     normalizedQuery = normalizeText(findTitle)
     for (let i = 0; i < listPaper.length; i++) {
         let document = ''
-        if(req.query['search-type'] == 'title')
+        if (req.query['search-type'] == 'title')
             document = listPaper[i].title;
-        else if(req.query['search-type'] == 'abstract')
+        else if (req.query['search-type'] == 'abstract')
             document = listPaper[i].metadata_id.abstract;
         else
             document = listPaper[i].metadata_id.content;
         console.log(document)
-        if(document === undefined)
+        if (document === undefined)
             continue
-        
+
         const normalizedDocument = normalizeText(document);
         console.log(normalizedDocument)
         if (normalizedDocument.some(word => normalizedQuery.includes(word))) {
@@ -178,19 +184,20 @@ controller.getFindPaper = async (req, res, next) => {
     }
     count = results.length
     results = results.slice(limit * (page - 1), limit * page)
-    
+
     res.locals.pagination = {
         page: page,
         limit: limit,
         totalRows: count,
         queryParams: req.query
     };
-    res.render('guest/find-paper', 
-    {   path: '/guest',
-        message : results.length <= 1 ? "Found " + results.length + " result for '" + findTitle + "'" : "Found " + results.length + " results for '" + findTitle + "'",
-        pageTitle: "Find paper by name",
-        listPaper: results,
-   });
+    res.render('guest/find-paper',
+        {
+            path: '/guest',
+            message: results.length <= 1 ? "Found " + results.length + " result for '" + findTitle + "'" : "Found " + results.length + " results for '" + findTitle + "'",
+            pageTitle: "Find paper by name",
+            listPaper: results,
+        });
 }
 
 
