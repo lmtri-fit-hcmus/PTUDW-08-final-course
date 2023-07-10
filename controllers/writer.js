@@ -38,6 +38,7 @@ controller.getPublished = async (req, res, next) => {
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
         .limit(limit)
+        .sort({ updatedAt: -1 })
         .skip(limit * (page - 1))
 
     const count = await Paper.find({ author_id: req.user._id, status: "published" }).count();
@@ -62,6 +63,7 @@ controller.getAccepted = async (req, res, next) => {
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
@@ -87,6 +89,7 @@ controller.getRejected = async (req, res, next) => {
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
@@ -112,6 +115,7 @@ controller.getSubmitted = async (req, res, next) => {
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 

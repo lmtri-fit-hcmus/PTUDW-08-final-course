@@ -83,7 +83,7 @@ controller.getHomePage = async (req, res, next) => {
     const otherPapers = await Paper.find({ status: 'published' })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
-        .limit(8);
+        .limit(16);
 
     res.render('subcriber/home', {
         path: '/subcriber', pageTitle: '08 Newspaper',

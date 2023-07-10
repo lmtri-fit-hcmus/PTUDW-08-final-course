@@ -28,6 +28,7 @@ controller.getHomePage = async (req, res, next) => {
         .populate('category_id')
         .populate('metadata_id')
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
@@ -146,6 +147,7 @@ controller.getApprovePaper = async (req, res, next) => {
         .populate('category_id')
         .populate('metadata_id')
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
@@ -175,10 +177,11 @@ controller.getRejectPaper = async (req, res, next) => {
 
     const limit = 5;
 
-    const listDraft = await Paper.find({ category_id: user.listCat[0]._id, reject_by: req.user._id })
+    const listDraft = await Paper.find({ category_id: user.listCat[0]._id, reject_by: req.user._id, status: 'rejected' })
         .populate('category_id')
         .populate('metadata_id')
         .populate('tags')
+        .sort({ updatedAt: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
 
