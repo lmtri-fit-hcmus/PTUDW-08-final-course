@@ -57,8 +57,24 @@
                 
             </div>
         </div>
+        <div class="col-lg-12">
+            <nav aria-label="Page navigation example" id="pagination">
+                {{{createPagination pagination paginationClass="pagination justify-content-center"
+                leftText="<" rightText=">" }}} </nav>
+        </div>
     </div>
     <style>
+        .active>.page-link, .page-link.active {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: #357c4d;
+    border-color: #357c4d;
+}
+
+.pagination {
+
+    --bs-pagination-color: #0ac66e;
+}
         #btn-paper-management {
      background-color: #357C4D; 
     }

@@ -10,6 +10,7 @@
     text-decoration: none;
     color: black;
 }
+
 .dropdown-menu[data-bs-popper] {
     top: 96%;
     left: 0;
