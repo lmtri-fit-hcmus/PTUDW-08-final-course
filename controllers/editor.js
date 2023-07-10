@@ -109,6 +109,7 @@ controller.postChangePwd = async (req, res, next) => {
 
 controller.acceptPaper = async (req, res, next) => {
     req.app.locals.layout = 'editor'
+    let dateUpdate = new Date(req.body.date + ' ' + req.body.time + ':00');
     await Paper.findByIdAndUpdate({ _id: req.params.id },
         {
             $set: {

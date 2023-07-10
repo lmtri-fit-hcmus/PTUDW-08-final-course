@@ -20,7 +20,7 @@
 }
 
 
-#reject-overlay {
+/* #reject-overlay {
     display: none;
     position: fixed;
     top: 50%;
@@ -33,7 +33,7 @@
     border: 1px solid black;
     border-radius: 20px;
     align-items: center;
-}
+} */
 
 
 

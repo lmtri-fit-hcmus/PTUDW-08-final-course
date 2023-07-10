@@ -62,64 +62,12 @@
                         </div>
                         <div class="option">
                             <button class="option-item text-white bg-success m-2"
-                                style="position: absolute; right: 20px; top:10px" id="accept-btn">Accept</button>
-                            <form class="container" action="/editor/accept/{{this._id}}?_method=PUT" method="POST"
-                                id="accept-overlay">
-                                <div class="title fs-4 m-3 mb-4"> Accept
-                                </div>
-                                <div class="item d-flex align-items-center mx-5 my-4">
-                                    <div class="name text-end px-3 py-2">Date</div>
-                                    <input class="input w-75 border border-secondary rounded-3 p-2 text-dark"
-                                        type="date" placeholder="Date" name="date">
-                                </div>
+                                style="position: absolute; right: 20px; top:10px" data-bs-toggle="modal"
+                                data-bs-id="{{this._id}}" data-bs-target="#accept-paper-modal">Accept</button>
 
-                                <div class="item d-flex align-items-center mx-5 my-4">
-                                    <div class="name text-end px-3 py-2">Time</div>
-                                    <input class="input w-75 border border-secondary rounded-3 p-2 text-dark"
-                                        type="time" placeholder="Time" name="time">
-                                </div>
-
-                                <div class="item d-flex justify-content-end mx-5 my-4">
-                                    <div class="px-2">
-                                        <button
-                                            class="btn-cancel w-10 border bg-secondary text-white rounded-3 px-3 py-1"
-                                            id="cancel-btn" type="button">Cancel
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1"
-                                            id="save-btn" type="submit">Save
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </form>
                             <button class="option-item text-white bg-danger m-2" id="reject-btn"
-                                style="position: absolute; right: 20px; top:50px">Reject</button>
-                            <form class="container" action="/editor/reject/{{this._id}}?_method=PUT" method="POST"
-                                id="reject-overlay">
-                                <div class="title fs-4 m-3 mb-4"> Reject
-                                </div>
-                                <div class="item  mx-5 my-4">
-                                    <div class="name py-2">Note
-                                    </div>
-                                    <textarea class="input w-100 h-100 border border-secondary rounded-3 p-2 text-dark"
-                                        placeholder="Note" name="note" rows="7" required></textarea>
-                                </div>
-                                <div class=" item d-flex justify-content-end mx-5 my-4">
-                                    <div class="px-2">
-                                        <button
-                                            class="btn-cancel w-10 border bg-secondary text-white rounded-3 px-3 py-1"
-                                            id="cancel-btn" type="button">Cancel
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1"
-                                            id="save-btn" type="submit">Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                style="position: absolute; right: 20px; top:50px" data-bs-toggle="modal"
+                                data-bs-id="{{this._id}}" data-bs-target="#reject-paper-modal">Reject</button>
                         </div>
                     </div>
                 </div>
@@ -138,7 +86,7 @@
         </div>
     </div>
 </main>
-<div id="background"></div>
+{{!-- <div id="background"></div> --}}
 <script>
     document.querySelectorAll('#pagination li').forEach(li => {
         li.classList.add('page-item');
@@ -147,3 +95,131 @@
         a.classList.add('page-link');
     })
 </script>
+
+
+
+
+<div class="modal" tabindex="-1" id="reject-paper-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form name="reject-paper-form" method="POST">
+                    <textarea class="input w-100 h-100 border border-secondary rounded-3 p-2 text-dark"
+                        placeholder="Note" name="note" rows="7" required></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-reject-paper" type="button" class="btn btn-danger">Reject</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="accept-paper-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Accept</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form name="accept-paper-form" method="POST">
+                    <div class="item d-flex align-items-center mx-5 my-4">
+                        <div class="name text-end px-3 py-2">Date</div>
+                        <input class="input w-75 border border-secondary rounded-3 p-2 text-dark" type="date"
+                            placeholder="Date" name="date" required>
+                    </div>
+
+                    <div class="item d-flex align-items-center mx-5 my-4">
+                        <div class="name text-end px-3 py-2">Time</div>
+                        <input class="input w-75 border border-secondary rounded-3 p-2 text-dark" type="time"
+                            placeholder="Time" name="time" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-accept-paper" type="button" class="btn btn-success">Accept</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const rejectPaperModal = document.getElementById('reject-paper-modal')
+    var rejectForm = document.forms['reject-paper-form'];
+    var btnReject = document.getElementById('btn-reject-paper');
+
+    if (rejectPaperModal) {
+        console.log()
+        rejectPaperModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            id = button.getAttribute('data-bs-id');
+            console.log(id);
+        })
+    }
+    btnReject.onclick = function () {
+        rejectForm.action = '/editor/reject/' + id + '?_method=PUT';
+        console.log(rejectForm.action)
+        rejectForm.submit();
+    }
+
+
+
+    const acceptPaperModal = document.getElementById('accept-paper-modal')
+    var acceptForm = document.forms['accept-paper-form'];
+    var btnAccept = document.getElementById('btn-accept-paper');
+
+    if (acceptPaperModal) {
+        console.log()
+        acceptPaperModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            id = button.getAttribute('data-bs-id');
+            console.log(id);
+        })
+    }
+    btnAccept.onclick = function () {
+        acceptForm.action = '/editor/accept/' + id + '?_method=PUT';
+        console.log(acceptForm.action)
+        acceptForm.submit();
+    }
+</script>
+
+
+
+
+
+<form class="container" action="/editor/accept/{{this._id}}?_method=PUT" method="POST" id="accept-overlay">
+    <div class="title fs-4 m-3 mb-4"> Accept
+    </div>
+    <div class="item d-flex align-items-center mx-5 my-4">
+        <div class="name text-end px-3 py-2">Date</div>
+        <input class="input w-75 border border-secondary rounded-3 p-2 text-dark" type="date" placeholder="Date"
+            name="date">
+    </div>
+
+    <div class="item d-flex align-items-center mx-5 my-4">
+        <div class="name text-end px-3 py-2">Time</div>
+        <input class="input w-75 border border-secondary rounded-3 p-2 text-dark" type="time" placeholder="Time"
+            name="time">
+    </div>
+
+    <div class="item d-flex justify-content-end mx-5 my-4">
+        <div class="px-2">
+            <button class="btn-cancel w-10 border bg-secondary text-white rounded-3 px-3 py-1" id="cancel-btn"
+                type="button">Cancel
+            </button>
+        </div>
+        <div>
+            <button class="btn-save w-10 border bg-success text-white rounded-3 px-3 py-1" id="save-btn"
+                type="submit">Save
+            </button>
+        </div>
+    </div>
+
+</form>
