@@ -115,12 +115,14 @@
                 <div class="scroll " id="scroll-style-trend">
                     {{#each topTrendPapers}}
                     <div class="top-10-item">
-                        <div class="d-flex mb-3">
-                            <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
-                                style="width:60%;height:120px;object-fit:cover;">
-                            {{#if isPremium}}
-                            <i class="bi bi-star-fill" style="color: yellow; left: 120px"></i>
-                            {{/if}}
+                        <div class="d-flex mb-3" style="position:relative">
+                            <div style="position:relative">
+                                <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
+                                    style="width:120px;height:120px;object-fit:cover;">
+                                {{#if isPremium}}
+                                <i class="bi bi-star-fill" style="color: yellow;"></i>
+                                {{/if}}
+                            </div>
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                                 <div class="mb-1" style="font-size:13px;">
                                     <div class="top-10-item-date p-1">{{timeChange publicationDate}}</div>
@@ -143,11 +145,13 @@
                     {{#each topNewPapers}}
                     <div class="top-10-item">
                         <div class="d-flex mb-3" style="position:relative">
-                            <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
-                                style="width:60%;height:120px;object-fit:cover;">
-                            {{#if isPremium}}
-                            <i class="bi bi-star-fill" style="color: yellow; left: 120px"></i>
-                            {{/if}}
+                            <div style="position:relative">
+                                <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
+                                    style="width:120px;height:120px;object-fit:cover;">
+                                {{#if isPremium}}
+                                <i class="bi bi-star-fill" style="color: yellow;"></i>
+                                {{/if}}
+                            </div>
                             <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
                                 <div class="mb-1" style="font-size:13px;">
                                     <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
