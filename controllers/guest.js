@@ -8,6 +8,10 @@ const Tags = require('../models/tag');
 const bcrypt = require('bcrypt');
 const controller = {}
 
+function normalizeText(text) {
+    return text.toLowerCase().replace(/[^\w\s]/g, '').split(' ');
+  }
+
 controller.getDataHeader = async (req, res, next) => {
 
     const categories = await Cats.find({})
@@ -78,21 +82,20 @@ controller.getHomePage = async (req, res, next) => {
 };
 controller.getListPaperCategory = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
-
-    const limit = 5;
+    const limit = 3;
 
     req.app.locals.layout = 'guest'
     const cat = await Cats.findOne({ name: req.params.category })
 
-    const listPaperCat = await Paper.find({ category_id: cat._id })
+    const listPaperCat = await Paper.find({ category_id: cat._id, status: 'published' })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate('tags')
         .sort({ isPremium: -1 })
         .limit(limit)
         .skip(limit * (page - 1))
-
     const count = await Paper.find({ category_id: cat._id, status: 'published' }).count();
+
     res.locals.pagination = {
         page: page,
         limit: limit,
@@ -134,6 +137,49 @@ controller.getListPaperTag = async (req, res, next) => {
         pageTitle: req.params.category,
         listPaperTag: listPaper,
         tagName: tag.name });
+}
+controller.getFindPaperByName = async (req, res, next) => {
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    req.app.locals.layout = 'guest'
+   
+    const findTitle = req.query.title
+
+    const listPaper = await Paper.find()
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate('tags')
+        .sort({ isPremium: -1 })
+        //  .limit(limit)
+        //  .skip(limit * (page - 1))
+    results = []
+    normalizedQuery = normalizeText(findTitle)
+    console.log(normalizedQuery)
+    for (let i = 0; i < listPaper.length; i++) {
+        const document = listPaper[i].title;
+        const normalizedDocument = normalizeText(document);
+        
+        if (normalizedDocument.some(word => normalizedQuery.includes(word))) {
+            results.push(listPaper[i]);
+        }
+    }
+    count = results.length
+    results = results.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('guest/find-paper', 
+    {   path: '/guest',
+        message : results.length <= 1 ? "Found " + results.length + " result for '" + findTitle + "'" : "Found " + results.length + " results for '" + findTitle + "'",
+        pageTitle: "Find paper by name",
+        listPaper: results,
+   });
 }
 
 
