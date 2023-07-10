@@ -10,12 +10,24 @@ function normalization(text) {
 }
 exports.getCategories = async (req, res, next) => {
   req.app.locals.layout = 'admin'
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   cats = (await Cats.find()).map(category => {
     ch = category['name']
     c = category.toObject()
     c['signname'] = normalization(ch)
     return c
   });
+  
+  count = cats.length
+  cats = cats.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
   res.render('admin/categories', {
     path: '/admin/categories',
     pageTitle: 'Manage categories',
@@ -175,7 +187,19 @@ exports.postAddTag = (req, res, next) => {
 
 exports.getListPaper = async (req, res, next) => {
   req.app.locals.layout = 'admin'
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   list = await (Papers.find().populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
+  
+  count = list.length
+  list = list.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
   res.render('admin/list-paper', {
     path: '/admin/list-paper',
     pageTitle: 'Manage papers',
@@ -186,7 +210,19 @@ exports.getListPaper = async (req, res, next) => {
 
 exports.getListPendingReviewPaper = async(req, res, next) => {
   req.app.locals.layout = 'admin'
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   list = await (Papers.find({status: "submitted"}).populate({ path: 'category_id', select: 'name color' })).populate('tags', 'name')
+  count = list.length
+  list = list.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+  
   res.render('admin/pending-review', {
     path: 'admin/pending-review',
     pageTitle: 'Manage papers',
@@ -196,7 +232,18 @@ exports.getListPendingReviewPaper = async(req, res, next) => {
 
 exports.getListUser = (req, res, next) => {
   req.app.locals.layout = 'admin'
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   Users.find().then(users =>{
+    count = users.length
+    users = users.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
     res.render('admin/list-user', {
       path: 'admin/list-user',
       pageTitle: 'Manage user',
@@ -207,9 +254,19 @@ exports.getListUser = (req, res, next) => {
 
 exports.getAssignCat = async (req, res, next) => {
   req.app.locals.layout = 'admin'
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   Users.find({role: "Editor"}).populate('listCat').then(users =>{
     Cats.find().then(cats =>{
-      
+      count = cats.length
+      cats = cats.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
       res.render('admin/assign-category', {
       path: 'admin/assign-category',
       pageTitle: 'Manage user',
@@ -220,13 +277,94 @@ exports.getAssignCat = async (req, res, next) => {
   })
 }
 
+exports.getRenew =  (req, res, next) => {
+  
+  req.app.locals.layout = 'admin'
+  
+  Users.updateOne(
+    { _id: req.query.user_id }, // Filter to find the document to update
+    {
+      lastPaidDate : new Date()
+    },
+    { new: true }
+  ).then(updatedObject => {
+    console.log('Object updated successfully');
+  })
+    .catch(error => {
+      console.error('Error updating object:', error);
+    });;
+  
+    res.redirect("/admin/renew-account")
+}
+
+exports.getAssign =  (req, res, next) => {
+  
+  req.app.locals.layout = 'admin'
+  console.log(req.query.category_id,  req.query.user_id)
+  Users.updateOne(
+    { _id: req.query.user_id }, // Filter to find the document to update
+    {
+      listCat : [req.query.category_id]
+    },
+    { new: true }
+  ).then(updatedObject => {
+    console.log('Object updated successfully');
+  })
+    .catch(error => {
+      console.error('Error updating object:', error);
+    });;
+  
+    res.redirect("/admin/assign-category")
+}
+
 exports.getRenewAccount = async (req, res, next) => {
   req.app.locals.layout = 'admin'
+  const today  = new Date();
+  let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+  const limit = 7;
   Users.find({role: "Subcriber"}).then(users =>{
+      let tmp = JSON.parse(JSON.stringify(users))
+      for(let i = 0 ; i < users.length; i++){
+        if((today.getTime() - (users[i].lastPaidDate).getTime())/(1000 * 3600 * 24 ) <= 7){
+          tmp[i].expired = 0
+          tmp[i].left = 7 - parseInt(((today.getTime() - (users[i].lastPaidDate).getTime())/(1000 * 3600 * 24 )))
+        }
+        else{
+          tmp[i].expired = 1
+        }
+      }
+      count = tmp.length
+      tmp = tmp.slice(limit * (page - 1), limit * page)
+    
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
       res.render('admin/renew-account', {
       path: 'admin/renew-account',
       pageTitle: 'Manage user',
-      listUser: users
+      listUser: tmp, 
     });
     })
+}
+
+exports.getPublishPaper = (req, res, next) => {
+  
+  req.app.locals.layout = 'admin'
+  Papers.updateOne(
+    { _id: req.query.paper_id }, // Filter to find the document to update
+    {
+      status : "published"
+    },
+    { new: true }
+  ).then(updatedObject => {
+    console.log('Object updated successfully');
+  })
+    .catch(error => {
+      console.error('Error updating object:', error);
+    });;
+  
+    res.redirect("/admin/pending-review")
 }

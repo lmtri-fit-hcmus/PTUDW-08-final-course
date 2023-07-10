@@ -22,11 +22,16 @@ router.post('/tags/add', isAuth, adminController.postAddTag)
 router.post('/categories/add', isAuth, adminController.postAddCategory)
 
 router.get('/list-paper', isAuth, adminController.getListPaper)
+router.get('/pending-review/publish', isAuth, adminController.getPublishPaper)
 router.get('/pending-review', isAuth, adminController.getListPendingReviewPaper)
 
-router.get('/list-user', isAuth, adminController.getListUser)
-router.get('/assign-category', isAuth, adminController.getAssignCat)
-router.get('/renew-account', isAuth, adminController.getRenewAccount)
 
+router.get('/list-user', isAuth, adminController.getListUser)
+
+router.get('/assign-category/assign', isAuth, adminController.getAssign)
+router.get('/assign-category', isAuth, adminController.getAssignCat)
+
+router.get('/renew-account/renew', isAuth, adminController.getRenew)
+router.get('/renew-account', isAuth, adminController.getRenewAccount)
 
 module.exports = router;

@@ -26,10 +26,10 @@
         <div class="option col-2 d-flex px-5 justify-content-center align-items-center">
             <div class="container">
                 <a class="option-to-choose option-link d-block" id="list-user-option" href="list-user"> List user</a>
-                <a class="option-to-choose option-link d-block" id="assign-cat-option" href="assign-category"
-                    style="color: #357C4D;"><i class="fa-solid fa-caret-right" style="color: #21ab51;"></i> Assign
+                <a class="option-to-choose option-link d-block" id="assign-cat-option" href="assign-category"> Assign
                     category</a>
-                <a class="option-to-choose option-link d-block" id="renew-acc-option" href="renew-account">Renew
+                <a class="option-to-choose option-link d-block" id="renew-acc-option" href="renew-account"
+                    style="color: #357C4D;"><i class="fa-solid fa-caret-right" style="color: #21ab51;"></i> Renew
                     account</a>
             </div>
             <div class="vertical-line" style="border-left: 1px solid black; height: 100%;"></div>
@@ -50,22 +50,36 @@
                                 <div class="user-role">{{this.email}}</div>
                                 <br>
                                 <div class="user-role">{{this.role}}</div>
+                                {{#if this.expired}}
                                 <div id="tmp-expire-day" class="expire-day"
-                                    style="margin-right: 10px; color: #921C1C; position: absolute; bottom: 0; right: 0;">
+                                    style="; margin-right: 10px; color: #921C1C; position: absolute; bottom: 0; right: 0;">
                                     Expired </div>
+                                {{else}}
+                                    <div id="tmp-expire-day" class="expire-day" 
+                                    style=" margin-right: 10px; color:#21ab51; position: absolute; bottom: 0; right: 0;">
+                                    Expired after {{this.left}} days </div>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
-                    <div class="renew-account-btn col-2 dropdown d-flex justify-content-center align-items-center">
-                        <button id="renew-btn" class="w-100">
-                            Renew account
+                    {{#if this.expired}}
+                    <div class="renew-account-btn col-2 dropdown d-flex justify-content-center align-items-center ">
+                        <button id="renew-btn" class="w-100"   >
+                            <a style="text-decoration: none; color:black" href="renew-account/renew?user_id={{this._id}}">Renew account</a>
                         </button>
                     </div>
+                    {{/if}}
+
 
                 </div>
                 {{/each}}
                 <br>
             </div>
+        </div>
+         <div class="col-lg-12">
+            <nav aria-label="Page navigation example" id="pagination">
+                {{{createPagination pagination paginationClass="pagination justify-content-center"
+                leftText="<" rightText=">" }}} </nav>
         </div>
     </div>
     <div id="overlay-show"></div>
