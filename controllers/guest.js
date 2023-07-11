@@ -207,7 +207,39 @@ controller.getFindPaper = async (req, res, next) => {
             listPaper: results,
         });
 }
+controller.getShowPaper = (req, res, next) => {
+    req.app.locals.layout = 'guest'
+    const paper_id = req.query.paper_id
+    console.log(paper_id)
+    Paper.find({_id : paper_id})
+    .populate({ path: 'category_id', select: 'color name' })
+    .populate({ path: 'metadata_id', select: 'avaPaper content abstract' })
+    .populate({ path: 'author_id', select: 'email'})
+    .populate('tags').then(paper => {
+        Comment.find({paper_id : paper_id})
+        .populate({ path: 'user_id', select: 'email avatar'})
+        .then(comments => {
+                Paper.find({category_id : paper[0].category_id})
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .then(sameCatPapers => {
+            console.log(sameCatPapers)
+            res.render('paper/details', {
+                path: 'paper',
+                pageTitle: 'Guess',
+                paper: paper[0],
+                comments: comments,
+                sameCatPapers: sameCatPapers
+              });
+            })
+        })
+        
 
+        
+    })
+
+       
+  }
 
 // controller.getProfilePage = async (req, res, next) => {
 //     req.app.locals.layout = 'subcriber'

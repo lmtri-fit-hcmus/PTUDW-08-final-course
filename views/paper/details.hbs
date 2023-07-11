@@ -1,0 +1,76 @@
+<main>
+        <div class="container my-5">
+            <div class="mt-5">
+                <div class="header-content mt-5 d-flex justify-content-between">
+                    <div class="item-cat-tag d-flex">
+                        <div
+                            class="text-white text-decoration-none rounded-3 my-1 mx-2 d-block px-2" style="background-color: {{paper.category_id.color}};" >
+                            {{paper.category_id.name}}
+                        </div>
+                        <div class="item-tag my-1">
+                            {{#each paper.tags}}
+                            <a class="bg-secondary text-decoration-none text-white rounded-3 mx-1 px-1"
+                                href="coffee-tag.html">#{{name}}
+                            </a>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="item-date text-end">{{timeChange paper.createdAt}}</div>
+                </div>
+                <span class="line mb-4"></span>
+                <div class="title-detail h2 text-center"> {{paper.title}}</div>
+
+                <span class="line mt-4"></span>
+                <div class="item-author fw-bold text-end">Author: {{paper.author_id.email}}</div>
+                <div class="item-img text-center my-5">
+                    <img src="/images/{{paper.metadata_id.avaPaper}}" alt="website template image"
+                        style="object-fit:cover;">
+                </div>
+            </div>
+
+            <div class="content">
+                {{{paper.metadata_id.content}}}
+            </div>
+            <div class="comment-content mt-5">
+                <span class="mt-5 h5  text-success text-decoration-none">Comment</span>
+                <span class="line"></span>
+                {{#each comments}}
+                    <div class="a-comment d-flex py-2">
+                    <img class="img-avatar" src="/images/{{comments.user_id.avatar}}" style="width:50px;height:50px;">
+                    <div class="full-content mx-2 w-100 ">
+                        <span class="user fw-bold">{{comments.user_id.email}}</span>
+                        {{comments.user_id.comment_text}}
+
+                        <div class="comment-time text-start mt-2">Mar, 14th, 2023</div>
+                    </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="same-cat mt-5">
+                <span class="mt-5 h5  text-success text-decoration-none">On the same category</span>
+                <span class="line"></span>
+                <div class="slick-cat">
+                    {{#each sameCatPapers}}
+                        <div class="same-cat-item p-3">
+                        <div class="d-flex mb-3">
+                            <img src="/images/{{metadata_id.avaPaper}}" alt="website template image"
+                                style="width:120px;height:120px;object-fit:cover;">
+                            <div class="w-100 d-flex flex-column bg-light px-3" style="height:120px;">
+                                <div class="mb-1" style="font-size:13px;">
+                                    <div class="same-cat-item-date p-1">{{timeChange createdAt}}</div>
+                                    <div class="same-cat-item-category text-white p-1 rounded-3" href="#" style="background-color: {{category_id.color}};">
+                                        {{category_id.name}}
+                                        </d>
+                                    </div>
+                                    <a class="same-cat-item-title m-0 p-1" href="#">{{title}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </main>
