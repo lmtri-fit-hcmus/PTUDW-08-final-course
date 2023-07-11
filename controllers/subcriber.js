@@ -8,6 +8,10 @@ const Tags = require('../models/tag');
 const bcrypt = require('bcrypt');
 const controller = {}
 
+function normalizeText(text) {
+    return text.toLowerCase().replace(/[^\w\s]/g, '').split(' ');
+}
+
 controller.getDataHeader = async (req, res, next) => {
     const user = await User.findById({ _id: req.session.user._id });
     res.locals.avatar = user.avatar;
@@ -186,6 +190,99 @@ controller.getListPaperCategory = async (req, res, next) => {
     res.render('subcriber/category', { path: '/subcriber', pageTitle: req.params.category, listPaperCat: listPaperCat, catName: cat.name });
 }
 
+controller.getListPaperTag = async (req, res, next) => {
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
 
+    const limit = 5;
+
+    req.app.locals.layout = 'subcriber'
+
+    const tag = await Tags.findOne({ name: req.params.tag })
+    console.log(tag.name)
+    const listPaper = await Paper.find()
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
+        .populate({ path: 'tags', select: 'name' })
+    let tmp = JSON.parse(JSON.stringify(listPaper))
+    console.log(tmp)
+    let listPapers = []
+    for (let i = 0; i < tmp.length; i++) {
+        for (let j = 0; j < tmp[i].tags.length; j++) {
+            if (tmp[i].tags[j]._id == tag._id) {
+                listPapers.push(tmp[i])
+            }
+        }
+    }
+    count = listPapers.length
+    listPapers = listPapers.slice(limit * (page - 1), limit * page)
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    console.log(listPapers)
+    res.render('subcriber/tag',
+        {
+            path: '/subcriber',
+            pageTitle: req.params.category,
+            listPaperTag: listPapers,
+            tagName: tag.name
+        });
+}
+
+controller.getFindPaper = async (req, res, next) => {
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
+
+    const limit = 5;
+
+    req.app.locals.layout = 'subcriber'
+
+    const findTitle = req.query.title
+
+    const listPaper = await Paper.find()
+        .populate({ path: 'category_id', select: 'color name' })
+        .populate({ path: 'metadata_id', select: 'avaPaper content abstract' })
+        .populate('tags')
+        .sort({ isPremium: -1 })
+    //  .limit(limit)
+    //  .skip(limit * (page - 1))
+    results = []
+    normalizedQuery = normalizeText(findTitle)
+    for (let i = 0; i < listPaper.length; i++) {
+        let document = ''
+        if (req.query['search-type'] == 'title')
+            document = listPaper[i].title;
+        else if (req.query['search-type'] == 'abstract')
+            document = listPaper[i].metadata_id.abstract;
+        else
+            document = listPaper[i].metadata_id.content;
+        console.log(document)
+        if (document === undefined)
+            continue
+
+        const normalizedDocument = normalizeText(document);
+        console.log(normalizedDocument)
+        if (normalizedDocument.some(word => normalizedQuery.includes(word))) {
+            results.push(listPaper[i]);
+        }
+    }
+    count = results.length
+    results = results.slice(limit * (page - 1), limit * page)
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    };
+    res.render('subcriber/find-paper',
+        {
+            path: '/subcriber',
+            message: results.length <= 1 ? "Found " + results.length + " result for '" + findTitle + "'" : "Found " + results.length + " results for '" + findTitle + "'",
+            pageTitle: "Find paper by name",
+            listPaper: results,
+        });
+}
 
 module.exports = controller; 

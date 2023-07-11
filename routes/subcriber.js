@@ -30,8 +30,10 @@ router.post('/profile', isAuth, upload.single('avatar'), subcriberController.pos
 
 router.get('/change-pwd', isAuth, subcriberController.getDataHeader, subcriberController.getChangePwdPage);
 router.post('/change-pwd', isAuth, subcriberController.postChangePwd);
-router.get('/:category', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperCategory);
+router.get('/categories/:category', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperCategory);
+router.get('/tags/:tag', isAuth, subcriberController.getDataHeader, subcriberController.getListPaperTag);
 
+router.get('/find-paper', isAuth, subcriberController.getDataHeader, subcriberController.getFindPaper);
 module.exports = router;
 
 //[check('name').trim().isLength({ min: 1 }).withMessage('Name is required!')],

@@ -26,9 +26,14 @@
 
     <div class="container logo-search d-flex justify-content-between p-2 w-100 align-items-end ">
         <a class="logo mx-5" href="/subcriber/"><img class="img-logo w-80" src="/images/logo.png"></a>
-        <form action="#" class="searchform order-sm-start order-lg-last">
+        <form action="/subcriber/find-paper" method="get" class="searchform order-sm-start order-lg-last">
             <div class="form-group d-flex mx-4">
-                <input type=" text" class="form-control pl-3" placeholder="Enter your search title">
+                <select class="form-control" id="dropdown" name="search-type">
+                    <option value="title">Search by title</option>
+                    <option value="abstract">Search by abstract</option>
+                    <option value="content">Search by content</option>
+                </select>
+                <input type=" text" class="form-control pl-3" placeholder="Enter your search text" name="title">
                 <button type="submit" placeholder="" class="btn-search bg-light border border-1 rounded">
                     <i class="bi bi-search"></i>
                 </button>
@@ -47,7 +52,7 @@
                         aria-haspopup="true" aria-expanded="false">Category</a>
                     <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
                         {{#each categories}}
-                        <a class="dropdown-item" href="/subcriber/{{name}}">{{name}}</a>
+                        <a class="dropdown-item" href="/subcriber/categories/{{name}}">{{name}}</a>
                         {{/each}}
                     </div>
                 </li>
@@ -55,11 +60,9 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Tag</a>
                     <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
-                        <div class="dropdown-menu w-100 text-center" aria-labelledby="dropdownId">
-                            {{#each tags}}
-                            <a class="dropdown-item" href="/subcriber/{{name}}">{{name}}</a>
-                            {{/each}}
-                        </div>
+                        {{#each tags}}
+                        <a class="dropdown-item" href="/subcriber/tags/{{name}}">#{{name}}</a>
+                        {{/each}}
                     </div>
                 </li>
             </ul>

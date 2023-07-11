@@ -86,7 +86,7 @@ controller.getHomePage = async (req, res, next) => {
 };
 controller.getListPaperCategory = async (req, res, next) => {
     let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page))
-    const limit = 3;
+    const limit = 5;
 
     req.app.locals.layout = 'guest'
     const cat = await Cats.findOne({ name: req.params.category })
@@ -123,19 +123,19 @@ controller.getListPaperTag = async (req, res, next) => {
 
     const tag = await Tags.findOne({ name: req.params.tag })
     console.log(tag.name)
-    const listPaper = await Paper.find()
+    const listPaper = await Paper.find({ status: 'published' })
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
         .populate({ path: 'tags', select: 'name' })
     let tmp = JSON.parse(JSON.stringify(listPaper))
     console.log(tmp)
     let listPapers = []
-    for(let i = 0 ; i < tmp.length; i++){
-      for (let j = 0 ; j < tmp[i].tags.length; j++){
-        if(tmp[i].tags[j]._id == tag._id){
-            listPapers.push(tmp[i])
+    for (let i = 0; i < tmp.length; i++) {
+        for (let j = 0; j < tmp[i].tags.length; j++) {
+            if (tmp[i].tags[j]._id == tag._id) {
+                listPapers.push(tmp[i])
+            }
         }
-      }
     }
     count = listPapers.length
     listPapers = listPapers.slice(limit * (page - 1), limit * page)

@@ -1,6 +1,6 @@
 <main>
     <div class="container my-5">
-        <a class="top-3 h5 my-5 py-5 text-success text-decoration-none" href="/subcriber/"> {{message}}</a>
+        <a class="top-3 h5 my-5 py-5 text-success text-decoration-none" href="/guest/"> {{message}}</a>
         <span class="line mb-3"></span>
         <div class="mt-5">
             {{#each listPaper}}
@@ -13,25 +13,30 @@
                         </div>
                         {{#if isPremium}}
                         <i class="bi bi-star-fill" style="color: yellow;"></i> {{/if}}
-                        <div class="item-download text-center p-1" style="font-size:13px;"> <span> <i
-                                    class="bi bi-download"></i>
-                                Download</span>
-                        </div>
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                         <div class="mb-1" style="font-size:13px;">
+                            {{#if isPremium}}
+                            {{!-- href renew --}}
                             <a class="item-title m-0 p-1" href="#" id="title">{{title}}
                             </a>
+                            {{else}}
+                            {{!-- href detail --}}
+                            <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            </a>
+                            {{/if}}
                             <div class="item-date">{{timeChange publicationDate}}</div>
                             <div class="item-tag my-1">
                                 {{#each this.tags}}
-                                <a class="bg-secondary text-decoration-none text-white rounded-3 p-1" href="/tags/{{name}}">#{{name}}
+                                <a class="bg-secondary text-decoration-none text-white rounded-3 p-1"
+                                    href="/tags/{{name}}">#{{name}}
                                 </a>
                                 {{/each}}
                             </div>
                             <a class="item-category text-white text-decoration-none rounded-3" href="#"
                                 style="background-color:{{category_id.color}}">
-                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
+                                <a href="categories/{{category_id.name}}"
+                                    style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </a>
                             <p class="item-demo mt-2">{{{metadata_id.abstract}}}</p>
                         </div>
