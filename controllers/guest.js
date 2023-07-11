@@ -126,23 +126,31 @@ controller.getListPaperTag = async (req, res, next) => {
     const listPaper = await Paper.find()
         .populate({ path: 'category_id', select: 'color name' })
         .populate({ path: 'metadata_id', select: 'avaPaper abstract' })
-        .populate({ path: 'tags', match: { _id: tag._id }, select: 'name' })
-        .sort({ isPremium: -1 })
-        .limit(limit)
-        .skip(limit * (page - 1))
-    count = listPaper.length
-    console.log(listPaper)
+        .populate({ path: 'tags', select: 'name' })
+    let tmp = JSON.parse(JSON.stringify(listPaper))
+    console.log(tmp)
+    let listPapers = []
+    for(let i = 0 ; i < tmp.length; i++){
+      for (let j = 0 ; j < tmp[i].tags.length; j++){
+        if(tmp[i].tags[j]._id == tag._id){
+            listPapers.push(tmp[i])
+        }
+      }
+    }
+    count = listPapers.length
+    listPapers = listPapers.slice(limit * (page - 1), limit * page)
     res.locals.pagination = {
         page: page,
         limit: limit,
         totalRows: count,
         queryParams: req.query
     };
+    console.log(listPapers)
     res.render('guest/tag',
         {
             path: '/guest',
             pageTitle: req.params.category,
-            listPaperTag: listPaper,
+            listPaperTag: listPapers,
             tagName: tag.name
         });
 }

@@ -36,7 +36,7 @@
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
-                                {{{category_id.name}}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                                 </d>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
-                                {{{category_id.name}}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </div>
                         </div>
                         {{/with}}
@@ -84,7 +84,7 @@
                             </div>
                             <div class="top-3-category position-absolute top-0 start-0 text-white p-2 rounded-3 m-3 text-centerd"
                                 style="background-color: {{category_id.color}}" href="#">
-                                {{{category_id.name}}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </div>
                         </div>
                         {{/with}}
@@ -125,7 +125,7 @@
                                     <div class="top-10-item-date p-1">{{timeChange publicationDate}}</div>
                                     <div class="top-10-item-category text-white p-1 rounded-3" href="#"
                                         style="background-color: {{category_id.color}}">
-                                        {{category_id.name}}
+                                        <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                                     </div>
                                     {{#if isPremium}}
                                     {{!-- href renew --}}
@@ -157,7 +157,7 @@
                                     <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                                     <div class="top-10-item-category text-white p-1 rounded-3"
                                         style="background-color: {{category_id.color}}" href="#">
-                                        {{category_id.name}}
+                                        <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                                     </div>
                                     {{#if isPremium}}
                                     {{!-- href renew --}}
@@ -201,7 +201,7 @@
                             <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                             <div class="top-10-item-category text-white p-1 rounded-3"
                                 style="background-color: {{category_id.color}}" href="#">
-                                {{category_id.name}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </div>
                             {{#if isPremium}}
                             {{!-- href renew --}}
@@ -241,7 +241,7 @@
                             <div class="top-10-item-date p-1">{{{timeChange publicationDate}}}</div>
                             <div class="top-10-item-category text-white p-1 rounded-3"
                                 style="background-color: {{category_id.color}}" href=" #">
-                                {{category_id.name}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </div>
                             {{#if isPremium}}
                             {{!-- href renew --}}
