@@ -33,5 +33,6 @@ router.get('/assign-category', isAuth, adminController.getAssignCat)
 
 router.get('/renew-account/renew', isAuth, adminController.getRenew)
 router.get('/renew-account', isAuth, adminController.getRenewAccount)
+router.get('/paper', isAuth ,adminController.getShowPaper)
 
 module.exports = router;

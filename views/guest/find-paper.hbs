@@ -20,18 +20,18 @@
                     </div>
                     <div class="w-100 d-flex flex-column bg-light px-3" style="height:180px;">
                         <div class="mb-1" style="font-size:13px;">
-                            <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            <a class="item-title m-0 p-1" href="/page?paper_id={{_id}}" id="title">{{title}}
                             </a>
                             <div class="item-date">{{timeChange publicationDate}}</div>
                             <div class="item-tag my-1">
                                 {{#each this.tags}}
-                                <a class="bg-secondary text-decoration-none text-white rounded-3 p-1" href="#">#{{name}}
+                                <a class="bg-secondary text-decoration-none text-white rounded-3 p-1" href="/tags/{{name}}">#{{name}}
                                 </a>
                                 {{/each}}
                             </div>
                             <a class="item-category text-white text-decoration-none rounded-3" href="#"
                                 style="background-color:{{category_id.color}}">
-                                {{category_id.name}}
+                                <a href="categories/{{category_id.name}}" style="text-decoration: none; color:white">{{category_id.name}}</a>
                             </a>
                             <p class="item-demo mt-2">{{{metadata_id.abstract}}}</p>
                         </div>

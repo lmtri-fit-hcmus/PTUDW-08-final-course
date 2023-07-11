@@ -1,7 +1,7 @@
 <main>
     <div class="container my-5">
-        <a class="top-3 h5 my-5 py-5 text-success text-decoration-none" href="/subcriber/">Home > Tag </a>
-        <span class="top-3 h5 text-success text-decoration-none">{{tagName}}</span>
+        <a class="top-3 h5 my-5 py-5 text-success text-decoration-none" href="/subcriber/">Home > Tag > </a>
+        <span class="top-3 h5 text-success text-decoration-none">"#{{tagName}}"</span>
         <span class="line mb-3"></span>
         {{!-- <form action="#" class="searchform order-sm-start order-lg-last" style="width: 20%;
             float: right;">
@@ -29,14 +29,14 @@
                         <div class="mb-1" style="font-size:13px;">
                             {{#if isPremium}}
                             {{!-- href renew --}}
-                            <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            <a class="item-title m-0 p-1" href="/page?paper_id={{_id}}" id="title">{{title}}
                             </a>
                             {{else}}
                             {{!-- href detail --}}
-                            <a class="item-title m-0 p-1" href="#" id="title">{{title}}
+                            <a class="item-title m-0 p-1" href="/page?paper_id={{_id}}" id="title">{{title}}
                             </a>
                             {{/if}}
-                            <div class="item-date">{{timeChange publicationDate}}</div>
+                            <div class="item-date">{{publicationDate}}</div>
                             <div class="item-tag my-1">
                                 {{#each this.tags}}
                                 <a class="bg-secondary text-decoration-none text-white rounded-3" href="#">{{name}}
